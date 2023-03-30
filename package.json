@@ -25,11 +25,20 @@
         "eslint-config-prettier": "^8.8.0",
         "husky": "^8.0.3",
         "lint-staged": "^13.2.0",
+        "postcss": "^8.4.21",
+        "postcss-cli": "^10.1.0",
+        "postcss-sorting": "^8.0.2",
         "prettier": "^2.8.7",
         "sass": "^1.60.0"
     },
     "lint-staged": {
-        "src/**/*.{js,jsx,ts,tsx}": "eslint --cache --fix",
-        "src/**/*.{js,jsx,ts,tsx,scss,css}": "prettier --write"
+        "src/**/*.{js,jsx,ts,tsx}": [
+            "eslint --cache --fix",
+            "prettier --write"
+        ],
+        "src/**/*.{scss,css}": [
+            "prettier --write",
+            "npx postcss --no-map --replace"
+        ]
     }
 }
