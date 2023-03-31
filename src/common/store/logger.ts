@@ -1,4 +1,4 @@
-import { State, StateCreator, StoreMutatorIdentifier } from 'zustand';
+import { StateCreator, StoreMutatorIdentifier } from 'zustand';
 
 type Logger = <
 	T extends TablatureStore,
@@ -9,7 +9,7 @@ type Logger = <
 	name?: string
 ) => StateCreator<T, Mps, Mcs>;
 
-type LoggerImpl = <T extends State>(f: StateCreator<T, [], []>, name?: string) => StateCreator<T, [], []>;
+type LoggerImpl = <T extends TablatureStore>(f: StateCreator<T, [], []>, name?: string) => StateCreator<T, [], []>;
 
 const loggerImpl: LoggerImpl = (f, name) => (set, get, store) => {
 	const loggedSet: typeof set = (...a) => {
