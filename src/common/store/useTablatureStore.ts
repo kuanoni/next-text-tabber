@@ -1,10 +1,14 @@
 import { create, StoreApi, UseBoundStore } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
+import { logger } from './logger';
+
 export const tablatureStoreBase = create(
-	immer<TablatureStore>(() => ({
-		columns: [],
-	}))
+	logger(
+		immer<TablatureStore>(() => ({
+			columns: [],
+		}))
+	)
 );
 
 type WithSelectors<S> = S extends { getState: () => infer T } ? S & { use: { [K in keyof T]: () => T[K] } } : never;
