@@ -1,0 +1,8 @@
+.column {
+	margin-right: 1px;
+
+	&:hover {
+		background-color: $c-medium;
+		cursor: pointer;
+	}
+}
