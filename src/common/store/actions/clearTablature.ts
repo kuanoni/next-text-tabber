@@ -3,5 +3,5 @@ import { tablatureStoreBase } from '../useTablatureStore';
 
 export const clearTablature = () =>
 	tablatureStoreBase.setState((state) => {
-		state.columns = BLANK_TABLATURE;
+		state.tablature = BLANK_TABLATURE;
 	});
