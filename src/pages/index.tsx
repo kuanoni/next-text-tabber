@@ -1,11 +1,9 @@
 import Head from 'next/head';
 
+import TablatureControls from '@modules/tablature/components/controls/TablatureControls';
 import Tablature from '@modules/tablature/components/Tablature';
-import { clearTablature } from '@modules/tablatureStore/actions/clearTablature';
-import { insertBlankColumn } from '@modules/tablatureStore/actions/insertBlankColumn';
-import { pushBlankColumn } from '@modules/tablatureStore/actions/pushBlankColumn';
-import { pushBlankLine } from '@modules/tablatureStore/actions/pushBlankLine';
 import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
+import styles from '@styles/pages/index.module.scss';
 
 export default function Home() {
 	const lines = useTablatureStore().tablatureLines;
@@ -19,12 +17,9 @@ export default function Home() {
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
-			<main>
+			<main className={styles.main}>
 				<Tablature lines={lines} />
-				<button onClick={() => pushBlankColumn(0)}>pushBlankColumn</button>
-				<button onClick={() => insertBlankColumn(0, 0)}>insertBlankColumn</button>
-				<button onClick={() => pushBlankLine()}>pushBlankLine</button>
-				<button onClick={() => clearTablature()}>clearTablature</button>
+				<TablatureControls />
 			</main>
 		</>
 	);
