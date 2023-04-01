@@ -1,9 +1,11 @@
-import { Inter } from 'next/font/google';
 import Head from 'next/head';
 
-const inter = Inter({ subsets: ['latin'] });
+import Tablature from '@modules/tablature/components/Tablature';
+import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
 
 export default function Home() {
+	const lines = useTablatureStore().tablature;
+
 	return (
 		<>
 			<Head>
@@ -12,7 +14,9 @@ export default function Home() {
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
-			<main></main>
+			<main>
+				<Tablature lines={lines} />
+			</main>
 		</>
 	);
 }
