@@ -3,7 +3,7 @@ import { tablatureStoreBase } from '../useTablatureStore';
 
 export const pushBlankColumn = (line: number) =>
 	tablatureStoreBase.setState((state) => {
-		if (!state.tablature[line]) return console.error(`Tried to push column to non-existant line: ${line}`);
+		if (!state.tablatureLines[line]) return console.error(`Tried to push column to non-existant line: ${line}`);
 
-		state.tablature[line].push(BLANK_COLUMN);
+		state.tablatureLines[line].push(BLANK_COLUMN);
 	});
