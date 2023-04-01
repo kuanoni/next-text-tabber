@@ -1,13 +1,12 @@
 import Head from 'next/head';
 
-import TablatureControls from '@modules/tablature/components/controls/TablatureControls';
-import Tablature from '@modules/tablature/components/Tablature';
+import TablatureControls from '@modules/tablatureEditor/components/controls/TablatureControls';
+import Tablature from '@modules/tablatureEditor/components/Tablature';
 import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
 import styles from '@styles/pages/index.module.scss';
 
 export default function Home() {
 	const lines = useTablatureStore().tablatureLines;
-	console.log(lines);
 
 	return (
 		<>
