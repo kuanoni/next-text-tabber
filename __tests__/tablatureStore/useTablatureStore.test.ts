@@ -21,42 +21,42 @@ describe('useTablatureStore', () => {
 			clearTablature();
 		});
 
-		expect(result.current.tablature).toEqual(BLANK_TABLATURE);
+		expect(result.current.tablatureLines).toEqual(BLANK_TABLATURE);
 	});
 
 	it('The pushBlankLine action function correctly adds a blank line.', () => {
 		const { result } = renderHook(() => useTablatureStore((state) => state));
 
-		const currentTablature = result.current.tablature;
+		const currentTablature = result.current.tablatureLines;
 
 		act(() => {
 			pushBlankLine();
 		});
 
-		expect(result.current.tablature).toEqual([...currentTablature, BLANK_LINE]);
+		expect(result.current.tablatureLines).toEqual([...currentTablature, BLANK_LINE]);
 	});
 
 	it('The pushBlankColumn action function correctly adds a blank column to the first line.', () => {
 		const { result } = renderHook(() => useTablatureStore((state) => state));
 
-		const currentTablature = result.current.tablature;
+		const currentTablature = result.current.tablatureLines;
 
 		act(() => {
 			pushBlankColumn(0);
 		});
 
-		expect(result.current.tablature).toEqual([[...currentTablature[0], BLANK_COLUMN]]);
+		expect(result.current.tablatureLines).toEqual([[...currentTablature[0], BLANK_COLUMN]]);
 	});
 
 	it('The insertBlankColumn action function correctly inserts a blank column in the first line.', () => {
 		const { result } = renderHook(() => useTablatureStore((state) => state));
 
-		const currentTablature = result.current.tablature;
+		const currentTablature = result.current.tablatureLines;
 
 		act(() => {
 			insertBlankColumn(0, 0);
 		});
 
-		expect(result.current.tablature).toEqual([[BLANK_COLUMN, ...currentTablature[0]]]);
+		expect(result.current.tablatureLines).toEqual([[BLANK_COLUMN, ...currentTablature[0]]]);
 	});
 });

@@ -11,7 +11,7 @@ interface Column {
 type Line = Column[];
 
 interface TablatureStore {
-	tablature: Line[];
+	tablatureLines: Line[];
 }
 
 interface NoteModifierSnap {

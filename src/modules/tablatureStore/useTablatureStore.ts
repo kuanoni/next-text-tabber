@@ -7,7 +7,7 @@ import { logger } from './logger';
 export const tablatureStoreBase = create(
 	logger(
 		immer<TablatureStore>(() => ({
-			tablature: BLANK_TABLATURE,
+			tablatureLines: BLANK_TABLATURE,
 		}))
 	)
 );

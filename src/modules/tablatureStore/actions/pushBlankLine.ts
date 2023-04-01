@@ -3,5 +3,5 @@ import { tablatureStoreBase } from '../useTablatureStore';
 
 export const pushBlankLine = () =>
 	tablatureStoreBase.setState((state) => {
-		state.tablature.push(BLANK_LINE);
+		state.tablatureLines.push(BLANK_LINE);
 	});

@@ -15,7 +15,9 @@ const loggerImpl: LoggerImpl = (f, name) => (set, get, store) => {
 	const loggedSet: typeof set = (...a) => {
 		set(...a);
 		console.log(...(name ? [`${name}:`] : []), get());
-		get().tablature.forEach((line) => console.table(line.map((column) => column.cells.map((cell) => cell.fret))));
+		get().tablatureLines.forEach((line) =>
+			console.table(line.map((column) => column.cells.map((cell) => cell.fret)))
+		);
 	};
 	store.setState = loggedSet;
 
