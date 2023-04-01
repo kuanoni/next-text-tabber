@@ -1,10 +1,12 @@
 import Head from 'next/head';
 
-import Tablature from '@modules/tablature/components/Tablature';
+import TablatureControls from '@modules/tablatureEditor/components/controls/TablatureControls';
+import Tablature from '@modules/tablatureEditor/components/Tablature';
 import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
+import styles from '@styles/pages/index.module.scss';
 
 export default function Home() {
-	const lines = useTablatureStore().tablature;
+	const lines = useTablatureStore().tablatureLines;
 
 	return (
 		<>
@@ -14,8 +16,9 @@ export default function Home() {
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
-			<main>
+			<main className={styles.main}>
 				<Tablature lines={lines} />
+				<TablatureControls />
 			</main>
 		</>
 	);
