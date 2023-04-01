@@ -1,10 +1,10 @@
-import { clearTablature } from '@common/store/actions/clearTablature';
-import { insertBlankColumn } from '@common/store/actions/insertBlankColumn';
-import { pushBlankColumn } from '@common/store/actions/pushBlankColumn';
-import { pushBlankLine } from '@common/store/actions/pushBlankLine';
-import { BLANK_COLUMN, BLANK_LINE, BLANK_TABLATURE } from '@common/store/constants';
-import { useTablatureStore } from '@common/store/useTablatureStore';
 import { describe, expect, jest } from '@jest/globals';
+import { clearTablature } from '@modules/tablatureStore/actions/clearTablature';
+import { insertBlankColumn } from '@modules/tablatureStore/actions/insertBlankColumn';
+import { pushBlankColumn } from '@modules/tablatureStore/actions/pushBlankColumn';
+import { pushBlankLine } from '@modules/tablatureStore/actions/pushBlankLine';
+import { BLANK_COLUMN, BLANK_LINE, BLANK_TABLATURE } from '@modules/tablatureStore/constants';
+import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
 describe('useTablatureStore', () => {
