@@ -1,12 +1,13 @@
 import { create, StoreApi, UseBoundStore } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
+import { BLANK_TABLATURE } from './constants';
 import { logger } from './logger';
 
 export const tablatureStoreBase = create(
 	logger(
 		immer<TablatureStore>(() => ({
-			columns: [],
+			columns: BLANK_TABLATURE,
 		}))
 	)
 );

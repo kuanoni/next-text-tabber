@@ -7,7 +7,6 @@ import { act, cleanup, renderHook } from '@testing-library/react';
 
 describe('addBlankColumn', () => {
 	afterEach(() => {
-		// You can chose to set the store's state to a default value here.
 		jest.resetAllMocks();
 		cleanup();
 	});
@@ -22,5 +21,15 @@ describe('addBlankColumn', () => {
 		});
 
 		expect(result.current.columns).toEqual([...currentColumns, BLANK_COLUMN]);
+	});
+
+	it('The clearTablature action function reverts the tablature to its original state.', () => {
+		const { result } = renderHook(() => useTablatureStore((state) => state));
+
+		act(() => {
+			clearTablature();
+		});
+
+		expect(result.current.columns).toEqual(BLANK_TABLATURE);
 	});
 });
