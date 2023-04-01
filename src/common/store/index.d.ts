@@ -8,8 +8,10 @@ interface Column {
 	cells: Cell[];
 }
 
+type Line = Column[];
+
 interface TablatureStore {
-	columns: Column[];
+	tablature: Line[];
 }
 
 interface NoteModifierSnap {
