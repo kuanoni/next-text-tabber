@@ -3,7 +3,7 @@ export const BLANK_CELL: Cell = { modifier: null, fret: -1 };
 
 // TODO: replace '6' with some dynamic variable to represent instrument strings
 export const BLANK_COLUMN: Column = { modifier: null, cells: new Array(6).fill(BLANK_CELL) };
-export const BLANK_LINE = [BLANK_COLUMN];
+export const BLANK_LINE = [BLANK_COLUMN, BLANK_COLUMN];
 export const BLANK_TABLATURE = [BLANK_LINE];
 
 export const NOTE_MODIFIERS: { [i: string]: NoteModifier } = {
