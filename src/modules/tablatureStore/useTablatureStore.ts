@@ -1,16 +1,12 @@
 import { create, StoreApi, UseBoundStore } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-import { BLANK_TABLATURE } from './constants';
+import { electricGuitar } from './constants';
 import { logger } from './logger';
 
-export const tablatureStoreBase = create(
-	logger(
-		immer<TablatureStore>(() => ({
-			tablatureLines: BLANK_TABLATURE,
-		}))
-	)
-);
+const initialState = electricGuitar.createInitialState();
+
+export const tablatureStoreBase = create(logger(immer<typeof initialState>(() => initialState)));
 
 type WithSelectors<S> = S extends { getState: () => infer T } ? S & { use: { [K in keyof T]: () => T[K] } } : never;
 
