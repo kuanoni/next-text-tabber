@@ -6,7 +6,7 @@ import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
 import styles from '@styles/pages/index.module.scss';
 
 export default function Home() {
-	const lines = useTablatureStore().tablatureLines;
+	const tablature = useTablatureStore().tablature;
 
 	return (
 		<>
@@ -17,7 +17,7 @@ export default function Home() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 			<main className={styles.main}>
-				<Tablature lines={lines} />
+				<Tablature tablature={tablature} />
 				<TablatureControls />
 			</main>
 		</>

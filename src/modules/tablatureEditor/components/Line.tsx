@@ -2,13 +2,13 @@ import Column from './Column';
 import styles from './Line.module.scss';
 
 interface Props {
-	columns: Line;
+	line: Line;
 }
 
-const Line = ({ columns }: Props) => {
+const Line = ({ line }: Props) => {
 	return (
 		<div className={styles.line}>
-			{columns.map((column, i) => (
+			{line.columns.map((column, i) => (
 				<Column key={i} column={column} />
 			))}
 		</div>

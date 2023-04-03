@@ -2,14 +2,14 @@ import Line from './Line';
 import styles from './Tablature.module.scss';
 
 interface Props {
-	lines: Line[];
+	tablature: Tablature;
 }
 
-const Tablature = ({ lines }: Props) => {
+const Tablature = ({ tablature }: Props) => {
 	return (
 		<div className={styles.tablature}>
-			{lines.map((line, i) => (
-				<Line key={i} columns={line} />
+			{tablature.lines.map((line, i) => (
+				<Line key={i} line={line} />
 			))}
 		</div>
 	);
