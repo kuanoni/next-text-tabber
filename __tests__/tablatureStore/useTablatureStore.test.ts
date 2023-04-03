@@ -1,8 +1,10 @@
 import { describe, expect, jest } from '@jest/globals';
+import { changeInstrument } from '@modules/tablatureStore/actions/changeInstrument';
 import { clearTablature } from '@modules/tablatureStore/actions/clearTablature';
 import { insertBlankColumn } from '@modules/tablatureStore/actions/insertBlankColumn';
 import { pushBlankColumn } from '@modules/tablatureStore/actions/pushBlankColumn';
 import { pushBlankLine } from '@modules/tablatureStore/actions/pushBlankLine';
+import { electricBass, electricGuitar } from '@modules/tablatureStore/constants';
 import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
@@ -10,7 +12,18 @@ describe('useTablatureStore', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
 		cleanup();
-		clearTablature();
+		changeInstrument(electricGuitar);
+	});
+
+	it('The changeInstrument action function correctly changes the store instrument, and resets the store tablature.', () => {
+		const { result } = renderHook(() => useTablatureStore((state) => state));
+
+		act(() => {
+			changeInstrument(electricBass);
+		});
+
+		expect(result.current.instrument).toEqual(electricBass);
+		expect(result.current.tablature).toEqual(electricBass.BLANK_TABLATURE);
 	});
 
 	it('The clearTablature action function reverts the tablature to its original state.', () => {
