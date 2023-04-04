@@ -1,5 +1,3 @@
-import { Instrument } from '@common/Instrument';
-
 import styles from './Fretboard.module.scss';
 import TuningColumn from './TuningColumn';
 

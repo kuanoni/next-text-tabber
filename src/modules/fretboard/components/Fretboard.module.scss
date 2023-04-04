@@ -1,4 +1,11 @@
 .fretboard {
-	.frets {
+	.tuning-column {
+		display: flex;
+		flex-direction: column;
+		width: 3rem;
+
+		.tuning-selector {
+			height: 2rem;
+		}
 	}
 }

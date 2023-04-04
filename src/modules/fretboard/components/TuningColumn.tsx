@@ -1,7 +1,7 @@
 import { changeTuning } from '@modules/tablatureStore/actions/changeTuning';
 import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
 
-import styles from './TuningColumn.module.scss';
+import styles from './Fretboard.module.scss';
 import TuningSelector from './TuningSelector';
 
 const TuningColumn = () => {

@@ -1,5 +1,5 @@
 import { OCTAVE_NOTES } from '../constants';
-import styles from './TuningSelector.module.scss';
+import styles from './Fretboard.module.scss';
 
 interface Props {
 	stringIndex: number;
