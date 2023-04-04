@@ -1,8 +1,8 @@
 import { changeTuning } from '@modules/tablatureStore/actions/changeTuning';
 import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
 
-import { OCTAVE_NOTES } from '../constants';
 import styles from './TuningColumn.module.scss';
+import TuningSelector from './TuningSelector';
 
 const TuningColumn = () => {
 	const tuning = useTablatureStore().tuning;
@@ -15,21 +15,14 @@ const TuningColumn = () => {
 
 	return (
 		<div className={styles['tuning-column']}>
-			{tuning.map((tuningValue, stringIndex) => {
-				return (
-					<select
-						key={stringIndex}
-						defaultValue={tuningValue}
-						onChange={() => onSelectChange(stringIndex, tuningValue)}
-					>
-						{OCTAVE_NOTES.map((note, i) => (
-							<option key={note} value={i}>
-								{note}
-							</option>
-						))}
-					</select>
-				);
-			})}
+			{tuning.map((tuningValue, stringIndex) => (
+				<TuningSelector
+					key={stringIndex}
+					stringIndex={stringIndex}
+					tuningValue={tuningValue}
+					onSelectChange={onSelectChange}
+				/>
+			))}
 		</div>
 	);
 };

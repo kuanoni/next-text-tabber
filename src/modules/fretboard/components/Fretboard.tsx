@@ -1,7 +1,7 @@
 import { Instrument } from '@common/Instrument';
 
 import styles from './Fretboard.module.scss';
-import TuningSelector from './TuningSelector';
+import TuningColumn from './TuningColumn';
 
 interface Props {
 	instrument: Instrument;
@@ -10,7 +10,7 @@ interface Props {
 const Fretboard = ({ instrument }: Props) => {
 	return (
 		<div className={styles.fretboard}>
-			<TuningSelector defaultTuning={instrument.defaultTuning} />
+			<TuningColumn />
 			<div className={styles.frets}></div>
 		</div>
 	);
