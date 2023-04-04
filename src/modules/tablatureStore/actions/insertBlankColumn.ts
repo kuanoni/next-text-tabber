@@ -1,9 +1,9 @@
-import { BLANK_COLUMN } from '../constants';
 import { tablatureStoreBase } from '../useTablatureStore';
 
-export const insertBlankColumn = (line: number, at: number) =>
+export const insertBlankColumn = (lineIndex: number, columnIndex: number) =>
 	tablatureStoreBase.setState((state) => {
-		if (!state.tablatureLines[line]) return console.error(`Tried to insert column in non-existant line: ${line}`);
+		if (!state.tablature.lines[lineIndex])
+			return console.error(`Tried to insert column in non-existant line: ${lineIndex}`);
 
-		state.tablatureLines[line].splice(at, 0, BLANK_COLUMN);
+		state.tablature.lines[lineIndex].columns.splice(columnIndex, 0, state.instrument.BLANK_COLUMN);
 	});

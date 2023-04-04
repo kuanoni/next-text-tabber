@@ -1,10 +1,6 @@
-export const BLANK_NOTE_CHAR = '-';
-export const BLANK_CELL: Cell = { modifier: null, fret: -1 };
+import { Instrument } from '@common/Instrument';
 
-// TODO: replace '6' with some dynamic variable to represent instrument strings
-export const BLANK_COLUMN: Column = { modifier: null, cells: new Array(6).fill(BLANK_CELL) };
-export const BLANK_LINE = [BLANK_COLUMN, BLANK_COLUMN];
-export const BLANK_TABLATURE = [BLANK_LINE];
+export const BLANK_NOTE_CHAR = '-';
 
 export const NOTE_MODIFIERS: { [i: string]: NoteModifier } = {
 	Ghost: { behavior: 'wrap', symbolLeft: '(', symbolRight: ')' },
@@ -15,3 +11,6 @@ export const COLUMN_MODIFIERS: { [i: string]: ColumnModifier } = {
 	'Palm mute': { start: 'PM', end: '-|', filler: '-' },
 	Vibrato: { filler: '~' },
 };
+
+export const electricGuitar = new Instrument('Electric Guitar', 6, 24, [], [[]]);
+export const electricBass = new Instrument('Electric Bass', 4, 24, [], [[]]);

@@ -8,10 +8,17 @@ interface Column {
 	cells: Cell[];
 }
 
-type Line = Column[];
+interface Line {
+	columns: Column[];
+}
+
+interface Tablature {
+	lines: Line[];
+}
 
 interface TablatureStore {
-	tablatureLines: Line[];
+	instrument: import('@common/Instrument').Instrument;
+	tablature: Tablature;
 }
 
 interface NoteModifierSnap {
@@ -19,7 +26,7 @@ interface NoteModifierSnap {
 	symbolRight: string;
 }
 
-interface NoteModifierWrap extends NoteModifier {
+interface NoteModifierWrap {
 	behavior: 'wrap';
 	symbolLeft: string;
 	symbolRight: string;
