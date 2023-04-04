@@ -1,11 +1,7 @@
 import styles from './Fretboard.module.scss';
 import TuningColumn from './TuningColumn';
 
-interface Props {
-	instrument: Instrument;
-}
-
-const Fretboard = ({ instrument }: Props) => {
+const Fretboard = () => {
 	return (
 		<div className={styles.fretboard}>
 			<TuningColumn />

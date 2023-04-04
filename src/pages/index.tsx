@@ -8,7 +8,6 @@ import styles from '@styles/pages/index.module.scss';
 
 export default function Home() {
 	const tablature = useTablatureStore().tablature;
-	const instrument = useTablatureStore().instrument;
 
 	return (
 		<>
@@ -19,7 +18,7 @@ export default function Home() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 			<main className={styles.main}>
-				<Fretboard instrument={instrument} />
+				<Fretboard />
 				<div className={styles.tablature}>
 					<Tablature tablature={tablature} />
 					<TablatureControls />
