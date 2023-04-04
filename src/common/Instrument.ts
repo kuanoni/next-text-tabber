@@ -3,7 +3,7 @@ export class Instrument {
 	readonly amountOfStrings: number;
 	readonly amountOfFrets: number;
 	readonly defaultTuning: number[];
-	readonly commonTunings: number[][];
+	readonly commonTunings: { [i: string]: number[] };
 	readonly BLANK_CELL: Cell;
 	readonly BLANK_COLUMN: Column;
 	readonly BLANK_LINE: Line;
@@ -14,7 +14,7 @@ export class Instrument {
 		amountOfStrings: number,
 		amountOfFrets: number,
 		defaultTuning: number[],
-		commonTunings: number[][]
+		commonTunings: { [i: string]: number[] }
 	) {
 		this.name = name;
 		this.amountOfStrings = amountOfStrings;
