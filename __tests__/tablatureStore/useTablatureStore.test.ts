@@ -1,5 +1,6 @@
 import { describe, expect, jest } from '@jest/globals';
 import { changeInstrument } from '@modules/tablatureStore/actions/changeInstrument';
+import { changeTuning } from '@modules/tablatureStore/actions/changeTuning';
 import { clearTablature } from '@modules/tablatureStore/actions/clearTablature';
 import { insertBlankColumn } from '@modules/tablatureStore/actions/insertBlankColumn';
 import { pushBlankColumn } from '@modules/tablatureStore/actions/pushBlankColumn';
@@ -80,5 +81,23 @@ describe('useTablatureStore', () => {
 		expect(result.current.tablature).toEqual({
 			lines: [{ columns: [blankColumn, ...currentTablature.lines[0].columns] }],
 		});
+	});
+
+	it('[changeTuning] change the state tuning to a new correctly sized array.', () => {
+		const { result } = renderHook(() => useTablatureStore((state) => state));
+
+		const newTuning: number[] = [27, 32, 45, 99, 0, 11];
+
+		act(() => {
+			changeTuning(newTuning);
+		});
+
+		expect(result.current.tuning).toEqual(newTuning);
+	});
+
+	it('[changeTuning] throw an error when passed an array of invalid length.', () => {
+		const changeTuningInvalidLength = () => changeTuning([27]);
+
+		expect(changeTuningInvalidLength).toThrow('invalid length');
 	});
 });
