@@ -1,0 +1,9 @@
+.tuning-selector {
+	display: flex;
+	flex-direction: column;
+
+	select {
+		width: 3rem;
+		height: 2rem;
+	}
+}
