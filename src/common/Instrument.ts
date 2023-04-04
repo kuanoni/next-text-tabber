@@ -33,6 +33,7 @@ export class Instrument {
 	createInitialState(): TablatureStore {
 		return {
 			instrument: this,
+			tuning: this.defaultTuning,
 			tablature: this.BLANK_TABLATURE,
 		};
 	}

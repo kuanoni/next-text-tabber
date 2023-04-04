@@ -18,6 +18,7 @@ interface Tablature {
 
 interface TablatureStore {
 	instrument: import('@common/Instrument').Instrument;
+	tuning: import('@common/Instrument').Instrument['defaultTuning'];
 	tablature: Tablature;
 }
 
