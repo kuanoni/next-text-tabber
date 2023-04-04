@@ -1,6 +1,9 @@
 .main {
-	display: grid;
-	gap: 16px;
 	padding: 1rem;
-	grid-template-columns: 5fr 1fr;
+
+	.tablature {
+		display: grid;
+		gap: 16px;
+		grid-template-columns: 5fr 1fr;
+	}
 }
