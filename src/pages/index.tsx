@@ -1,5 +1,6 @@
 import Head from 'next/head';
 
+import Fretboard from '@modules/fretboard/components/Fretboard';
 import TablatureControls from '@modules/tablatureEditor/components/controls/TablatureControls';
 import Tablature from '@modules/tablatureEditor/components/Tablature';
 import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
@@ -17,8 +18,11 @@ export default function Home() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 			<main className={styles.main}>
-				<Tablature tablature={tablature} />
-				<TablatureControls />
+				<Fretboard />
+				<div className={styles.tablature}>
+					<Tablature tablature={tablature} />
+					<TablatureControls />
+				</div>
 			</main>
 		</>
 	);

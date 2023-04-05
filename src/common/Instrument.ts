@@ -3,7 +3,8 @@ export class Instrument {
 	readonly amountOfStrings: number;
 	readonly amountOfFrets: number;
 	readonly defaultTuning: number[];
-	readonly commonTunings: number[][];
+	readonly defaultTuningName: string;
+	readonly commonTunings: { [i: string]: number[] };
 	readonly BLANK_CELL: Cell;
 	readonly BLANK_COLUMN: Column;
 	readonly BLANK_LINE: Line;
@@ -13,14 +14,17 @@ export class Instrument {
 		name: string,
 		amountOfStrings: number,
 		amountOfFrets: number,
+		defaultTuningName: string,
 		defaultTuning: number[],
-		commonTunings: number[][]
+		commonTunings: { [i: string]: number[] }
 	) {
 		this.name = name;
 		this.amountOfStrings = amountOfStrings;
 		this.amountOfFrets = amountOfFrets;
 		this.defaultTuning = defaultTuning;
-		this.commonTunings = commonTunings;
+		this.defaultTuningName = defaultTuningName;
+		this.commonTunings = { [defaultTuningName]: defaultTuning, ...commonTunings };
+
 		this.BLANK_CELL = { modifier: null, fret: -1 };
 		this.BLANK_COLUMN = {
 			modifier: null,
@@ -33,6 +37,7 @@ export class Instrument {
 	createInitialState(): TablatureStore {
 		return {
 			instrument: this,
+			tuning: this.defaultTuning,
 			tablature: this.BLANK_TABLATURE,
 		};
 	}
