@@ -6,7 +6,7 @@ import { logger } from './logger';
 
 const initialState = electricGuitar.createInitialState();
 
-export const tablatureStoreBase = create(logger(immer<typeof initialState>(() => initialState)));
+export const tablatureStoreBase = create(logger(immer<TablatureStore>(() => initialState)));
 
 type WithSelectors<S> = S extends { getState: () => infer T } ? S & { use: { [K in keyof T]: () => T[K] } } : never;
 
