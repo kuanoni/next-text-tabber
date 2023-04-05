@@ -15,7 +15,7 @@ const TuningColumn = () => {
 	};
 
 	return (
-		<div className={styles['tuning-column']}>
+		<div className={styles['tuning-column']} data-testid='tuning-column'>
 			<TuningSelectorCommon />
 			{tuning.map((tuningValue, stringIndex) => (
 				<TuningSelector

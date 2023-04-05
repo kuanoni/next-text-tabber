@@ -10,6 +10,7 @@ interface Props {
 const TuningSelector = ({ stringIndex, tuningValue, onSelectChange }: Props) => {
 	return (
 		<select
+			data-testid={`tuning-selector-${stringIndex}`}
 			className={styles['tuning-selector']}
 			value={tuningValue}
 			onChange={(e) => onSelectChange(stringIndex, parseInt(e.target.value))}

@@ -10,7 +10,11 @@ const TuningSelectorCommon = () => {
 		changeTuning(instrument.commonTunings[e.target.value]);
 
 	return (
-		<select defaultValue={instrument.defaultTuningName} onChange={onCommonTuningChange}>
+		<select
+			data-testid='tuning-selector-common'
+			defaultValue={instrument.defaultTuningName}
+			onChange={onCommonTuningChange}
+		>
 			{Object.keys(instrument.commonTunings).map((tuningName) => (
 				<option key={tuningName} value={tuningName}>
 					{tuningName === instrument.defaultTuningName ? `${tuningName} (Default)` : tuningName}
