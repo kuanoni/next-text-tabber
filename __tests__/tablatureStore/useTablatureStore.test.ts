@@ -16,7 +16,7 @@ describe('useTablatureStore', () => {
 		changeInstrument(electricGuitar);
 	});
 
-	it('The changeInstrument action function correctly changes the store instrument, and resets the store tablature.', () => {
+	it("[changeInstrument] reset the entire state to the instrument's initial state.", () => {
 		const { result } = renderHook(() => useTablatureStore((state) => state));
 
 		act(() => {
@@ -26,7 +26,7 @@ describe('useTablatureStore', () => {
 		expect(result.current).toEqual(electricBass.createInitialState());
 	});
 
-	it('The clearTablature action function reverts the tablature to its original state.', () => {
+	it('[clearTablature] revert the tablature to its default state.', () => {
 		const { result } = renderHook(() => useTablatureStore((state) => state));
 
 		const blankTablature = result.current.instrument.BLANK_TABLATURE;
@@ -38,7 +38,7 @@ describe('useTablatureStore', () => {
 		expect(result.current.tablature).toEqual(blankTablature);
 	});
 
-	it('The pushBlankLine action function correctly adds a blank line.', () => {
+	it('[pushBlankLine] append a blank line to the tablature.', () => {
 		const { result } = renderHook(() => useTablatureStore((state) => state));
 
 		const currentTablature = result.current.tablature;
@@ -52,7 +52,7 @@ describe('useTablatureStore', () => {
 		expect(result.current.tablature).toEqual(expected);
 	});
 
-	it('The pushBlankColumn action function correctly adds a blank column to the first line.', () => {
+	it('[pushBlankColumn] append a blank column to the first line.', () => {
 		const { result } = renderHook(() => useTablatureStore((state) => state));
 
 		const currentTablature = result.current.tablature;
@@ -67,7 +67,7 @@ describe('useTablatureStore', () => {
 		});
 	});
 
-	it('The insertBlankColumn action function correctly inserts a blank column in the first line.', () => {
+	it('[insertBlankColumn] insert a blank column in the first line.', () => {
 		const { result } = renderHook(() => useTablatureStore((state) => state));
 
 		const currentTablature = result.current.tablature;
