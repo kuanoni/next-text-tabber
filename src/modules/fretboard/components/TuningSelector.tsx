@@ -11,7 +11,7 @@ const TuningSelector = ({ stringIndex, tuningValue, onSelectChange }: Props) => 
 	return (
 		<select
 			className={styles['tuning-selector']}
-			defaultValue={tuningValue}
+			value={tuningValue}
 			onChange={(e) => onSelectChange(stringIndex, parseInt(e.target.value))}
 		>
 			{OCTAVE_NOTES.map((note, i) => (
