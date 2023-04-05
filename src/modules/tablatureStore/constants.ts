@@ -13,11 +13,17 @@ export const COLUMN_MODIFIERS: { [i: string]: ColumnModifier } = {
 };
 
 const SIX_STRING_TUNINGS = {
-	'E Standard': [28, 33, 38, 43, 47, 52],
-	'Drop D': [28, 33, 38, 43, 47, 52],
+	'Drop D': [26, 33, 38, 43, 47, 52],
 };
 
-export const electricGuitar = new Instrument('Electric Guitar', 6, 24, [28, 33, 38, 43, 47, 52], SIX_STRING_TUNINGS);
-export const electricBass = new Instrument('Electric Bass', 4, 24, [16, 21, 26, 31], {
+export const electricGuitar = new Instrument(
+	'Electric Guitar',
+	6,
+	24,
+	'E Standard',
+	[28, 33, 38, 43, 47, 52],
+	SIX_STRING_TUNINGS
+);
+export const electricBass = new Instrument('Electric Bass', 4, 24, 'E Standard', [16, 21, 26, 31], {
 	'E Standard': [16, 21, 26, 31],
 });
