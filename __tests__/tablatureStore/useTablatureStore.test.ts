@@ -23,8 +23,7 @@ describe('useTablatureStore', () => {
 			changeInstrument(electricBass);
 		});
 
-		expect(result.current.instrument).toEqual(electricBass);
-		expect(result.current.tablature).toEqual(electricBass.BLANK_TABLATURE);
+		expect(result.current).toEqual(electricBass.createInitialState());
 	});
 
 	it('The clearTablature action function reverts the tablature to its original state.', () => {
