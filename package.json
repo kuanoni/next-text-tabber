@@ -27,6 +27,7 @@
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^14.0.0",
         "@typescript-eslint/eslint-plugin": "^5.57.0",
+        "babel-plugin-react-remove-properties": "^0.3.0",
         "cypress": "^12.9.0",
         "eslint": "^8.37.0",
         "eslint-config-prettier": "^8.8.0",
