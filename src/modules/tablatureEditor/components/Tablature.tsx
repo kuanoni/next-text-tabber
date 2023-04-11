@@ -9,7 +9,7 @@ const Tablature = ({ tablature }: Props) => {
 	return (
 		<div className={styles.tablature}>
 			{tablature.lines.map((line, i) => (
-				<Line key={i} line={line} />
+				<Line key={i} index={i} line={line} />
 			))}
 		</div>
 	);
