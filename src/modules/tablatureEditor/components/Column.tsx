@@ -3,6 +3,7 @@ import { memo, MouseEventHandler } from 'react';
 import { columnSelectionFinish } from '@modules/editorStore/actions/columnSelectionFinish';
 import { columnSelectionHover } from '@modules/editorStore/actions/columnSelectionHover';
 import { columnSelectionStart } from '@modules/editorStore/actions/columnSelectionStart';
+import { useEditorStore } from '@modules/editorStore/useEditorStore';
 
 import Cell from './Cell';
 import styles from './Column.module.scss';
@@ -14,18 +15,19 @@ interface Props {
 	isSelected: boolean;
 }
 
+const isSelectingSelector = (state: EditorStore) => state.isSelecting;
+
 const Column = memo<Props>(({ lineIndex, columnIndex, column, isSelected }) => {
+	const isSelecting = useEditorStore(isSelectingSelector);
+
 	const onMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
 		e.stopPropagation();
 		columnSelectionStart(lineIndex, columnIndex);
-
-		// if mouseup event is triggered anywhere ELSE in the window, finish the selection
-		// window.addEventListener('mouseup', () => columnSelectionFinish(lineIndex, columnIndex), { once: true });
 	};
 
 	const onMouseUp: MouseEventHandler<HTMLDivElement> = (e) => {
 		e.stopPropagation();
-		columnSelectionFinish(lineIndex, columnIndex);
+		columnSelectionFinish();
 	};
 
 	const onMouseOver: MouseEventHandler<HTMLDivElement> = () => {
