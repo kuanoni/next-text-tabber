@@ -1,11 +1,12 @@
 import { editorStoreBase } from '../useEditorStore';
 
-export const columnSelectionStart = (line: number, start: number) => {
+export const columnSelectionStart = (lineIndex: number, columnIndex: number) => {
 	editorStoreBase.setState((state) => {
+		state.isSelecting = true;
 		state.selectedColumns = {
-			line,
-			start,
-			end: start,
+			line: lineIndex,
+			start: columnIndex,
+			end: columnIndex,
 		};
 	});
 };
