@@ -1,13 +1,12 @@
 import { setColumnSelection } from '@modules/editorStore/actions/setColumnSelection';
+import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
 
 import Line from './Line';
 import styles from './Tablature.module.scss';
 
-interface Props {
-	tablature: Tablature;
-}
+const Tablature = () => {
+	const tablature = useTablatureStore().tablature;
 
-const Tablature = ({ tablature }: Props) => {
 	return (
 		<div
 			className={styles.tablature}
