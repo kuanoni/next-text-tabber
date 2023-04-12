@@ -11,25 +11,26 @@ const between = (num: number, a: number, b: number) => {
 };
 
 interface Props {
-	index: number;
+	lineIndex: number;
 	line: Line;
 }
 
-const Line = ({ index, line }: Props) => {
+const Line = ({ lineIndex, line }: Props) => {
 	const selectedColumns = useEditorStore().selectedColumns;
 
 	return (
 		<div className={styles.line}>
 			{line.columns.map((column, columnIndex) => {
 				const isSelected =
-					index === selectedColumns.line && between(columnIndex, selectedColumns.start, selectedColumns.end);
+					lineIndex === selectedColumns.line &&
+					between(columnIndex, selectedColumns.start, selectedColumns.end);
 
 				return (
 					<Column
 						key={columnIndex}
-						lineIndex={index}
-						columnIndex={columnIndex}
 						column={column}
+						lineIndex={lineIndex}
+						columnIndex={columnIndex}
 						isSelected={isSelected}
 					/>
 				);

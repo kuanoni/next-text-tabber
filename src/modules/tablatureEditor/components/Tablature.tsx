@@ -17,7 +17,7 @@ const Tablature = ({ tablature }: Props) => {
 			}}
 		>
 			{tablature.lines.map((line, i) => (
-				<Line key={i} index={i} line={line} />
+				<Line key={i} lineIndex={i} line={line} />
 			))}
 		</div>
 	);
