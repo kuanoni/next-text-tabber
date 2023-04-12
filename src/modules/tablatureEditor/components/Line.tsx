@@ -1,6 +1,3 @@
-import { useState } from 'react';
-
-import { selectColumns } from '@modules/editorStore/actions/selectColumns';
 import { useEditorStore } from '@modules/editorStore/useEditorStore';
 
 import Column from './Column';
@@ -12,29 +9,23 @@ interface Props {
 }
 
 const Line = ({ index, line }: Props) => {
-	const [selectionStart, setSelectionStart] = useState<number | null>(null);
 	const selectedColumns = useEditorStore().selectedColumns;
-
-	const onColumnMouseDown = (columnIndex: number) => setSelectionStart(columnIndex);
-
-	const onColumnMouseUp = (columnIndex: number) => {
-		if (selectionStart !== null) selectColumns(index, selectionStart, columnIndex);
-		setSelectionStart(null);
-	};
 
 	return (
 		<div className={styles.line}>
-			{line.columns.map((column, i) => {
+			{line.columns.map((column, columnIndex) => {
 				const isSelected =
-					index === selectedColumns.line && i >= selectedColumns.start && i <= selectedColumns.end;
+					index === selectedColumns.line &&
+					columnIndex >= selectedColumns.start &&
+					columnIndex <= selectedColumns.end;
+
 				return (
 					<Column
-						key={i}
-						index={i}
+						key={columnIndex}
+						lineIndex={index}
+						columnIndex={columnIndex}
 						column={column}
 						isSelected={isSelected}
-						onMouseUp={onColumnMouseUp}
-						onMouseDown={onColumnMouseDown}
 					/>
 				);
 			})}
