@@ -4,6 +4,7 @@ import { immer } from 'zustand/middleware/immer';
 import { logger } from './logger';
 
 const initialState: EditorStore = {
+	isSelecting: false,
 	selectedColumns: {
 		line: -1,
 		start: -1,

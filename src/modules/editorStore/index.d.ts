@@ -1,4 +1,5 @@
 interface EditorStore {
+	isSelecting: boolean;
 	selectedColumns: ColumnSelection;
 }
 
