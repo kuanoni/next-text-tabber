@@ -30,7 +30,7 @@ export class Instrument {
 			modifier: null,
 			cells: new Array<Cell>(amountOfStrings).fill(this.BLANK_CELL),
 		};
-		this.BLANK_LINE = { columns: [this.BLANK_COLUMN, this.BLANK_COLUMN] };
+		this.BLANK_LINE = { columns: new Array(8).fill(this.BLANK_COLUMN) };
 		this.BLANK_TABLATURE = { lines: [this.BLANK_LINE] };
 	}
 
