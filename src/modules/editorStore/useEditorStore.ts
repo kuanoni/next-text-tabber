@@ -1,16 +1,9 @@
 import { create, StoreApi, UseBoundStore } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
+import { initialState } from './constants';
 import { logger } from './logger';
 
-const initialState: EditorStore = {
-	isSelecting: false,
-	selectedColumns: {
-		line: -1,
-		start: -1,
-		end: -1,
-	},
-};
 export const editorStoreBase = create(logger(immer<EditorStore>(() => initialState)));
 
 type WithSelectors<S> = S extends { getState: () => infer T } ? S & { use: { [K in keyof T]: () => T[K] } } : never;
