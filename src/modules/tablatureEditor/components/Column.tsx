@@ -1,6 +1,7 @@
 import { memo, MouseEventHandler } from 'react';
 
 import { columnSelectionFinish } from '@modules/editorStore/actions/columnSelectionFinish';
+import { columnSelectionHover } from '@modules/editorStore/actions/columnSelectionHover';
 import { columnSelectionStart } from '@modules/editorStore/actions/columnSelectionStart';
 
 import Cell from './Cell';
@@ -27,12 +28,17 @@ const Column = memo<Props>(({ lineIndex, columnIndex, column, isSelected }) => {
 		columnSelectionFinish(lineIndex, columnIndex);
 	};
 
+	const onMouseOver: MouseEventHandler<HTMLDivElement> = () => {
+		if (isSelecting) columnSelectionHover(lineIndex, columnIndex);
+	};
+
 	return (
 		<div
 			className={isSelected ? styles.column + ' ' + styles.selected : styles.column}
 			data-col-idx={columnIndex}
 			onMouseDown={onMouseDown}
 			onMouseUp={onMouseUp}
+			onMouseOver={onMouseOver}
 		>
 			{column.cells.map((cell, i) => (
 				<Cell key={i} cell={cell} />
