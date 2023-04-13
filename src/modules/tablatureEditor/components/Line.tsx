@@ -19,7 +19,7 @@ const Line = ({ lineIndex, line }: Props) => {
 	const selectedColumns = useEditorStore().selectedColumns;
 
 	return (
-		<div className={styles.line}>
+		<div className={styles.line} data-testid='line'>
 			{line.columns.map((column, columnIndex) => {
 				const isSelected =
 					lineIndex === selectedColumns.line &&

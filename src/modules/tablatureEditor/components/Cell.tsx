@@ -5,7 +5,11 @@ interface Props {
 }
 
 const Cell = ({ cell }: Props) => {
-	return <div className={styles.cell}>{cell.fret === -1 ? '-' : cell.fret}</div>;
+	return (
+		<div data-testid='cell' className={styles.cell}>
+			{cell.fret === -1 ? '-' : cell.fret}
+		</div>
+	);
 };
 
 export default Cell;

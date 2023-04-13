@@ -9,6 +9,7 @@ const Tablature = () => {
 
 	return (
 		<div
+			data-testid='tablature'
 			className={styles.tablature}
 			onMouseDown={() => {
 				// remove selection on mouse down
