@@ -23,11 +23,14 @@ const Column = memo<Props>(({ lineIndex, columnIndex, column, isSelected }) => {
 	const onMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
 		e.stopPropagation();
 		columnSelectionStart(lineIndex, columnIndex);
-	};
-
-	const onMouseUp: MouseEventHandler<HTMLDivElement> = (e) => {
-		e.stopPropagation();
-		columnSelectionFinish();
+		document.addEventListener(
+			'mouseup',
+			(e) => {
+				e.stopPropagation();
+				columnSelectionFinish();
+			},
+			{ once: true }
+		);
 	};
 
 	const onMouseOver: MouseEventHandler<HTMLDivElement> = () => {
@@ -39,7 +42,6 @@ const Column = memo<Props>(({ lineIndex, columnIndex, column, isSelected }) => {
 			className={isSelected ? styles.column + ' ' + styles.selected : styles.column}
 			data-col-idx={columnIndex}
 			onMouseDown={onMouseDown}
-			onMouseUp={onMouseUp}
 			onMouseOver={onMouseOver}
 		>
 			{column.cells.map((cell, i) => (
