@@ -39,8 +39,9 @@ const Column = memo<Props>(({ lineIndex, columnIndex, column, isSelected }) => {
 
 	return (
 		<div
-			className={isSelected ? styles.column + ' ' + styles.selected : styles.column}
-			data-col-idx={columnIndex}
+			data-testid='column'
+			data-selected={isSelected}
+			className={styles.column}
 			onMouseDown={onMouseDown}
 			onMouseOver={onMouseOver}
 		>
