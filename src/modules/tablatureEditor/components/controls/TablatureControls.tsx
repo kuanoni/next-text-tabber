@@ -10,12 +10,24 @@ import styles from './TablatureControls.module.scss';
 const TablatureControls = () => {
 	return (
 		<div className={styles['tablature-controls']}>
-			<button onClick={() => pushBlankColumn(0)}>pushBlankColumn</button>
-			<button onClick={() => insertBlankColumn(0, 0)}>insertBlankColumn</button>
-			<button onClick={() => pushBlankLine()}>pushBlankLine</button>
-			<button onClick={() => resetTablature()}>resetTablature</button>
-			<button onClick={() => changeInstrument(electricGuitar)}>changeInstrument electricGuitar</button>
-			<button onClick={() => changeInstrument(electricBass)}>changeInstrument electricBass</button>
+			<button data-testid='pushBlankColumn' onClick={() => pushBlankColumn(0)}>
+				pushBlankColumn
+			</button>
+			<button data-testid='insertBlankColumn' onClick={() => insertBlankColumn(0, 0)}>
+				insertBlankColumn
+			</button>
+			<button data-testid='pushBlankLine' onClick={() => pushBlankLine()}>
+				pushBlankLine
+			</button>
+			<button data-testid='resetTablature' onClick={() => resetTablature()}>
+				resetTablature
+			</button>
+			<button data-testid='changeInstrument guitar' onClick={() => changeInstrument(electricGuitar)}>
+				changeInstrument electricGuitar
+			</button>
+			<button data-testid='changeInstrument bass' onClick={() => changeInstrument(electricBass)}>
+				changeInstrument electricBass
+			</button>
 		</div>
 	);
 };
