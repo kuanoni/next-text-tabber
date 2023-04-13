@@ -1,5 +1,8 @@
 .column {
-	margin-right: 1px;
+	&[data-selected='true'] {
+		color: $c-background;
+		background-color: $c-foreground;
+	}
 
 	&:hover {
 		background-color: $c-medium;
