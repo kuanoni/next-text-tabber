@@ -3,12 +3,9 @@ import Head from 'next/head';
 import Fretboard from '@modules/fretboard/components/Fretboard';
 import TablatureControls from '@modules/tablatureEditor/components/controls/TablatureControls';
 import Tablature from '@modules/tablatureEditor/components/Tablature';
-import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
 import styles from '@styles/pages/index.module.scss';
 
 export default function Home() {
-	const tablature = useTablatureStore().tablature;
-
 	return (
 		<>
 			<Head>
@@ -20,7 +17,7 @@ export default function Home() {
 			<main className={styles.main}>
 				<Fretboard />
 				<div className={styles.tablature}>
-					<Tablature tablature={tablature} />
+					<Tablature />
 					<TablatureControls />
 				</div>
 			</main>
