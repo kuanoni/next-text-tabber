@@ -1,4 +1,4 @@
-import { setColumnFret } from '@modules/tablatureStore/actions/setSelectedColumnsFret';
+import { setSelectedColumnsFret } from '@modules/tablatureStore/actions/setSelectedColumnsFret';
 
 import styles from './Fretboard.module.scss';
 
@@ -9,7 +9,7 @@ interface Props {
 
 const Fret = ({ stringNumber, fretNumber }: Props) => {
 	const onClick = () => {
-		setColumnFret(stringNumber, fretNumber);
+		setSelectedColumnsFret(stringNumber, fretNumber);
 	};
 
 	return <div className={styles.fret} onClick={onClick}></div>;
