@@ -1,4 +1,4 @@
-import { setColumnFret } from '@modules/tablatureStore/actions/setColumnFret';
+import { setColumnFret } from '@modules/tablatureStore/actions/setSelectedColumnsFret';
 
 import styles from './Fretboard.module.scss';
 
