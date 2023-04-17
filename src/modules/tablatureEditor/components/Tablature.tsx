@@ -5,7 +5,7 @@ import Line from './Line';
 import styles from './Tablature.module.scss';
 
 const Tablature = () => {
-	const tablature = useTablatureStore().tablature;
+	const tablature = useTablatureStore((state) => state.tablature);
 
 	return (
 		<div

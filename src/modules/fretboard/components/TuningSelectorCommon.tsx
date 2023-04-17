@@ -4,7 +4,7 @@ import { changeTuning } from '@modules/tablatureStore/actions/changeTuning';
 import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
 
 const TuningSelectorCommon = () => {
-	const instrument = useTablatureStore().instrument;
+	const instrument = useTablatureStore((state) => state.instrument);
 
 	const onCommonTuningChange: ChangeEventHandler<HTMLSelectElement> = (e) =>
 		changeTuning(instrument.commonTunings[e.target.value]);

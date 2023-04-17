@@ -16,7 +16,7 @@ interface Props {
 }
 
 const Line = ({ lineIndex, line }: Props) => {
-	const selectedColumns = useEditorStore().selectedColumns;
+	const selectedColumns = useEditorStore((state) => state.selectedColumns);
 
 	return (
 		<div className={styles.line} data-testid='line'>

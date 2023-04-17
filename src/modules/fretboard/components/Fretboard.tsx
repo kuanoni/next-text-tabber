@@ -5,7 +5,7 @@ import FretColumn from './FretColumn';
 import TuningColumn from './TuningColumn';
 
 const Fretboard = () => {
-	const instrument = useTablatureStore().instrument;
+	const instrument = useTablatureStore((state) => state.instrument);
 
 	return (
 		<div className={styles.fretboard}>
