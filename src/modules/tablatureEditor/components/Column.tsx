@@ -15,7 +15,7 @@ interface Props {
 	isSelected: boolean;
 }
 
-const isSelectingSelector = (state: EditorStore) => state.isSelecting;
+const isSelectingSelector = (state: EditorSlice) => state.isSelecting;
 
 const Column = memo<Props>(({ lineIndex, columnIndex, column, isSelected }) => {
 	const isSelecting = useEditorStore(isSelectingSelector);

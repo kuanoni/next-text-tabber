@@ -1,4 +1,4 @@
-export const initialState: EditorStore = {
+export const initialState: EditorSlice = {
 	isSelecting: false,
 	selectedColumns: {
 		line: -1,

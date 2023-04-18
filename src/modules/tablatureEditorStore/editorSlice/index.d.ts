@@ -1,4 +1,4 @@
-interface EditorStore {
+interface EditorSlice {
 	isSelecting: boolean;
 	selectedColumns: ColumnSelection;
 }
