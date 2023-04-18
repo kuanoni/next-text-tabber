@@ -1,7 +1,7 @@
-import { editorStoreBase } from '../useEditorStore';
+import { useTablatureEditorStore } from '../../useTablatureEditorStore';
 
 export const columnSelectionFinish = () => {
-	editorStoreBase.setState((state) => {
+	useTablatureEditorStore.setState((state) => {
 		state.isSelecting = false;
 	});
 };

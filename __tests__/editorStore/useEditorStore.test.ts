@@ -1,13 +1,13 @@
 import { describe, expect, jest } from '@jest/globals';
-import { columnSelectionFinish } from '@modules/editorStore/actions/columnSelectionFinish';
-import { columnSelectionHover } from '@modules/editorStore/actions/columnSelectionHover';
-import { columnSelectionStart } from '@modules/editorStore/actions/columnSelectionStart';
-import { resetEditor } from '@modules/editorStore/actions/resetEditor';
-import { initialState } from '@modules/editorStore/constants';
-import { useEditorStore } from '@modules/editorStore/useEditorStore';
+import { columnSelectionFinish } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionFinish';
+import { columnSelectionHover } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionHover';
+import { columnSelectionStart } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionStart';
+import { resetEditor } from '@modules/tablatureEditorStore/editorSlice/actions/resetEditor';
+import { initialState } from '@modules/tablatureEditorStore/editorSlice/constants';
+import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
-describe('useTablatureStore', () => {
+describe('useTablatureEditorStore', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
 		cleanup();
@@ -15,7 +15,7 @@ describe('useTablatureStore', () => {
 	});
 
 	it('[resetEditor] reset the entire state to the initial state.', () => {
-		const { result } = renderHook(() => useEditorStore((state) => state));
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		act(() => {
 			resetEditor();
@@ -25,7 +25,7 @@ describe('useTablatureStore', () => {
 	});
 
 	it('[columnSelectionStart] sets "isSelecting" flag true, sets "selectedColumns" appropriately.', () => {
-		const { result } = renderHook(() => useEditorStore((state) => state));
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		act(() => {
 			columnSelectionStart(0, 1);
@@ -36,7 +36,7 @@ describe('useTablatureStore', () => {
 	});
 
 	it('[columnSelectionHover] sets "selectedColumns.end" appropriately.', () => {
-		const { result } = renderHook(() => useEditorStore((state) => state));
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		act(() => {
 			columnSelectionStart(0, 1);
@@ -48,7 +48,7 @@ describe('useTablatureStore', () => {
 	});
 
 	it('[columnSelectionFinish] sets "isSelecting" flag false.', () => {
-		const { result } = renderHook(() => useEditorStore((state) => state));
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		act(() => {
 			columnSelectionStart(0, 1);
@@ -61,7 +61,7 @@ describe('useTablatureStore', () => {
 	});
 
 	it('[columnSelection(Start/Hover/Finish)] handles hovering on different line.', () => {
-		const { result } = renderHook(() => useEditorStore((state) => state));
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		act(() => {
 			columnSelectionStart(0, 1);

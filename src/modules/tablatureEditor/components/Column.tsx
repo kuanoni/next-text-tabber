@@ -3,7 +3,7 @@ import { memo, MouseEventHandler } from 'react';
 import { columnSelectionFinish } from '@modules/editorStore/actions/columnSelectionFinish';
 import { columnSelectionHover } from '@modules/editorStore/actions/columnSelectionHover';
 import { columnSelectionStart } from '@modules/editorStore/actions/columnSelectionStart';
-import { useEditorStore } from '@modules/editorStore/useEditorStore';
+import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
 
 import Cell from './Cell';
 import styles from './Column.module.scss';
@@ -18,7 +18,7 @@ interface Props {
 const isSelectingSelector = (state: EditorSlice) => state.isSelecting;
 
 const Column = memo<Props>(({ lineIndex, columnIndex, column, isSelected }) => {
-	const isSelecting = useEditorStore(isSelectingSelector);
+	const isSelecting = useTablatureEditorStore(isSelectingSelector);
 
 	const onMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
 		e.stopPropagation();

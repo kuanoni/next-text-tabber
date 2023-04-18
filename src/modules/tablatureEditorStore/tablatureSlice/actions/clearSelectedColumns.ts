@@ -1,12 +1,12 @@
-import { editorStoreBase } from '@modules/editorStore/useEditorStore';
+import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
 
-import { tablatureStoreBase } from '../useTablatureStore';
+import { useTablatureEditorStore } from '../../useTablatureEditorStore';
 import { iterateColumnSelection } from './utils/iterateColumnSelection';
 
 export const clearSelectedColumns = () => {
-	const { line } = editorStoreBase.getState().selectedColumns;
+	const { line } = useTablatureEditorStore.getState().selectedColumns;
 
-	tablatureStoreBase.setState((state) => {
+	useTablatureEditorStore.setState((state) => {
 		iterateColumnSelection((i) => {
 			state.tablature.lines[line].columns[i] = state.instrument.BLANK_COLUMN;
 		});

@@ -1,7 +1,7 @@
-import { tablatureStoreBase } from '../useTablatureStore';
+import { useTablatureEditorStore } from '../../useTablatureEditorStore';
 
 export const insertBlankColumn = (lineIndex: number, columnIndex: number) =>
-	tablatureStoreBase.setState((state) => {
+	useTablatureEditorStore.setState((state) => {
 		if (!state.tablature.lines[lineIndex])
 			return console.error(`Tried to insert column in non-existant line: ${lineIndex}`);
 

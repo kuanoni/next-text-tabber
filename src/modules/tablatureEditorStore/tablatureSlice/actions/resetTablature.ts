@@ -1,6 +1,6 @@
-import { tablatureStoreBase } from '../useTablatureStore';
+import { useTablatureEditorStore } from '../../useTablatureEditorStore';
 
 export const resetTablature = () =>
-	tablatureStoreBase.setState((state) => {
+	useTablatureEditorStore.setState((state) => {
 		state.tablature = state.instrument.BLANK_TABLATURE;
 	});

@@ -1,15 +1,15 @@
 import { describe, expect, jest } from '@jest/globals';
-import { changeInstrument } from '@modules/tablatureStore/actions/changeInstrument';
-import { changeTuning } from '@modules/tablatureStore/actions/changeTuning';
-import { insertBlankColumn } from '@modules/tablatureStore/actions/insertBlankColumn';
-import { pushBlankColumn } from '@modules/tablatureStore/actions/pushBlankColumn';
-import { pushBlankLine } from '@modules/tablatureStore/actions/pushBlankLine';
-import { resetTablature } from '@modules/tablatureStore/actions/resetTablature';
-import { electricBass, electricGuitar } from '@modules/tablatureStore/constants';
-import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
+import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
+import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
+import { insertBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertBlankColumn';
+import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
+import { pushBlankLine } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankLine';
+import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
+import { electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
+import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
-describe('useTablatureStore', () => {
+describe('useTablatureEditorStore', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
 		cleanup();
@@ -17,7 +17,7 @@ describe('useTablatureStore', () => {
 	});
 
 	it("[changeInstrument] reset the entire state to the instrument's initial state.", () => {
-		const { result } = renderHook(() => useTablatureStore((state) => state));
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		act(() => {
 			changeInstrument(electricBass);
@@ -27,7 +27,7 @@ describe('useTablatureStore', () => {
 	});
 
 	it('[resetTablature] revert the tablature to its default state.', () => {
-		const { result } = renderHook(() => useTablatureStore((state) => state));
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		const blankTablature = result.current.instrument.BLANK_TABLATURE;
 
@@ -39,7 +39,7 @@ describe('useTablatureStore', () => {
 	});
 
 	it('[pushBlankLine] append a blank line to the tablature.', () => {
-		const { result } = renderHook(() => useTablatureStore((state) => state));
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		const currentTablature = result.current.tablature;
 		const blankLine = result.current.instrument.BLANK_LINE;
@@ -53,7 +53,7 @@ describe('useTablatureStore', () => {
 	});
 
 	it('[pushBlankColumn] append a blank column to the first line.', () => {
-		const { result } = renderHook(() => useTablatureStore((state) => state));
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		const currentTablature = result.current.tablature;
 		const blankColumn = result.current.instrument.BLANK_COLUMN;
@@ -68,7 +68,7 @@ describe('useTablatureStore', () => {
 	});
 
 	it('[insertBlankColumn] insert a blank column in the first line.', () => {
-		const { result } = renderHook(() => useTablatureStore((state) => state));
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		const currentTablature = result.current.tablature;
 		const blankColumn = result.current.instrument.BLANK_COLUMN;
@@ -83,7 +83,7 @@ describe('useTablatureStore', () => {
 	});
 
 	it('[changeTuning] change the state tuning to a new correctly sized array.', () => {
-		const { result } = renderHook(() => useTablatureStore((state) => state));
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		const newTuning: number[] = [27, 32, 45, 99, 0, 11];
 

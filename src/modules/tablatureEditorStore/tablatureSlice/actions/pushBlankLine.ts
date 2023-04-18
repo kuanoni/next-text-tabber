@@ -1,6 +1,6 @@
-import { tablatureStoreBase } from '../useTablatureStore';
+import { useTablatureEditorStore } from '../../useTablatureEditorStore';
 
 export const pushBlankLine = () =>
-	tablatureStoreBase.setState((state) => {
+	useTablatureEditorStore.setState((state) => {
 		state.tablature.lines.push(state.instrument.BLANK_LINE);
 	});

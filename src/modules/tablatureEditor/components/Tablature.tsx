@@ -1,11 +1,11 @@
 import { setColumnSelection } from '@modules/editorStore/actions/setColumnSelection';
-import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
+import { useTablatureEditorStore } from '@modules/tablatureStore/useTablatureEditorStore';
 
 import Line from './Line';
 import styles from './Tablature.module.scss';
 
 const Tablature = () => {
-	const tablature = useTablatureStore((state) => state.tablature);
+	const tablature = useTablatureEditorStore((state) => state.tablature);
 
 	return (
 		<div

@@ -1,4 +1,4 @@
+import { useTablatureEditorStore } from '../../useTablatureEditorStore';
 import { initialState } from '../constants';
-import { editorStoreBase } from '../useEditorStore';
 
-export const resetEditor = () => editorStoreBase.setState(() => initialState);
+export const resetEditor = () => useTablatureEditorStore.setState(() => initialState);

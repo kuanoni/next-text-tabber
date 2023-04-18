@@ -1,11 +1,11 @@
-import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
+import { useTablatureEditorStore } from '@modules/tablatureStore/useTablatureEditorStore';
 
 import styles from './Fretboard.module.scss';
 import FretColumn from './FretColumn';
 import TuningColumn from './TuningColumn';
 
 const Fretboard = () => {
-	const instrument = useTablatureStore((state) => state.instrument);
+	const instrument = useTablatureEditorStore((state) => state.instrument);
 
 	return (
 		<div className={styles.fretboard}>
