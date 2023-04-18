@@ -1,4 +1,5 @@
 import { changeInstrument } from '@modules/tablatureStore/actions/changeInstrument';
+import { clearSelectedColumns } from '@modules/tablatureStore/actions/clearSelectedColumns';
 import { insertBlankColumn } from '@modules/tablatureStore/actions/insertBlankColumn';
 import { pushBlankColumn } from '@modules/tablatureStore/actions/pushBlankColumn';
 import { pushBlankLine } from '@modules/tablatureStore/actions/pushBlankLine';
@@ -15,6 +16,9 @@ const TablatureControls = () => {
 			</button>
 			<button data-testid='insertBlankColumn' onClick={() => insertBlankColumn(0, 0)}>
 				insertBlankColumn
+			</button>
+			<button data-testid='clearSelectedColumns' onClick={() => clearSelectedColumns()}>
+				clearSelectedColumns
 			</button>
 			<button data-testid='pushBlankLine' onClick={() => pushBlankLine()}>
 				pushBlankLine

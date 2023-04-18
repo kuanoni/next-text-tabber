@@ -6,7 +6,7 @@ import TuningSelector from './TuningSelector';
 import TuningSelectorCommon from './TuningSelectorCommon';
 
 const TuningColumn = () => {
-	const tuning = useTablatureStore().tuning;
+	const tuning = useTablatureStore((state) => state.tuning);
 
 	const onTuningSelectorChange = (stringIndex: number, tuningValue: number) => {
 		const newTuning = [...tuning];

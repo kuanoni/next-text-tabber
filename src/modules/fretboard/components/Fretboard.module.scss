@@ -1,4 +1,5 @@
 .fretboard {
+	display: flex;
 	.tuning-column {
 		display: flex;
 		flex-direction: column;
@@ -6,6 +7,28 @@
 
 		select {
 			height: 2rem;
+		}
+	}
+
+	.fret-columns-container {
+		display: flex;
+
+		.fret-column {
+			display: flex;
+			flex-direction: column;
+			width: 3rem;
+
+			.column-label {
+				height: 2rem;
+				color: $c-background;
+				background-color: $c-foreground;
+				text-align: center;
+			}
+
+			.fret {
+				height: 2rem;
+				border: 1px solid black;
+			}
 		}
 	}
 }
