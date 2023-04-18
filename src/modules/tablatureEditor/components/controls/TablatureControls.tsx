@@ -1,10 +1,10 @@
-import { changeInstrument } from '@modules/tablatureStore/actions/changeInstrument';
-import { clearSelectedColumns } from '@modules/tablatureStore/actions/clearSelectedColumns';
-import { insertBlankColumn } from '@modules/tablatureStore/actions/insertBlankColumn';
-import { pushBlankColumn } from '@modules/tablatureStore/actions/pushBlankColumn';
-import { pushBlankLine } from '@modules/tablatureStore/actions/pushBlankLine';
-import { resetTablature } from '@modules/tablatureStore/actions/resetTablature';
-import { electricBass, electricGuitar } from '@modules/tablatureStore/constants';
+import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
+import { clearSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/clearSelectedColumns';
+import { insertBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertBlankColumn';
+import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
+import { pushBlankLine } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankLine';
+import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
+import { electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
 
 import styles from './TablatureControls.module.scss';
 

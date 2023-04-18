@@ -1,5 +1,5 @@
-import { setColumnSelection } from '@modules/editorStore/actions/setColumnSelection';
-import { useTablatureEditorStore } from '@modules/tablatureStore/useTablatureEditorStore';
+import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/setColumnSelection';
+import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 
 import Line from './Line';
 import styles from './Tablature.module.scss';

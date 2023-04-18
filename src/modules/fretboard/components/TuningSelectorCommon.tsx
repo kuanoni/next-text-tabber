@@ -1,7 +1,7 @@
 import { ChangeEventHandler } from 'react';
 
-import { changeTuning } from '@modules/tablatureStore/actions/changeTuning';
-import { useTablatureEditorStore } from '@modules/tablatureStore/useTablatureEditorStore';
+import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
+import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 
 const TuningSelectorCommon = () => {
 	const instrument = useTablatureEditorStore((state) => state.instrument);

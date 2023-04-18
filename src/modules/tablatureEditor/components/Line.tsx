@@ -1,4 +1,4 @@
-import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
+import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 
 import Column from './Column';
 import styles from './Line.module.scss';

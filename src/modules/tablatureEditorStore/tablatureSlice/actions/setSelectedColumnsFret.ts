@@ -1,6 +1,5 @@
-import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
+import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 
-import { useTablatureEditorStore } from '../../useTablatureEditorStore';
 import { iterateColumnSelection } from './utils/iterateColumnSelection';
 
 export const setSelectedColumnsFret = (stringNumber: number, fretNumber: number) => {
