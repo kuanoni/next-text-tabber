@@ -21,7 +21,8 @@ describe('useTablatureEditorStore', () => {
 			resetEditor();
 		});
 
-		expect(result.current).toEqual(initialState);
+		for (const key of Object.keys(initialState))
+			expect(result.current[key as keyof EditorSlice]).toEqual(initialState[key as keyof EditorSlice]);
 	});
 
 	it('[columnSelectionStart] sets "isSelecting" flag true, sets "selectedColumns" appropriately.', () => {

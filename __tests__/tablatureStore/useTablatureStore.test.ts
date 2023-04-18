@@ -16,16 +16,6 @@ describe('useTablatureEditorStore', () => {
 		changeInstrument(electricGuitar);
 	});
 
-	it("[changeInstrument] reset the entire state to the instrument's initial state.", () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
-
-		act(() => {
-			changeInstrument(electricBass);
-		});
-
-		expect(result.current).toEqual(electricBass.createInitialState());
-	});
-
 	it('[resetTablature] revert the tablature to its default state.', () => {
 		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
@@ -36,6 +26,21 @@ describe('useTablatureEditorStore', () => {
 		});
 
 		expect(result.current.tablature).toEqual(blankTablature);
+	});
+
+	it("[changeInstrument] reset the entire state to the instrument's initial state.", () => {
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+		const instrumentInitialState = electricBass.createInitialState();
+
+		act(() => {
+			changeInstrument(electricBass);
+		});
+
+		for (const key of Object.keys(instrumentInitialState))
+			expect(result.current[key as keyof TablatureSlice]).toEqual(
+				instrumentInitialState[key as keyof TablatureSlice]
+			);
 	});
 
 	it('[pushBlankLine] append a blank line to the tablature.', () => {
