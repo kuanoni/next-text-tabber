@@ -1,10 +1,10 @@
 import { ChangeEventHandler } from 'react';
 
-import { changeTuning } from '@modules/tablatureStore/actions/changeTuning';
-import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
+import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
+import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 
 const TuningSelectorCommon = () => {
-	const instrument = useTablatureStore((state) => state.instrument);
+	const instrument = useTablatureEditorStore((state) => state.instrument);
 
 	const onCommonTuningChange: ChangeEventHandler<HTMLSelectElement> = (e) =>
 		changeTuning(instrument.commonTunings[e.target.value]);

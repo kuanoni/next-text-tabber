@@ -1,4 +1,4 @@
-import { useEditorStore } from '@modules/editorStore/useEditorStore';
+import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 
 import Column from './Column';
 import styles from './Line.module.scss';
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const Line = ({ lineIndex, line }: Props) => {
-	const selectedColumns = useEditorStore((state) => state.selectedColumns);
+	const selectedColumns = useTablatureEditorStore((state) => state.selectedColumns);
 
 	return (
 		<div className={styles.line} data-testid='line'>

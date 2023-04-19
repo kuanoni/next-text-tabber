@@ -34,7 +34,7 @@ export class Instrument {
 		this.BLANK_TABLATURE = { lines: [this.BLANK_LINE] };
 	}
 
-	createInitialState(): TablatureStore {
+	createInitialState(): TablatureSlice {
 		return {
 			instrument: this,
 			tuning: this.defaultTuning,

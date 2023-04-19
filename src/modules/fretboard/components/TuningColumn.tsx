@@ -1,12 +1,12 @@
-import { changeTuning } from '@modules/tablatureStore/actions/changeTuning';
-import { useTablatureStore } from '@modules/tablatureStore/useTablatureStore';
+import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
+import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 
 import styles from './Fretboard.module.scss';
 import TuningSelector from './TuningSelector';
 import TuningSelectorCommon from './TuningSelectorCommon';
 
 const TuningColumn = () => {
-	const tuning = useTablatureStore((state) => state.tuning);
+	const tuning = useTablatureEditorStore((state) => state.tuning);
 
 	const onTuningSelectorChange = (stringIndex: number, tuningValue: number) => {
 		const newTuning = [...tuning];

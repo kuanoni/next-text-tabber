@@ -1,7 +1,7 @@
-import { editorStoreBase } from '../useEditorStore';
+import { useTablatureEditorStore } from '../../useTablatureEditorStore';
 
 export const columnSelectionStart = (lineIndex: number, columnIndex: number) => {
-	editorStoreBase.setState((state) => {
+	useTablatureEditorStore.setState((state) => {
 		state.isSelecting = true;
 		state.selectedColumns = {
 			line: lineIndex,

@@ -1,7 +1,7 @@
-import { editorStoreBase } from '../useEditorStore';
+import { useTablatureEditorStore } from '../../useTablatureEditorStore';
 
 export const columnSelectionHover = (lineIndex: number, columnIndex: number) => {
-	editorStoreBase.setState((state) => {
+	useTablatureEditorStore.setState((state) => {
 		// if selection finishes on different line, or outside a column component
 		if (lineIndex !== state.selectedColumns.line || columnIndex < 0) return;
 

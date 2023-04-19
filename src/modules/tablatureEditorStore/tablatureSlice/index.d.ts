@@ -16,7 +16,7 @@ interface Tablature {
 	lines: Line[];
 }
 
-interface TablatureStore {
+interface TablatureSlice {
 	instrument: import('@common/Instrument').Instrument;
 	tuning: import('@common/Instrument').Instrument['defaultTuning'];
 	tablature: Tablature;

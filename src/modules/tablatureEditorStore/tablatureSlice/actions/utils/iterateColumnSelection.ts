@@ -1,7 +1,7 @@
-import { editorStoreBase } from '@modules/editorStore/useEditorStore';
+import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 
 export const iterateColumnSelection = (cb: (i: number) => void) => {
-	const selectedColumns = editorStoreBase.getState().selectedColumns;
+	const selectedColumns = useTablatureEditorStore.getState().selectedColumns;
 
 	if (selectedColumns.line < 0 || selectedColumns.start < 0 || selectedColumns.end < 0) return;
 
