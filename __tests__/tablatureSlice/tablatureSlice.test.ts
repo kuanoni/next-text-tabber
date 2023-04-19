@@ -1,10 +1,12 @@
 import { describe, expect, jest } from '@jest/globals';
+import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/setColumnSelection';
 import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
 import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
 import { insertBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertBlankColumn';
 import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
 import { pushBlankLine } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankLine';
 import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
+import { setSelectedColumnsFret } from '@modules/tablatureEditorStore/tablatureSlice/actions/setSelectedColumnsFret';
 import { electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
@@ -103,5 +105,47 @@ describe('useTablatureEditorStore', () => {
 		const changeTuningInvalidLength = () => changeTuning([27]);
 
 		expect(changeTuningInvalidLength).toThrow('invalid length');
+	});
+
+	describe('[setSelectedColumnFrets] set frets of selected columns.', () => {
+		const line = 0;
+		const stringNumber = 3;
+		const fretNumber = 5;
+
+		it('Selection from (4) to (7).', () => {
+			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+			const selectionStart = 4;
+			const selectionEnd = 7;
+
+			act(() => {
+				setColumnSelection(line, selectionStart, selectionEnd);
+				setSelectedColumnsFret(stringNumber, fretNumber);
+			});
+
+			result.current.tablature.lines[line].columns.forEach((column, i) => {
+				if (i >= selectionStart && i <= selectionEnd)
+					expect(column.cells[stringNumber].fret).toEqual(fretNumber);
+				else expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
+			});
+		});
+
+		it('Selection from (6) to (2).', () => {
+			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+			const selectionStart = 6;
+			const selectionEnd = 2;
+
+			act(() => {
+				setColumnSelection(line, selectionStart, selectionEnd);
+				setSelectedColumnsFret(stringNumber, fretNumber);
+			});
+
+			result.current.tablature.lines[line].columns.forEach((column, i) => {
+				if (i >= selectionEnd && i <= selectionStart)
+					expect(column.cells[stringNumber].fret).toEqual(fretNumber);
+				else expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
+			});
+		});
 	});
 });
