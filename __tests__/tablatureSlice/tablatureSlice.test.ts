@@ -2,6 +2,7 @@ import { describe, expect, jest } from '@jest/globals';
 import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/setColumnSelection';
 import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
 import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
+import { clearSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/clearSelectedColumns';
 import { insertBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertBlankColumn';
 import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
 import { pushBlankLine } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankLine';
@@ -153,6 +154,24 @@ describe('useTablatureEditorStore', () => {
 				if (i >= end && i <= start) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
 				else expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
 			});
+		});
+	});
+
+	it('[clearSelectedColumns] reset selected columns.', () => {
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+		const { line, start, end } = createForwardSelection();
+		const stringNumber = 3;
+		const fretNumber = 5;
+
+		act(() => {
+			setColumnSelection(line, start, end);
+			setSelectedColumnsFret(stringNumber, fretNumber);
+			clearSelectedColumns();
+		});
+
+		result.current.tablature.lines[line].columns.forEach((column, i) => {
+			if (i >= end && i <= start) expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
 		});
 	});
 });
