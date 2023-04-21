@@ -11,6 +11,18 @@ import { electricBass, electricGuitar } from '@modules/tablatureEditorStore/tabl
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
+const createForwardSelection = () => ({
+	line: 0,
+	start: 4,
+	end: 7,
+});
+
+const createBackwardSelection = () => ({
+	line: 0,
+	start: 6,
+	end: 3,
+});
+
 describe('useTablatureEditorStore', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
@@ -108,42 +120,37 @@ describe('useTablatureEditorStore', () => {
 	});
 
 	describe('[setSelectedColumnFrets] set frets of selected columns.', () => {
-		const line = 0;
 		const stringNumber = 3;
 		const fretNumber = 5;
 
-		it('Selection from (4) to (7).', () => {
+		it('Foreward selection..', () => {
 			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
-			const selectionStart = 4;
-			const selectionEnd = 7;
+			const { line, start, end } = createForwardSelection();
 
 			act(() => {
-				setColumnSelection(line, selectionStart, selectionEnd);
+				setColumnSelection(line, start, end);
 				setSelectedColumnsFret(stringNumber, fretNumber);
 			});
 
 			result.current.tablature.lines[line].columns.forEach((column, i) => {
-				if (i >= selectionStart && i <= selectionEnd)
-					expect(column.cells[stringNumber].fret).toEqual(fretNumber);
+				if (i >= start && i <= end) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
 				else expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
 			});
 		});
 
-		it('Selection from (6) to (2).', () => {
+		it('Backward selection.', () => {
 			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
-			const selectionStart = 6;
-			const selectionEnd = 2;
+			const { line, start, end } = createBackwardSelection();
 
 			act(() => {
-				setColumnSelection(line, selectionStart, selectionEnd);
+				setColumnSelection(line, start, end);
 				setSelectedColumnsFret(stringNumber, fretNumber);
 			});
 
 			result.current.tablature.lines[line].columns.forEach((column, i) => {
-				if (i >= selectionEnd && i <= selectionStart)
-					expect(column.cells[stringNumber].fret).toEqual(fretNumber);
+				if (i >= end && i <= start) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
 				else expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
 			});
 		});
