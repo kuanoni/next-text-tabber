@@ -1,13 +1,28 @@
 import { describe, expect, jest } from '@jest/globals';
+import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/setColumnSelection';
 import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
 import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
+import { clearSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/clearSelectedColumns';
 import { insertBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertBlankColumn';
 import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
 import { pushBlankLine } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankLine';
 import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
+import { setSelectedColumnsFret } from '@modules/tablatureEditorStore/tablatureSlice/actions/setSelectedColumnsFret';
 import { electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
+
+const createForwardSelection = () => ({
+	line: 0,
+	start: 4,
+	end: 7,
+});
+
+const createBackwardSelection = () => ({
+	line: 0,
+	start: 6,
+	end: 3,
+});
 
 describe('useTablatureEditorStore', () => {
 	afterEach(() => {
@@ -103,5 +118,60 @@ describe('useTablatureEditorStore', () => {
 		const changeTuningInvalidLength = () => changeTuning([27]);
 
 		expect(changeTuningInvalidLength).toThrow('invalid length');
+	});
+
+	describe('[setSelectedColumnFrets] set frets of selected columns.', () => {
+		const stringNumber = 3;
+		const fretNumber = 5;
+
+		it('Foreward selection..', () => {
+			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+			const { line, start, end } = createForwardSelection();
+
+			act(() => {
+				setColumnSelection(line, start, end);
+				setSelectedColumnsFret(stringNumber, fretNumber);
+			});
+
+			result.current.tablature.lines[line].columns.forEach((column, i) => {
+				if (i >= start && i <= end) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
+				else expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
+			});
+		});
+
+		it('Backward selection.', () => {
+			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+			const { line, start, end } = createBackwardSelection();
+
+			act(() => {
+				setColumnSelection(line, start, end);
+				setSelectedColumnsFret(stringNumber, fretNumber);
+			});
+
+			result.current.tablature.lines[line].columns.forEach((column, i) => {
+				if (i >= end && i <= start) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
+				else expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
+			});
+		});
+	});
+
+	it('[clearSelectedColumns] reset selected columns.', () => {
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+		const { line, start, end } = createForwardSelection();
+		const stringNumber = 3;
+		const fretNumber = 5;
+
+		act(() => {
+			setColumnSelection(line, start, end);
+			setSelectedColumnsFret(stringNumber, fretNumber);
+			clearSelectedColumns();
+		});
+
+		result.current.tablature.lines[line].columns.forEach((column, i) => {
+			if (i >= end && i <= start) expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
+		});
 	});
 });

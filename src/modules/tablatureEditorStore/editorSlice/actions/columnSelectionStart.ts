@@ -1,6 +1,6 @@
 import { useTablatureEditorStore } from '../../useTablatureEditorStore';
 
-export const columnSelectionStart = (lineIndex: number, columnIndex: number) => {
+export const columnSelectionStart = (lineIndex: number, columnIndex: number) =>
 	useTablatureEditorStore.setState((state) => {
 		state.isSelecting = true;
 		state.selectedColumns = {
@@ -9,4 +9,3 @@ export const columnSelectionStart = (lineIndex: number, columnIndex: number) => 
 			end: columnIndex,
 		};
 	});
-};

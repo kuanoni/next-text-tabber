@@ -2,12 +2,11 @@ import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablat
 
 import { iterateColumnSelection } from './utils/iterateColumnSelection';
 
-export const clearSelectedColumns = () => {
-	const { line } = useTablatureEditorStore.getState().selectedColumns;
-
+export const clearSelectedColumns = () =>
 	useTablatureEditorStore.setState((state) => {
+		const { line } = state.selectedColumns;
+
 		iterateColumnSelection((i) => {
 			state.tablature.lines[line].columns[i] = state.instrument.BLANK_COLUMN;
 		});
 	});
-};
