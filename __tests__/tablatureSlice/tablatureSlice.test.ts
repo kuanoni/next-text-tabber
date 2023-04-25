@@ -3,7 +3,7 @@ import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/ac
 import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
 import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
 import { clearSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/clearSelectedColumns';
-import { insertBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertBlankColumn';
+import { insertBlankColumnAtSelection } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertBlankColumnAtSelection';
 import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
 import { pushBlankLine } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankLine';
 import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
@@ -94,7 +94,8 @@ describe('useTablatureEditorStore', () => {
 		const blankColumn = result.current.instrument.BLANK_COLUMN;
 
 		act(() => {
-			insertBlankColumn(0, 0);
+			setColumnSelection(0, 0, 0);
+			insertBlankColumnAtSelection();
 		});
 
 		expect(result.current.tablature).toEqual({
