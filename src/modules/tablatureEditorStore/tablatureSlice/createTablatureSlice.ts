@@ -5,7 +5,7 @@ import { electricGuitar } from './constants';
 const initialState = electricGuitar.createInitialState();
 
 export const createTablatureSlice: StateCreator<
-	TablatureSlice & EditorSlice,
+	TablatureEditorStore,
 	[['zustand/immer', never]],
 	[],
 	TablatureSlice
