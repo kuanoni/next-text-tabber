@@ -3,10 +3,8 @@ import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablat
 import { iterateColumnSelection } from './utils/iterateColumnSelection';
 
 export const clearSelectedColumns = () =>
-	useTablatureEditorStore.setState((state) => {
-		const { line } = state.selectedColumns;
-
-		iterateColumnSelection((i) => {
-			state.tablature.lines[line].columns[i] = state.instrument.BLANK_COLUMN;
-		});
-	});
+	useTablatureEditorStore.setState((state) =>
+		iterateColumnSelection((i, currentSelection) => {
+			state.tablature.lines[currentSelection.line].columns[i] = state.instrument.BLANK_COLUMN;
+		})
+	);
