@@ -16,12 +16,14 @@ interface Props {
 }
 
 const Line = ({ lineIndex, line }: Props) => {
-	const selectedColumns = useTablatureEditorStore((state) => state.selectedColumns);
+	const selectedColumns = useTablatureEditorStore((state) => state.currentSelection);
 
 	return (
 		<div className={styles.line} data-testid='line'>
 			{line.columns.map((column, columnIndex) => {
 				const isSelected =
+					!!selectedColumns.start &&
+					!!selectedColumns.end &&
 					lineIndex === selectedColumns.line &&
 					between(columnIndex, selectedColumns.start, selectedColumns.end);
 
