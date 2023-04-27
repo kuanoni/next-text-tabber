@@ -13,11 +13,12 @@ interface Props {
 	columnIndex: number;
 	column: Column;
 	isSelected: boolean;
+	isGhostSelected: boolean;
 }
 
 const isSelectingSelector = (state: EditorSlice) => state.isSelecting;
 
-const Column = memo<Props>(({ lineIndex, columnIndex, column, isSelected }) => {
+const Column = memo<Props>(({ lineIndex, columnIndex, column, isSelected, isGhostSelected }) => {
 	const isSelecting = useTablatureEditorStore(isSelectingSelector);
 
 	const onMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -41,6 +42,7 @@ const Column = memo<Props>(({ lineIndex, columnIndex, column, isSelected }) => {
 		<div
 			data-testid='column'
 			data-selected={isSelected}
+			data-ghost-selected={isGhostSelected}
 			className={styles.column}
 			onMouseDown={onMouseDown}
 			onMouseOver={onMouseOver}

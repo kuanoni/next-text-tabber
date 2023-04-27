@@ -1,10 +1,11 @@
 interface EditorSlice {
 	isSelecting: boolean;
-	selectedColumns: ColumnSelection;
+	ghostSelection: ColumnSelection;
+	currentSelection: ColumnSelection;
 }
 
 interface ColumnSelection {
-	line: number;
-	start: number;
-	end: number;
+	line: number | null;
+	start: number | null;
+	end: number | null;
 }

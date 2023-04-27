@@ -1,8 +1,7 @@
+export const BLANK_SELECTION: ColumnSelection = { line: null, start: null, end: null };
+
 export const initialState: EditorSlice = {
 	isSelecting: false,
-	selectedColumns: {
-		line: -1,
-		start: -1,
-		end: -1,
-	},
+	ghostSelection: BLANK_SELECTION,
+	currentSelection: BLANK_SELECTION,
 };
