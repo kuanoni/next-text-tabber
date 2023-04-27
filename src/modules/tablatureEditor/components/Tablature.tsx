@@ -1,4 +1,4 @@
-import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/setColumnSelection';
+import { resetColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/resetColumnSelection';
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 
 import Line from './Line';
@@ -11,10 +11,8 @@ const Tablature = () => {
 		<div
 			data-testid='tablature'
 			className={styles.tablature}
-			onMouseDown={() => {
-				// remove selection on mouse down
-				setColumnSelection(-1, -1, -1);
-			}}
+			// remove selection on mouse down
+			onMouseDown={() => resetColumnSelection()}
 		>
 			{tablature.lines.map((line, i) => (
 				<Line key={i} lineIndex={i} line={line} />

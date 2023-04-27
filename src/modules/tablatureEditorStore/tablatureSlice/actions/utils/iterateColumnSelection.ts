@@ -1,14 +1,17 @@
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 
-export const iterateColumnSelection = (cb: (i: number) => void) => {
-	const selectedColumns = useTablatureEditorStore.getState().selectedColumns;
+type DeepNonNullable<T> = {
+	[P in keyof T]-?: NonNullable<T[P]>;
+};
 
-	if (selectedColumns.line < 0 || selectedColumns.start < 0 || selectedColumns.end < 0) return;
+export const iterateColumnSelection = (cb: (i: number, currentSelection: DeepNonNullable<ColumnSelection>) => void) => {
+	const currentSelection = useTablatureEditorStore.getState().currentSelection;
+	const { line, start, end } = currentSelection;
 
-	const [start, end] =
-		selectedColumns.start < selectedColumns.end
-			? [selectedColumns.start, selectedColumns.end]
-			: [selectedColumns.end, selectedColumns.start];
+	if (line === null || start === null || end === null)
+		throw new Error(
+			`Attempted to iterate over a selection with a null value, line=${line} start=${start}, end=${end}`
+		);
 
-	for (let i = start; i < end + 1; i++) cb(i);
+	for (let i = start; i < end + 1; i++) cb(i, currentSelection as DeepNonNullable<ColumnSelection>);
 };

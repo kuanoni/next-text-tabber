@@ -1,5 +1,6 @@
 .column {
-	&[data-selected='true'] {
+	&[data-selected='true'],
+	&[data-ghost-selected='true'] {
 		color: $c-background;
 		background-color: $c-foreground;
 	}
