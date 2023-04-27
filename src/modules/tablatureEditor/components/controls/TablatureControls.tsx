@@ -1,6 +1,6 @@
 import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
 import { clearSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/clearSelectedColumns';
-import { insertBlankColumnAtSelection } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertBlankColumnAtSelection';
+import { insertColumnsAtSelection } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertColumnsAtSelection';
 import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
 import { pushBlankLine } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankLine';
 import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
@@ -14,8 +14,8 @@ const TablatureControls = () => {
 			<button data-testid='pushBlankColumn' onClick={() => pushBlankColumn(0)}>
 				pushBlankColumn
 			</button>
-			<button data-testid='insertBlankColumnAtSelection' onClick={() => insertBlankColumnAtSelection()}>
-				insertBlankColumnAtSelection
+			<button data-testid='insertColumnAtSelection' onClick={() => insertColumnsAtSelection()}>
+				insertColumnAtSelection
 			</button>
 			<button data-testid='clearSelectedColumns' onClick={() => clearSelectedColumns()}>
 				clearSelectedColumns
