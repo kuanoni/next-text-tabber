@@ -2,7 +2,9 @@ import { describe, expect, jest } from '@jest/globals';
 import { columnSelectionFinish } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionFinish';
 import { columnSelectionHover } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionHover';
 import { columnSelectionStart } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionStart';
+import { resetColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/resetColumnSelection';
 import { resetEditor } from '@modules/tablatureEditorStore/editorSlice/actions/resetEditor';
+import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/setColumnSelection';
 import { BLANK_SELECTION } from '@modules/tablatureEditorStore/editorSlice/constants';
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
@@ -12,6 +14,21 @@ describe('Column Selection Tests', () => {
 		jest.resetAllMocks();
 		cleanup();
 		resetEditor();
+	});
+
+	describe('[resetColumnSelection]', () => {
+		it('sets currentSelection and ghostSelection to blank selection.', () => {
+			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+			act(() => {
+				setColumnSelection(0, 1, 4);
+				resetColumnSelection();
+			});
+
+			expect(result.current.isSelecting).toBe(false);
+			expect(result.current.currentSelection).toEqual(BLANK_SELECTION);
+			expect(result.current.ghostSelection).toEqual(BLANK_SELECTION);
+		});
 	});
 
 	describe('[columnSelectionStart]', () => {
