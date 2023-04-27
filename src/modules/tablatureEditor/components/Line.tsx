@@ -17,15 +17,22 @@ interface Props {
 
 const Line = ({ lineIndex, line }: Props) => {
 	const selectedColumns = useTablatureEditorStore((state) => state.currentSelection);
+	const ghostSelectedColumns = useTablatureEditorStore((state) => state.ghostSelection);
 
 	return (
 		<div className={styles.line} data-testid='line'>
 			{line.columns.map((column, columnIndex) => {
 				const isSelected =
-					!!selectedColumns.start &&
-					!!selectedColumns.end &&
+					selectedColumns.start !== null &&
+					selectedColumns.end !== null &&
 					lineIndex === selectedColumns.line &&
 					between(columnIndex, selectedColumns.start, selectedColumns.end);
+
+				const isGhostSelected =
+					ghostSelectedColumns.start !== null &&
+					ghostSelectedColumns.end !== null &&
+					lineIndex === ghostSelectedColumns.line &&
+					between(columnIndex, ghostSelectedColumns.start, ghostSelectedColumns.end);
 
 				return (
 					<Column
@@ -34,6 +41,7 @@ const Line = ({ lineIndex, line }: Props) => {
 						lineIndex={lineIndex}
 						columnIndex={columnIndex}
 						isSelected={isSelected}
+						isGhostSelected={isGhostSelected}
 					/>
 				);
 			})}
