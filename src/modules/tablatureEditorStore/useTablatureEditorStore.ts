@@ -5,7 +5,7 @@ import { createEditorSlice } from './editorSlice/createEditorSlice';
 import { createTablatureSlice } from './tablatureSlice/createTablatureSlice';
 
 export const useTablatureEditorStore = create(
-	immer<TablatureSlice & EditorSlice>((...a) => ({
+	immer<TablatureEditorStore>((...a) => ({
 		...createTablatureSlice(...a),
 		...createEditorSlice(...a),
 	}))

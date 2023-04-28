@@ -1,14 +1,8 @@
+import numIsBetweenRange from '@common/utils/numBetweenRange';
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 
 import Column from './Column';
 import styles from './Line.module.scss';
-
-// checks if 'num' is between 'a' and 'b'
-const between = (num: number, a: number, b: number) => {
-	const min = Math.min.apply(Math, [a, b]),
-		max = Math.max.apply(Math, [a, b]);
-	return num >= min && num <= max;
-};
 
 interface Props {
 	lineIndex: number;
@@ -26,13 +20,13 @@ const Line = ({ lineIndex, line }: Props) => {
 					selectedColumns.start !== null &&
 					selectedColumns.end !== null &&
 					lineIndex === selectedColumns.line &&
-					between(columnIndex, selectedColumns.start, selectedColumns.end);
+					numIsBetweenRange(columnIndex, selectedColumns.start, selectedColumns.end);
 
 				const isGhostSelected =
 					ghostSelectedColumns.start !== null &&
 					ghostSelectedColumns.end !== null &&
 					lineIndex === ghostSelectedColumns.line &&
-					between(columnIndex, ghostSelectedColumns.start, ghostSelectedColumns.end);
+					numIsBetweenRange(columnIndex, ghostSelectedColumns.start, ghostSelectedColumns.end);
 
 				return (
 					<Column

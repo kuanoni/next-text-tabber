@@ -1,9 +1,11 @@
+import numIsBetweenRange from '@common/utils/numBetweenRange';
 import { describe, expect, jest } from '@jest/globals';
+import { resetEditor } from '@modules/tablatureEditorStore/editorSlice/actions/resetEditor';
 import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/setColumnSelection';
 import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
 import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
 import { clearSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/clearSelectedColumns';
-import { insertBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertBlankColumn';
+import { insertColumnsAtSelection } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertColumnsAtSelection';
 import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
 import { pushBlankLine } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankLine';
 import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
@@ -29,6 +31,7 @@ describe('useTablatureEditorStore', () => {
 		jest.resetAllMocks();
 		cleanup();
 		changeInstrument(electricGuitar);
+		resetEditor();
 	});
 
 	it('[resetTablature] revert the tablature to its default state.', () => {
@@ -94,7 +97,8 @@ describe('useTablatureEditorStore', () => {
 		const blankColumn = result.current.instrument.BLANK_COLUMN;
 
 		act(() => {
-			insertBlankColumn(0, 0);
+			setColumnSelection(0, 0, 0);
+			insertColumnsAtSelection();
 		});
 
 		expect(result.current.tablature).toEqual({
@@ -124,7 +128,7 @@ describe('useTablatureEditorStore', () => {
 		const stringNumber = 3;
 		const fretNumber = 5;
 
-		it('Foreward selection..', () => {
+		it('Left-to-right selection.', () => {
 			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 			const { line, start, end } = createForwardSelection();
@@ -135,12 +139,12 @@ describe('useTablatureEditorStore', () => {
 			});
 
 			result.current.tablature.lines[line].columns.forEach((column, i) => {
-				if (i >= start && i <= end) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
+				if (numIsBetweenRange(i, start, end)) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
 				else expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
 			});
 		});
 
-		it('Backward selection.', () => {
+		it('Right-to-left selection.', () => {
 			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 			const { line, start, end } = createBackwardSelection();
@@ -151,7 +155,7 @@ describe('useTablatureEditorStore', () => {
 			});
 
 			result.current.tablature.lines[line].columns.forEach((column, i) => {
-				if (i >= end && i <= start) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
+				if (numIsBetweenRange(i, start, end)) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
 				else expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
 			});
 		});
@@ -173,5 +177,18 @@ describe('useTablatureEditorStore', () => {
 		result.current.tablature.lines[line].columns.forEach((column, i) => {
 			if (i >= end && i <= start) expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
 		});
+	});
+
+	it('[insertColumnsAtSelection] inserts column after selection end.', () => {
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+		const column: Column = result.current.instrument.createColumnFromText('--2---');
+
+		act(() => {
+			setColumnSelection(0, 0, 0);
+			insertColumnsAtSelection([column]);
+		});
+
+		expect(result.current.tablature.lines[0].columns[1]).toEqual(column);
 	});
 });
