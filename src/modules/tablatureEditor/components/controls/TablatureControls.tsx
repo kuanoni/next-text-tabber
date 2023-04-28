@@ -2,7 +2,7 @@ import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/a
 import { clearSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/clearSelectedColumns';
 import { insertColumnsAtSelection } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertColumnsAtSelection';
 import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
-import { pushBlankLine } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankLine';
+import { pushBlankSection } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankSection';
 import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
 import { electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
 
@@ -20,8 +20,8 @@ const TablatureControls = () => {
 			<button data-testid='clearSelectedColumns' onClick={() => clearSelectedColumns()}>
 				clearSelectedColumns
 			</button>
-			<button data-testid='pushBlankLine' onClick={() => pushBlankLine()}>
-				pushBlankLine
+			<button data-testid='pushBlankSection' onClick={() => pushBlankSection()}>
+				pushBlankSection
 			</button>
 			<button data-testid='resetTablature' onClick={() => resetTablature()}>
 				resetTablature

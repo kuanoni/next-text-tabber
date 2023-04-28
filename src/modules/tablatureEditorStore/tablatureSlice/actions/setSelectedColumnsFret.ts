@@ -5,7 +5,7 @@ import { iterateColumnSelection } from './utils/iterateColumnSelection';
 export const setSelectedColumnsFret = (stringNumber: number, fretNumber: number) =>
 	useTablatureEditorStore.setState((state) => {
 		if (
-			state.currentSelection.line === null ||
+			state.currentSelection.section === null ||
 			state.currentSelection.start === null ||
 			state.currentSelection.end === null
 		)
@@ -14,6 +14,6 @@ export const setSelectedColumnsFret = (stringNumber: number, fretNumber: number)
 			);
 
 		iterateColumnSelection((i, currentSelection) => {
-			state.tablature.lines[currentSelection.line].columns[i].cells[stringNumber].fret = fretNumber;
+			state.tablature.sections[currentSelection.section].columns[i].cells[stringNumber].fret = fretNumber;
 		});
 	});

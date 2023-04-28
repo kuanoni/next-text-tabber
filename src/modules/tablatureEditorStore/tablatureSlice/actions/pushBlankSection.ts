@@ -1,6 +1,6 @@
 import { useTablatureEditorStore } from '../../useTablatureEditorStore';
 
-export const pushBlankLine = () =>
+export const pushBlankSection = () =>
 	useTablatureEditorStore.setState((state) => {
-		state.tablature.lines.push(state.instrument.BLANK_LINE);
+		state.tablature.sections.push(state.instrument.BLANK_SECTION);
 	});

@@ -9,7 +9,7 @@ import Cell from './Cell';
 import styles from './Column.module.scss';
 
 interface Props {
-	lineIndex: number;
+	sectionIndex: number;
 	columnIndex: number;
 	column: Column;
 	isSelected: boolean;
@@ -18,12 +18,12 @@ interface Props {
 
 const isSelectingSelector = (state: EditorSlice) => state.isSelecting;
 
-const Column = memo<Props>(({ lineIndex, columnIndex, column, isSelected, isGhostSelected }) => {
+const Column = memo<Props>(({ sectionIndex, columnIndex, column, isSelected, isGhostSelected }) => {
 	const isSelecting = useTablatureEditorStore(isSelectingSelector);
 
 	const onMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
 		e.stopPropagation();
-		columnSelectionStart(lineIndex, columnIndex);
+		columnSelectionStart(sectionIndex, columnIndex);
 		document.addEventListener(
 			'mouseup',
 			(e) => {
@@ -35,7 +35,7 @@ const Column = memo<Props>(({ lineIndex, columnIndex, column, isSelected, isGhos
 	};
 
 	const onMouseOver: MouseEventHandler<HTMLDivElement> = () => {
-		if (isSelecting) columnSelectionHover(lineIndex, columnIndex);
+		if (isSelecting) columnSelectionHover(sectionIndex, columnIndex);
 	};
 
 	return (

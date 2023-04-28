@@ -5,9 +5,9 @@ export const columnSelectionFinish = () =>
 	useTablatureEditorStore.setState((state) => {
 		const { ghostSelection } = state;
 
-		if (ghostSelection.line === null || ghostSelection.start === null || ghostSelection.end === null)
+		if (ghostSelection.section === null || ghostSelection.start === null || ghostSelection.end === null)
 			throw new Error(
-				`Attempted to finish selection with a null value, line=${ghostSelection.line} start=${ghostSelection.start}, end=${ghostSelection.end}`
+				`Attempted to finish selection with a null value, section=${ghostSelection.section} start=${ghostSelection.start}, end=${ghostSelection.end}`
 			);
 
 		const [start, end] =

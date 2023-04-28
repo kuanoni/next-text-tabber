@@ -8,12 +8,13 @@ interface Column {
 	cells: Cell[];
 }
 
-interface Line {
+interface Section {
+	name?: string;
 	columns: Column[];
 }
 
 interface Tablature {
-	lines: Line[];
+	sections: Section[];
 }
 
 interface TablatureSlice {

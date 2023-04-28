@@ -7,7 +7,7 @@ import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actio
 import { clearSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/clearSelectedColumns';
 import { insertColumnsAtSelection } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertColumnsAtSelection';
 import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
-import { pushBlankLine } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankLine';
+import { pushBlankSection } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankSection';
 import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
 import { setSelectedColumnsFret } from '@modules/tablatureEditorStore/tablatureSlice/actions/setSelectedColumnsFret';
 import { electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
@@ -15,13 +15,13 @@ import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablat
 import { act, cleanup, renderHook } from '@testing-library/react';
 
 const createForwardSelection = () => ({
-	line: 0,
+	section: 0,
 	start: 4,
 	end: 7,
 });
 
 const createBackwardSelection = () => ({
-	line: 0,
+	section: 0,
 	start: 6,
 	end: 3,
 });
@@ -61,21 +61,21 @@ describe('useTablatureEditorStore', () => {
 			);
 	});
 
-	it('[pushBlankLine] append a blank line to the tablature.', () => {
+	it('[pushBlankSection] append a blank section to the tablature.', () => {
 		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		const currentTablature = result.current.tablature;
-		const blankLine = result.current.instrument.BLANK_LINE;
-		const expected: Tablature = { lines: [...currentTablature.lines, blankLine] };
+		const blankSection = result.current.instrument.BLANK_SECTION;
+		const expected: Tablature = { sections: [...currentTablature.sections, blankSection] };
 
 		act(() => {
-			pushBlankLine();
+			pushBlankSection();
 		});
 
 		expect(result.current.tablature).toEqual(expected);
 	});
 
-	it('[pushBlankColumn] append a blank column to the first line.', () => {
+	it('[pushBlankColumn] append a blank column to the first section.', () => {
 		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		const currentTablature = result.current.tablature;
@@ -86,11 +86,11 @@ describe('useTablatureEditorStore', () => {
 		});
 
 		expect(result.current.tablature).toEqual({
-			lines: [{ columns: [...currentTablature.lines[0].columns, blankColumn] }],
+			sections: [{ columns: [...currentTablature.sections[0].columns, blankColumn] }],
 		});
 	});
 
-	it('[insertBlankColumn] insert a blank column in the first line.', () => {
+	it('[insertBlankColumn] insert a blank column in the first section.', () => {
 		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		const currentTablature = result.current.tablature;
@@ -102,7 +102,7 @@ describe('useTablatureEditorStore', () => {
 		});
 
 		expect(result.current.tablature).toEqual({
-			lines: [{ columns: [blankColumn, ...currentTablature.lines[0].columns] }],
+			sections: [{ columns: [blankColumn, ...currentTablature.sections[0].columns] }],
 		});
 	});
 
@@ -131,14 +131,14 @@ describe('useTablatureEditorStore', () => {
 		it('Left-to-right selection.', () => {
 			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
-			const { line, start, end } = createForwardSelection();
+			const { section, start, end } = createForwardSelection();
 
 			act(() => {
-				setColumnSelection(line, start, end);
+				setColumnSelection(section, start, end);
 				setSelectedColumnsFret(stringNumber, fretNumber);
 			});
 
-			result.current.tablature.lines[line].columns.forEach((column, i) => {
+			result.current.tablature.sections[section].columns.forEach((column, i) => {
 				if (numIsBetweenRange(i, start, end)) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
 				else expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
 			});
@@ -147,14 +147,14 @@ describe('useTablatureEditorStore', () => {
 		it('Right-to-left selection.', () => {
 			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
-			const { line, start, end } = createBackwardSelection();
+			const { section, start, end } = createBackwardSelection();
 
 			act(() => {
-				setColumnSelection(line, start, end);
+				setColumnSelection(section, start, end);
 				setSelectedColumnsFret(stringNumber, fretNumber);
 			});
 
-			result.current.tablature.lines[line].columns.forEach((column, i) => {
+			result.current.tablature.sections[section].columns.forEach((column, i) => {
 				if (numIsBetweenRange(i, start, end)) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
 				else expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
 			});
@@ -164,17 +164,17 @@ describe('useTablatureEditorStore', () => {
 	it('[clearSelectedColumns] reset selected columns.', () => {
 		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
-		const { line, start, end } = createForwardSelection();
+		const { section, start, end } = createForwardSelection();
 		const stringNumber = 3;
 		const fretNumber = 5;
 
 		act(() => {
-			setColumnSelection(line, start, end);
+			setColumnSelection(section, start, end);
 			setSelectedColumnsFret(stringNumber, fretNumber);
 			clearSelectedColumns();
 		});
 
-		result.current.tablature.lines[line].columns.forEach((column, i) => {
+		result.current.tablature.sections[section].columns.forEach((column, i) => {
 			if (i >= end && i <= start) expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
 		});
 	});
@@ -189,6 +189,6 @@ describe('useTablatureEditorStore', () => {
 			insertColumnsAtSelection([column]);
 		});
 
-		expect(result.current.tablature.lines[0].columns[1]).toEqual(column);
+		expect(result.current.tablature.sections[0].columns[1]).toEqual(column);
 	});
 });
