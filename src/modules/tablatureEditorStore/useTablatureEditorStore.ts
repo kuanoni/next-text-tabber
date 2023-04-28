@@ -15,6 +15,7 @@ export const useTablatureEditorStore = create(
 		{
 			partialize: (state) => ({ tablature: state.tablature }),
 			equality: shallow,
+			limit: 50,
 		}
 	)
 );
