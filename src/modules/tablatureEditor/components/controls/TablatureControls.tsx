@@ -5,10 +5,12 @@ import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/ac
 import { pushBlankSection } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankSection';
 import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
 import { electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
+import { useTablatureHistoryStore } from '@modules/tablatureEditorStore/useTablatureHistoryStore';
 
 import styles from './TablatureControls.module.scss';
 
 const TablatureControls = () => {
+	const { undo, redo } = useTablatureHistoryStore((state) => state);
 	return (
 		<div className={styles['tablature-controls']}>
 			<button data-testid='pushBlankColumn' onClick={() => pushBlankColumn(0)}>
@@ -31,6 +33,12 @@ const TablatureControls = () => {
 			</button>
 			<button data-testid='changeInstrument bass' onClick={() => changeInstrument(electricBass)}>
 				changeInstrument electricBass
+			</button>
+			<button data-testid='undo' onClick={() => undo()}>
+				undo
+			</button>
+			<button data-testid='redo' onClick={() => redo()}>
+				redo
 			</button>
 		</div>
 	);
