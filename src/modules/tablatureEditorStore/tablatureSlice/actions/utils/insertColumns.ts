@@ -1,11 +1,11 @@
 export const insertColumns = (
 	state: TablatureEditorStore,
-	lineIndex: number,
+	sectionIndex: number,
 	insertIndex: number,
 	columnsToInsert: Column[]
 ) => {
-	const preInserted = state.tablature.lines[lineIndex].columns.slice(0, insertIndex + 1);
-	const postInserted = state.tablature.lines[lineIndex].columns.slice(insertIndex + 1);
+	const preInserted = state.tablature.sections[sectionIndex].columns.slice(0, insertIndex + 1);
+	const postInserted = state.tablature.sections[sectionIndex].columns.slice(insertIndex + 1);
 
-	state.tablature.lines[lineIndex].columns = [...preInserted, ...columnsToInsert, ...postInserted];
+	state.tablature.sections[sectionIndex].columns = [...preInserted, ...columnsToInsert, ...postInserted];
 };

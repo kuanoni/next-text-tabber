@@ -5,7 +5,7 @@ interface EditorSlice {
 }
 
 interface ColumnSelection {
-	line: number | null;
+	section: number | null;
 	start: number | null;
 	end: number | null;
 }

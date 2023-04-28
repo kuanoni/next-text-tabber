@@ -1,4 +1,4 @@
-export const BLANK_SELECTION: ColumnSelection = { line: null, start: null, end: null };
+export const BLANK_SELECTION: ColumnSelection = { section: null, start: null, end: null };
 
 export const initialState: EditorSlice = {
 	isSelecting: false,

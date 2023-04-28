@@ -3,15 +3,16 @@ import { insertColumns } from './utils/insertColumns';
 
 export const insertColumnsAtSelection = (column?: Column[]) =>
 	useTablatureEditorStore.setState((state) => {
-		const { line, end } = state.currentSelection;
+		const { section, end } = state.currentSelection;
 
-		if (line === null || end === null)
-			return console.warn(`Attempting to insert column with null selection - line: ${line} - end: ${end}`);
+		if (section === null || end === null)
+			return console.warn(`Attempting to insert column with null selection - section: ${section} - end: ${end}`);
 
-		if (!state.tablature.lines[line]) throw new Error(`Tried to insert column in non-existant line: ${line}`);
+		if (!state.tablature.sections[section])
+			throw new Error(`Tried to insert column in non-existant section: ${section}`);
 
 		// by default, insert single blank column
 		if (!column) column = [state.instrument.BLANK_COLUMN];
 
-		insertColumns(state, line, end, column);
+		insertColumns(state, section, end, column);
 	});

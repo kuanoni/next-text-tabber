@@ -1,11 +1,11 @@
 import { useTablatureEditorStore } from '../../useTablatureEditorStore';
 import { BLANK_SELECTION } from '../constants';
 
-export const columnSelectionStart = (lineIndex: number, columnIndex: number) =>
+export const columnSelectionStart = (sectionIndex: number, columnIndex: number) =>
 	useTablatureEditorStore.setState((state) => {
 		state.isSelecting = true;
 		state.ghostSelection = {
-			line: lineIndex,
+			section: sectionIndex,
 			start: columnIndex,
 			end: columnIndex,
 		};

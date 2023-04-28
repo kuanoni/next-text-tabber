@@ -100,7 +100,7 @@ module.exports = {
 				'text-transform',
 				'text-decoration',
 
-				'line-height',
+				'section-height',
 				'word-spacing',
 				'letter-spacing',
 				'white-space',

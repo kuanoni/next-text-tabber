@@ -5,6 +5,6 @@ import { iterateColumnSelection } from './utils/iterateColumnSelection';
 export const clearSelectedColumns = () =>
 	useTablatureEditorStore.setState((state) =>
 		iterateColumnSelection((i, currentSelection) => {
-			state.tablature.lines[currentSelection.line].columns[i] = state.instrument.BLANK_COLUMN;
+			state.tablature.sections[currentSelection.section].columns[i] = state.instrument.BLANK_COLUMN;
 		})
 	);

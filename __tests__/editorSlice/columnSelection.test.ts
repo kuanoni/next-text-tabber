@@ -45,7 +45,7 @@ describe('Column Selection Tests', () => {
 
 			act(() => columnSelectionStart(0, 1));
 
-			expect(result.current.ghostSelection).toEqual({ line: 0, start: 1, end: 1 });
+			expect(result.current.ghostSelection).toEqual({ section: 0, start: 1, end: 1 });
 		});
 	});
 
@@ -58,10 +58,10 @@ describe('Column Selection Tests', () => {
 				columnSelectionHover(0, 5);
 			});
 
-			expect(result.current.ghostSelection).toEqual({ line: 0, start: 1, end: 5 });
+			expect(result.current.ghostSelection).toEqual({ section: 0, start: 1, end: 5 });
 		});
 
-		it('ignores hovering on different line.', () => {
+		it('ignores hovering on different section.', () => {
 			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 			act(() => {
@@ -69,7 +69,7 @@ describe('Column Selection Tests', () => {
 				columnSelectionHover(1, 3);
 			});
 
-			expect(result.current.ghostSelection).toEqual({ line: 0, start: 1, end: 1 });
+			expect(result.current.ghostSelection).toEqual({ section: 0, start: 1, end: 1 });
 		});
 
 		it('throws error on out of bounds columnIndex.', () => {
@@ -105,7 +105,7 @@ describe('Column Selection Tests', () => {
 				columnSelectionFinish();
 			});
 
-			expect(result.current.currentSelection).toEqual({ line: 0, start: 1, end: 5 });
+			expect(result.current.currentSelection).toEqual({ section: 0, start: 1, end: 5 });
 		});
 
 		it('resets "ghostSelection" to blank selection.', () => {
@@ -138,7 +138,7 @@ describe('Column Selection Tests', () => {
 				columnSelectionFinish();
 			});
 
-			expect(result.current.currentSelection).toEqual({ line: 0, start: 2, end: 6 });
+			expect(result.current.currentSelection).toEqual({ section: 0, start: 2, end: 6 });
 		});
 	});
 });

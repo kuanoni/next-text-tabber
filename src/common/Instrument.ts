@@ -9,7 +9,7 @@ export class Instrument {
 	readonly commonTunings: { [i: string]: number[] };
 	readonly BLANK_CELL: Cell;
 	readonly BLANK_COLUMN: Column;
-	readonly BLANK_LINE: Line;
+	readonly BLANK_SECTION: Section;
 	readonly BLANK_TABLATURE: Tablature;
 
 	constructor(
@@ -32,8 +32,8 @@ export class Instrument {
 			modifier: null,
 			cells: new Array<Cell>(amountOfStrings).fill(this.BLANK_CELL),
 		};
-		this.BLANK_LINE = { columns: new Array(8).fill(this.BLANK_COLUMN) };
-		this.BLANK_TABLATURE = { lines: [this.BLANK_LINE] };
+		this.BLANK_SECTION = { columns: new Array(8).fill(this.BLANK_COLUMN) };
+		this.BLANK_TABLATURE = { sections: [this.BLANK_SECTION] };
 	}
 
 	createInitialState(): TablatureSlice {

@@ -2,8 +2,8 @@ import TablatureControls from './controls/TablatureControls';
 import Tablature from './Tablature';
 
 const getTablature = () => cy.getTestElement('tablature');
-const getColumn = (columnIndex: number, lineIndex = 0) =>
-	cy.getTestElement('line').eq(lineIndex).find('[data-testid="column"]').eq(columnIndex);
+const getColumn = (columnIndex: number, sectionIndex = 0) =>
+	cy.getTestElement('section').eq(sectionIndex).find('[data-testid="column"]').eq(columnIndex);
 const columnIsSelected = (e: JQuery<HTMLElement>) => expect(e).to.have.attr('data-selected', 'true');
 const columnIsGhostSelected = (e: JQuery<HTMLElement>) => expect(e).to.have.attr('data-ghost-selected', 'true');
 const columnIsNotSelected = (e: JQuery<HTMLElement>) => expect(e).to.have.attr('data-selected', 'false');
@@ -62,8 +62,8 @@ describe('Column selection', () => {
 		getColumn(0).should(columnIsNotSelected);
 	});
 
-	it('prevents starting a selection on one line, and ending on another.', () => {
-		cy.getTestElement('pushBlankLine').click();
+	it('prevents starting a selection on one section, and ending on another.', () => {
+		cy.getTestElement('pushBlankSection').click();
 		getColumn(0).trigger('mousedown').should(columnIsGhostSelected);
 		getColumn(0, 1).trigger('mouseover').trigger('mouseup').should(columnIsNotSelected);
 	});
