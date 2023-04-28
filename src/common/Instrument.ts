@@ -1,3 +1,5 @@
+import { BLANK_NOTE_CHAR } from '@modules/tablatureEditorStore/tablatureSlice/constants';
+
 export class Instrument {
 	readonly name: string;
 	readonly amountOfStrings: number;
@@ -40,5 +42,27 @@ export class Instrument {
 			tuning: this.defaultTuning,
 			tablature: this.BLANK_TABLATURE,
 		};
+	}
+
+	createColumnFromText(columnText: string): Column {
+		if (columnText.length > this.amountOfStrings)
+			throw new Error(
+				`columnText has too many (${columnText.length}/${this.amountOfStrings}) characters: ${columnText}`
+			);
+
+		const columnCells = new Array<Cell>(this.amountOfStrings).fill(this.BLANK_CELL).map((_, i): Cell => {
+			const fret = columnText[i] === BLANK_NOTE_CHAR ? -1 : parseInt(columnText[i]);
+			return {
+				modifier: null,
+				fret,
+			};
+		});
+
+		const column: Column = {
+			modifier: null,
+			cells: columnCells,
+		};
+
+		return column;
 	}
 }
