@@ -13,7 +13,12 @@ export const useTablatureEditorStore = create(
 			...createEditorSlice(...a),
 		})),
 		{
-			partialize: (state) => ({ tablature: state.tablature }),
+			// don't save change history of 'ghostSelection' or 'isSelecting'
+			partialize: (state): Omit<TablatureEditorStore, 'ghostSelection' | 'isSelecting'> => {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				const { ghostSelection, isSelecting, ...rest } = state;
+				return rest;
+			},
 			equality: shallow,
 			limit: 50,
 		}
