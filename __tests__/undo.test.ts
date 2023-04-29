@@ -177,3 +177,39 @@ describe('[changeInstrument]', () => {
 		expect(store.current.instrument).toEqual(electricBass);
 	});
 });
+
+describe('[changeTuning]', () => {
+	cleanupStore();
+
+	it('undoes change to tuning.', () => {
+		const store = getTablatureStore();
+		const { undo } = getHistoryFns();
+
+		expect(store.current.tuning).toEqual(store.current.instrument.defaultTuning);
+
+		act(() => {
+			changeTuning([26, 33, 38, 43, 47, 52]);
+		});
+
+		expect(store.current.tuning).toEqual([26, 33, 38, 43, 47, 52]);
+
+		act(() => {
+			undo();
+		});
+
+		expect(store.current.tuning).toEqual(store.current.instrument.defaultTuning);
+	});
+
+	it('redoes change to tuning.', () => {
+		const store = getTablatureStore();
+		const { redo } = getHistoryFns();
+
+		expect(store.current.tuning).toEqual(store.current.instrument.defaultTuning);
+
+		act(() => {
+			redo();
+		});
+
+		expect(store.current.tuning).toEqual([26, 33, 38, 43, 47, 52]);
+	});
+});
