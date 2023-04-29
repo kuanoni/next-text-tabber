@@ -1,13 +1,13 @@
-import { describe, expect, jest } from '@jest/globals';
+import { beforeAll, describe, expect, jest } from '@jest/globals';
+import { resetStore } from '@modules/tablatureEditorStore/actions/resetStore';
 import { columnSelectionFinish } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionFinish';
 import { columnSelectionHover } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionHover';
 import { columnSelectionStart } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionStart';
-import { resetEditor } from '@modules/tablatureEditorStore/editorSlice/actions/resetEditor';
+import { resetColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/resetColumnSelection';
 import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/setColumnSelection';
 import { BLANK_SELECTION } from '@modules/tablatureEditorStore/editorSlice/constants';
 import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
 import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
-import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
 import { electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 import { useTablatureHistoryStore } from '@modules/tablatureEditorStore/useTablatureHistoryStore';
@@ -23,14 +23,18 @@ const getHistoryFns = () => {
 	return result.current;
 };
 
-beforeEach(() => {
-	jest.clearAllMocks();
-	cleanup();
-	resetEditor();
-	resetTablature();
-});
+const cleanupStore = () =>
+	beforeAll(() => {
+		jest.clearAllMocks();
+		cleanup();
+		act(() => {
+			resetStore();
+		});
+	});
 
 describe('[columnSelection(start/hover/finish)]', () => {
+	cleanupStore();
+
 	it('undoes selection.', () => {
 		const store = getTablatureStore();
 		const { undo } = getHistoryFns();
@@ -65,6 +69,8 @@ describe('[columnSelection(start/hover/finish)]', () => {
 });
 
 describe('[setColumnSelection]', () => {
+	cleanupStore();
+
 	it('undoes selection.', () => {
 		const store = getTablatureStore();
 		const { undo } = getHistoryFns();
@@ -97,6 +103,8 @@ describe('[setColumnSelection]', () => {
 });
 
 describe('[changeInstrument]', () => {
+	cleanupStore();
+
 	it('undoes change to electricBass.', () => {
 		const store = getTablatureStore();
 		const { undo } = getHistoryFns();
