@@ -102,6 +102,46 @@ describe('[setColumnSelection]', () => {
 	});
 });
 
+describe('[resetColumnSelection]', () => {
+	cleanupStore();
+
+	it('undoes selection reset.', () => {
+		const store = getTablatureStore();
+		const { undo } = getHistoryFns();
+
+		act(() => {
+			setColumnSelection(0, 1, 4);
+		});
+
+		expect(store.current.currentSelection).toEqual({ section: 0, start: 1, end: 4 });
+
+		act(() => {
+			resetColumnSelection();
+		});
+
+		expect(store.current.currentSelection).toEqual(BLANK_SELECTION);
+
+		act(() => {
+			undo();
+		});
+
+		expect(store.current.currentSelection).toEqual({ section: 0, start: 1, end: 4 });
+	});
+
+	it('redoes selection reset.', () => {
+		const store = getTablatureStore();
+		const { redo } = getHistoryFns();
+
+		expect(store.current.currentSelection).toEqual({ section: 0, start: 1, end: 4 });
+
+		act(() => {
+			redo();
+		});
+
+		expect(store.current.currentSelection).toEqual(BLANK_SELECTION);
+	});
+});
+
 describe('[changeInstrument]', () => {
 	cleanupStore();
 
