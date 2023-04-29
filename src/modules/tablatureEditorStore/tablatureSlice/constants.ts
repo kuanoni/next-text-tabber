@@ -27,3 +27,5 @@ export const electricGuitar = new Instrument(
 export const electricBass = new Instrument('Electric Bass', 4, 24, 'E Standard', [16, 21, 26, 31], {
 	'E Standard': [16, 21, 26, 31],
 });
+
+export const tablatureInitialState = electricGuitar.createInitialState();
