@@ -1,12 +1,10 @@
 import { StateCreator } from 'zustand';
 
-import { electricGuitar } from './constants';
-
-const initialState = electricGuitar.createInitialState();
+import { tablatureInitialState } from './constants';
 
 export const createTablatureSlice: StateCreator<
 	TablatureEditorStore,
 	[['zustand/immer', never]],
 	[],
 	TablatureSlice
-> = () => initialState;
+> = () => tablatureInitialState;

@@ -1,6 +1,6 @@
 import { describe, expect, jest } from '@jest/globals';
 import { resetEditor } from '@modules/tablatureEditorStore/editorSlice/actions/resetEditor';
-import { initialState } from '@modules/tablatureEditorStore/editorSlice/constants';
+import { editorInitialState } from '@modules/tablatureEditorStore/editorSlice/constants';
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
@@ -17,7 +17,7 @@ describe('useTablatureEditorStore', () => {
 			resetEditor();
 		});
 
-		for (const key of Object.keys(initialState))
-			expect(result.current[key as keyof EditorSlice]).toEqual(initialState[key as keyof EditorSlice]);
+		for (const key of Object.keys(editorInitialState))
+			expect(result.current[key as keyof EditorSlice]).toEqual(editorInitialState[key as keyof EditorSlice]);
 	});
 });
