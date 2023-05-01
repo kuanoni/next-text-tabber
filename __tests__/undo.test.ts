@@ -1,3 +1,4 @@
+import numIsBetweenRange from '@common/utils/numBetweenRange';
 import { beforeAll, describe, expect, jest } from '@jest/globals';
 import { resetStore } from '@modules/tablatureEditorStore/actions/resetStore';
 import { columnSelectionFinish } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionFinish';
@@ -8,6 +9,7 @@ import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/ac
 import { BLANK_SELECTION } from '@modules/tablatureEditorStore/editorSlice/constants';
 import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
 import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
+import { setSelectedColumnsFret } from '@modules/tablatureEditorStore/tablatureSlice/actions/setSelectedColumnsFret';
 import { electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 import { useTablatureHistoryStore } from '@modules/tablatureEditorStore/useTablatureHistoryStore';
@@ -211,5 +213,54 @@ describe('[changeTuning]', () => {
 		});
 
 		expect(store.current.tuning).toEqual([26, 33, 38, 43, 47, 52]);
+	});
+});
+
+describe('[setSelectedColumnFret]', () => {
+	cleanupStore();
+	const stringNumber = 3;
+	const fretNumber = 7;
+	const section = 0;
+	const start = 1;
+	const end = 4;
+
+	it('undoes setting column frets.', () => {
+		const store = getTablatureStore();
+		const { undo } = getHistoryFns();
+
+		act(() => {
+			setColumnSelection(section, start, end);
+			setSelectedColumnsFret(stringNumber, fretNumber);
+		});
+
+		store.current.tablature.sections[section].columns.forEach((column, i) => {
+			if (numIsBetweenRange(i, start, end)) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
+			else expect(column).toEqual(store.current.instrument.BLANK_COLUMN);
+		});
+
+		act(() => {
+			undo();
+		});
+
+		store.current.tablature.sections[section].columns.forEach((column) => {
+			expect(column).toEqual(store.current.instrument.BLANK_COLUMN);
+		});
+	});
+
+	it('redoes change to tuning.', () => {
+		const store = getTablatureStore();
+		const { redo } = getHistoryFns();
+
+		store.current.tablature.sections[section].columns.forEach((column) => {
+			expect(column).toEqual(store.current.instrument.BLANK_COLUMN);
+		});
+
+		act(() => {
+			redo();
+		});
+		store.current.tablature.sections[section].columns.forEach((column, i) => {
+			if (numIsBetweenRange(i, start, end)) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
+			else expect(column).toEqual(store.current.instrument.BLANK_COLUMN);
+		});
 	});
 });
