@@ -9,6 +9,7 @@ import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/ac
 import { BLANK_SELECTION } from '@modules/tablatureEditorStore/editorSlice/constants';
 import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
 import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
+import { insertColumnsAtSelection } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertColumnsAtSelection';
 import { setSelectedColumnsFret } from '@modules/tablatureEditorStore/tablatureSlice/actions/setSelectedColumnsFret';
 import { electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
@@ -262,5 +263,44 @@ describe('[setSelectedColumnFret]', () => {
 			if (numIsBetweenRange(i, start, end)) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
 			else expect(column).toEqual(store.current.instrument.BLANK_COLUMN);
 		});
+	});
+});
+
+describe('[insertColumnsAtSelection]', () => {
+	cleanupStore();
+
+	it('undoes inserting column.', () => {
+		const store = getTablatureStore();
+		const { undo } = getHistoryFns();
+
+		const column: Column = store.current.instrument.createColumnFromText('--2---');
+
+		act(() => {
+			setColumnSelection(0, 1, 1);
+			insertColumnsAtSelection([column]);
+		});
+
+		expect(store.current.tablature.sections[0].columns[2]).toEqual(column);
+
+		act(() => {
+			undo();
+		});
+
+		expect(store.current.tablature.sections[0].columns[2]).toEqual(store.current.instrument.BLANK_COLUMN);
+	});
+
+	it('redoes inserting column.', () => {
+		const store = getTablatureStore();
+		const { redo } = getHistoryFns();
+
+		const column: Column = store.current.instrument.createColumnFromText('--2---');
+
+		expect(store.current.tablature.sections[0].columns[2]).toEqual(store.current.instrument.BLANK_COLUMN);
+
+		act(() => {
+			redo();
+		});
+
+		expect(store.current.tablature.sections[0].columns[2]).toEqual(column);
 	});
 });
