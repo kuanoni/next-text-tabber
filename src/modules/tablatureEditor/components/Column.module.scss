@@ -1,4 +1,8 @@
 .column {
+	line-height: 10px;
+	writing-mode: vertical-lr;
+	text-orientation: upright;
+
 	&[data-selected='true'],
 	&[data-ghost-selected='true'] {
 		color: $c-background;
