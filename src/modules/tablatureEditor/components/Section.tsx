@@ -2,7 +2,7 @@ import numIsBetweenRange from '@common/utils/numBetweenRange';
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 
 import Column from './Column';
-import styles from './Line.module.scss';
+import styles from './Tablature.module.scss';
 
 interface Props {
 	sectionIndex: number;
