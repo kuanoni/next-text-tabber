@@ -6,7 +6,7 @@ import { columnSelectionStart } from '@modules/tablatureEditorStore/editorSlice/
 import { BLANK_NOTE_CHAR } from '@modules/tablatureEditorStore/tablatureSlice/constants';
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 
-import styles from './Column.module.scss';
+import styles from './Tablature.module.scss';
 
 interface Props {
 	sectionIndex: number;
