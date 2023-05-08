@@ -1,4 +1,4 @@
-import { memo, MouseEventHandler } from 'react';
+import { Fragment, memo, MouseEventHandler, useMemo } from 'react';
 
 import { columnSelectionFinish } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionFinish';
 import { columnSelectionHover } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionHover';
@@ -38,6 +38,25 @@ const Column = memo<Props>(({ sectionIndex, columnIndex, column, isSelected, isG
 		if (isSelecting) columnSelectionHover(sectionIndex, columnIndex);
 	};
 
+	// vertical columns built from splitting the fret characters
+	const innerColumns = useMemo(() => {
+		const outputArray = [];
+
+		// find character length of largest fret in the column
+		const maxLength = column.cells.reduce((acc, obj) => Math.max(acc, String(Math.max(obj.fret, 0)).length), 0);
+
+		for (let i = 0; i < maxLength; i++) {
+			const innerColumn = [];
+			for (let j = 0; j < column.cells.length; j++) {
+				if (column.cells[j].fret === -1) innerColumn.push(BLANK_NOTE_CHAR);
+				else innerColumn.push(String(column.cells[j].fret)[i] || BLANK_NOTE_CHAR);
+			}
+			outputArray.push(innerColumn.join(''));
+		}
+
+		return outputArray;
+	}, [column]);
+
 	return (
 		<div
 			data-testid='column'
@@ -47,7 +66,14 @@ const Column = memo<Props>(({ sectionIndex, columnIndex, column, isSelected, isG
 			onMouseDown={onMouseDown}
 			onMouseOver={onMouseOver}
 		>
-			{column.cells.map((cell) => (cell.fret === -1 ? BLANK_NOTE_CHAR : cell.fret)).join('')}
+			{innerColumns.map((subcolumn, i) => {
+				return (
+					<Fragment key={i}>
+						{subcolumn}
+						<br />
+					</Fragment>
+				);
+			})}
 		</div>
 	);
 });
