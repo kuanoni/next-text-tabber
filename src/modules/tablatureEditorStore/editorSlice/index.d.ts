@@ -4,8 +4,16 @@ interface EditorSlice {
 	currentSelection: ColumnSelection;
 }
 
-interface ColumnSelection {
-	section: number | null;
-	start: number | null;
-	end: number | null;
+interface BlankColumnSelection {
+	section: null;
+	start: null;
+	end: null;
 }
+
+interface ValidColumnSelection {
+	section: number;
+	start: number;
+	end: number;
+}
+
+type ColumnSelection = BlankColumnSelection | ValidColumnSelection;

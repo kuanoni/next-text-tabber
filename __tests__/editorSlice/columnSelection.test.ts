@@ -126,7 +126,7 @@ describe('Column Selection Tests', () => {
 			expect(result.current.ghostSelection).toEqual(BLANK_SELECTION);
 
 			const finishWithNullSelection = () => act(() => columnSelectionFinish());
-			expect(finishWithNullSelection).toThrow('null value');
+			expect(finishWithNullSelection).toThrow('section is null');
 		});
 
 		it('finish with "start" > "end".', () => {
