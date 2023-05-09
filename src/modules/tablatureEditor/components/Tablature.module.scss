@@ -15,9 +15,8 @@
 }
 
 .column {
-	line-height: 10px;
-	writing-mode: vertical-lr;
-	text-orientation: upright;
+	letter-spacing: 2px;
+	line-height: 11px;
 
 	&[data-selected='true'],
 	&[data-ghost-selected='true'] {

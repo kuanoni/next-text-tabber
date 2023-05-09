@@ -38,23 +38,39 @@ const Column = memo<Props>(({ sectionIndex, columnIndex, column, isSelected, isG
 		if (isSelecting) columnSelectionHover(sectionIndex, columnIndex);
 	};
 
-	// vertical columns built from splitting the fret characters
-	const innerColumns = useMemo(() => {
-		const outputArray = [];
+	const innerRows = useMemo(() => {
+		// find the max character length of the cells in the column
+		const maxLength = column.cells.reduce((prevCharLen, cell) => {
+			let charLen = Math.max(cell.fret, 0).toString().length;
 
-		// find character length of largest fret in the column
-		const maxLength = column.cells.reduce((acc, obj) => Math.max(acc, String(Math.max(obj.fret, 0)).length), 0);
-
-		for (let i = 0; i < maxLength; i++) {
-			const innerColumn = [];
-			for (let j = 0; j < column.cells.length; j++) {
-				if (column.cells[j].fret === -1) innerColumn.push(BLANK_NOTE_CHAR);
-				else innerColumn.push(String(column.cells[j].fret)[i] || BLANK_NOTE_CHAR);
+			// Add modifier character lengths
+			if (cell.modifier) {
+				switch (cell.modifier.behavior) {
+					case 'wrap':
+						charLen += cell.modifier.symbolLeft.length + cell.modifier.symbolRight.length;
+					case 'snap':
+						charLen += cell.modifier.symbolRight.length;
+				}
 			}
-			outputArray.push(innerColumn.join(''));
-		}
 
-		return outputArray;
+			return Math.max(prevCharLen, charLen);
+		}, 0);
+
+		return column.cells.map((cell) => {
+			// Combines fret characters with modifier characters
+			const getRawText = () => {
+				if (cell.fret === -1) return BLANK_NOTE_CHAR.repeat(maxLength);
+				if (cell.modifier?.behavior === 'snap') return cell.fret.toString() + cell.modifier.symbolRight;
+				if (cell.modifier?.behavior === 'wrap')
+					return cell.modifier.symbolLeft + cell.fret.toString() + cell.modifier.symbolRight;
+				return cell.fret.toString();
+			};
+
+			const text = getRawText();
+
+			// Fill blank spaces with blank note characters (-)
+			return BLANK_NOTE_CHAR.repeat(maxLength - text.length) + text;
+		});
 	}, [column]);
 
 	return (
@@ -66,10 +82,10 @@ const Column = memo<Props>(({ sectionIndex, columnIndex, column, isSelected, isG
 			onMouseDown={onMouseDown}
 			onMouseOver={onMouseOver}
 		>
-			{innerColumns.map((subcolumn, i) => {
+			{innerRows.map((row, i) => {
 				return (
 					<Fragment key={i}>
-						{subcolumn}
+						{row}
 						<br />
 					</Fragment>
 				);
