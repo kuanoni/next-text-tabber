@@ -2,7 +2,7 @@ import { Instrument } from '@common/Instrument';
 
 export const BLANK_NOTE_CHAR = '-';
 
-export const NOTE_MODIFIERS: { [i: string]: NoteModifier } = {
+export const CELL_MODIFIERS: { [i: string]: CellModifier } = {
 	Ghost: { behavior: 'wrap', symbolLeft: '(', symbolRight: ')' },
 	'Hammer on': { behavior: 'snap', symbolRight: 'h' },
 };

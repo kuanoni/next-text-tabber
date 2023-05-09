@@ -1,5 +1,5 @@
 interface Cell {
-	modifier: NoteModifier | null;
+	modifier: CellModifier | null;
 	fret: number;
 }
 
@@ -23,18 +23,18 @@ interface TablatureSlice {
 	tablature: Tablature;
 }
 
-interface NoteModifierSnap {
+interface CellModifierSnap {
 	behavior: 'snap';
 	symbolRight: string;
 }
 
-interface NoteModifierWrap {
+interface CellModifierWrap {
 	behavior: 'wrap';
 	symbolLeft: string;
 	symbolRight: string;
 }
 
-type NoteModifier = NoteModifierSnap | NoteModifierWrap;
+type CellModifier = CellModifierSnap | CellModifierWrap;
 
 interface ColumnModifier {
 	start?: string;
