@@ -74,13 +74,13 @@ const TablatureControls = () => {
 				</button>
 				<button
 					data-testid='setSelectedCellModifiers Ghost note'
-					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Ghost Note'])}
+					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Ghost note'])}
 				>
 					( )
 				</button>
 				<button
-					data-testid='setSelectedCellModifiers Natural Harmonic'
-					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Natural Harmonic'])}
+					data-testid='setSelectedCellModifiers Natural harmonic'
+					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Natural harmonic'])}
 				>
 					{'< >'}
 				</button>

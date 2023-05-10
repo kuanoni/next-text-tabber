@@ -3,7 +3,7 @@ import { Instrument } from '@common/Instrument';
 export const BLANK_NOTE_CHAR = '-';
 
 export const CELL_MODIFIERS: { [i: string]: CellModifier } = {
-	'Ghost Note': { behavior: 'wrap', symbolLeft: '(', symbolRight: ')' },
+	'Ghost note': { behavior: 'wrap', symbolLeft: '(', symbolRight: ')' },
 	'Natural harmonic': { behavior: 'wrap', symbolLeft: '<', symbolRight: '>' },
 	'Hammer-on': { behavior: 'snap', symbolRight: 'h' },
 	'Pull-off': { behavior: 'snap', symbolRight: 'p' },
