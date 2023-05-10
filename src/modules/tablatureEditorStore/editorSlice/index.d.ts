@@ -1,7 +1,7 @@
 interface EditorSlice {
 	isSelecting: boolean;
 	ghostSelection: ColumnSelection;
-	currentSelection: ColumnSelection;
+	currentSelection: ValidColumnSelection;
 }
 
 interface BlankColumnSelection {
