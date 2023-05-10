@@ -57,11 +57,13 @@ const formatInnerRows = (cells: Cell[]) => {
 		else if (cell.modifier?.behavior === 'wrap')
 			rowString = cell.modifier.symbolLeft + rowString + cell.modifier.symbolRight;
 
+		// Fill blank spaces with blank note characters (-)
+		rowString = rowString.padStart(columnWidth, BLANK_NOTE_CHAR);
+
 		// Apply end-padding if required
 		if (requiresPadding) rowString += BLANK_NOTE_CHAR;
 
-		// Fill blank spaces with blank note characters (-)
-		return rowString.padStart(columnWidth + 1, BLANK_NOTE_CHAR);
+		return rowString;
 	});
 };
 
