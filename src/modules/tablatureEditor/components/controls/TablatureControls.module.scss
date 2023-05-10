@@ -1,4 +1,14 @@
 .tablature-controls {
+	.button-group {
+		display: flex;
+		gap: 4px;
+		width: 100%;
+
+		button {
+			width: 32px;
+		}
+	}
+
 	button {
 		display: block;
 		width: 100%;
