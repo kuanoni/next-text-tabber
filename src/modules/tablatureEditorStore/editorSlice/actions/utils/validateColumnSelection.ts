@@ -1,4 +1,4 @@
-export const validateColumnSelection = (selection: ColumnSelection, tablature: Tablature): ValidColumnSelection => {
+export const validateColumnSelection = (selection: ColumnSelection, tablature: Tablature): NonBlankColumnSelection => {
 	const { section: sectionIndex, start, end } = selection;
 
 	if (sectionIndex === null) throw new Error(`Selected section is null.`);
