@@ -1,4 +1,4 @@
-import { Fragment, memo, MouseEventHandler, useMemo } from 'react';
+import { memo, MouseEventHandler, useMemo } from 'react';
 
 import { columnSelectionFinish } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionFinish';
 import { columnSelectionHover } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionHover';
@@ -16,43 +16,52 @@ interface Props {
 	isGhostSelected: boolean;
 }
 
-const createFormattedColumnRows = (cells: Cell[]) => {
-	// These are flags which will determine the type of padding the column gets
-	let isSnapping = false;
-	let isBlank = true;
+const getColumnFormattingInfo = (cells: Cell[]) => {
+	// These are flags which will determine the type of end-padding the column gets
+	let isColumnSnapping = false;
+	let isColumnBlank = true;
 
-	const maxLength = cells.reduce((prevCharLen, cell) => {
-		let charLen = Math.max(cell.fret, 0).toString().length;
-		if (cell.fret !== -1) isBlank = false;
+	const columnWidth = cells.reduce((prevWidth, cell) => {
+		// Get character length of cell fret minus the the negative sign (-)
+		let curWidth = Math.abs(cell.fret).toString().length;
 
-		// Add modifier character lengths
+		// Trip column flags if necessary
+		if (cell.modifier?.behavior === 'snap') isColumnSnapping = true;
+		if (cell.fret !== -1) isColumnBlank = false;
+
+		// If cell has a modifier, add its symbol character lengths
 		if (cell.modifier) {
-			switch (cell.modifier.behavior) {
-				case 'wrap':
-					charLen += cell.modifier.symbolLeft.length + cell.modifier.symbolRight.length;
-					break;
-				case 'snap':
-					isSnapping = true;
-					charLen += cell.modifier.symbolRight.length;
-					break;
-			}
+			curWidth += cell.modifier.symbolRight.length;
+			if (cell.modifier.behavior === 'wrap') curWidth += cell.modifier.symbolLeft.length;
 		}
 
-		return Math.max(prevCharLen, charLen);
+		// Return the higher width between the current and previous cell
+		return Math.max(prevWidth, curWidth);
 	}, 0);
 
-	return cells.map((cell) => {
-		let rowText = cell.fret.toString();
+	const requiresPadding = !isColumnBlank && !isColumnSnapping;
 
-		// Combines fret characters with modifier characters
-		if (cell.fret === -1) rowText = BLANK_NOTE_CHAR;
-		else if (cell.modifier?.behavior === 'snap') rowText = cell.fret.toString() + cell.modifier.symbolRight;
+	return { columnWidth, requiresPadding };
+};
+
+const formatInnerRows = (cells: Cell[]) => {
+	const { columnWidth, requiresPadding } = getColumnFormattingInfo(cells);
+
+	return cells.map((cell) => {
+		let rowString = cell.fret.toString();
+
+		// Replace '-1's with the proper blank cell character
+		if (cell.fret === -1) rowString = BLANK_NOTE_CHAR;
+		// Concatinates fret characters with modifier symbol characters
+		else if (cell.modifier?.behavior === 'snap') rowString += cell.modifier.symbolRight;
 		else if (cell.modifier?.behavior === 'wrap')
-			rowText = cell.modifier.symbolLeft + cell.fret.toString() + cell.modifier.symbolRight;
+			rowString = cell.modifier.symbolLeft + rowString + cell.modifier.symbolRight;
+
+		// Apply end-padding if required
+		if (requiresPadding) rowString += BLANK_NOTE_CHAR;
 
 		// Fill blank spaces with blank note characters (-)
-		if (isSnapping || isBlank) return BLANK_NOTE_CHAR.repeat(maxLength - rowText.length) + rowText;
-		else return BLANK_NOTE_CHAR.repeat(maxLength - rowText.length) + rowText + BLANK_NOTE_CHAR;
+		return rowString.padStart(columnWidth + 1, BLANK_NOTE_CHAR);
 	});
 };
 
@@ -78,7 +87,7 @@ const Column = memo<Props>(({ sectionIndex, columnIndex, column, isSelected, isG
 		if (isSelecting) columnSelectionHover(sectionIndex, columnIndex);
 	};
 
-	const innerRows = useMemo(() => createFormattedColumnRows(column.cells), [column]);
+	const innerRows = useMemo(() => formatInnerRows(column.cells), [column]);
 
 	return (
 		<div
@@ -89,14 +98,9 @@ const Column = memo<Props>(({ sectionIndex, columnIndex, column, isSelected, isG
 			onMouseDown={onMouseDown}
 			onMouseOver={onMouseOver}
 		>
-			{innerRows.map((row, i) => {
-				return (
-					<Fragment key={i}>
-						{row}
-						<br />
-					</Fragment>
-				);
-			})}
+			{innerRows.map((row, i) => (
+				<div key={i}>{row}</div>
+			))}
 		</div>
 	);
 });
