@@ -43,43 +43,43 @@ const TablatureControls = () => {
 			</button>
 			<div className={styles['button-group']}>
 				<button
-					data-testid='setSelectedCellModifiers Hammer-on'
+					data-testid='set-cell-modifier Hammer-on'
 					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Hammer-on'])}
 				>
 					h
 				</button>
 				<button
-					data-testid='setSelectedCellModifiers Pull-off'
+					data-testid='set-cell-modifier Pull-off'
 					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Pull-off'])}
 				>
 					p
 				</button>
 				<button
-					data-testid='setSelectedCellModifiers Bend'
+					data-testid='set-cell-modifier Bend'
 					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Bend'])}
 				>
 					b
 				</button>
 				<button
-					data-testid='setSelectedCellModifiers Slide up'
+					data-testid='set-cell-modifier Slide up'
 					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Slide up'])}
 				>
 					/
 				</button>
 				<button
-					data-testid='setSelectedCellModifiers Slide down'
+					data-testid='set-cell-modifier Slide down'
 					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Slide down'])}
 				>
 					\
 				</button>
 				<button
-					data-testid='setSelectedCellModifiers Ghost note'
+					data-testid='set-cell-modifier Ghost note'
 					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Ghost note'])}
 				>
 					( )
 				</button>
 				<button
-					data-testid='setSelectedCellModifiers Natural harmonic'
+					data-testid='set-cell-modifier Natural harmonic'
 					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Natural harmonic'])}
 				>
 					{'< >'}
