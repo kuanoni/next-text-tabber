@@ -5,8 +5,10 @@ import styles from './Fretboard.module.scss';
 import TuningSelector from './TuningSelector';
 import TuningSelectorCommon from './TuningSelectorCommon';
 
+const tuningSelector = (state: TablatureEditorStore) => state.tuning;
+
 const TuningColumn = () => {
-	const tuning = useTablatureEditorStore((state) => state.tuning);
+	const tuning = useTablatureEditorStore(tuningSelector);
 
 	const onTuningSelectorChange = (stringIndex: number, tuningValue: number) => {
 		const newTuning = [...tuning];

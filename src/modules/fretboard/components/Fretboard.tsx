@@ -4,8 +4,10 @@ import styles from './Fretboard.module.scss';
 import FretColumn from './FretColumn';
 import TuningColumn from './TuningColumn';
 
+const instrumentSelector = (state: TablatureEditorStore) => state.instrument;
+
 const Fretboard = () => {
-	const instrument = useTablatureEditorStore((state) => state.instrument);
+	const instrument = useTablatureEditorStore(instrumentSelector);
 
 	return (
 		<div className={styles.fretboard}>

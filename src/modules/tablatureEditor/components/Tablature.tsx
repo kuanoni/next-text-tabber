@@ -4,8 +4,10 @@ import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablat
 import Section from './Section';
 import styles from './Tablature.module.scss';
 
+const tablatureSelector = (state: TablatureEditorStore) => state.tablature;
+
 const Tablature = () => {
-	const tablature = useTablatureEditorStore((state) => state.tablature);
+	const tablature = useTablatureEditorStore(tablatureSelector);
 
 	return (
 		<div
