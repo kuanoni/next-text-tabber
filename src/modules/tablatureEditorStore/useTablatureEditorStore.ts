@@ -13,11 +13,10 @@ export const useTablatureEditorStore = create(
 			...createEditorSlice(...a),
 		})),
 		{
-			// don't save change history of 'ghostSelection' or 'isSelecting'
-			partialize: (state): Omit<TablatureEditorStore, 'ghostSelection' | 'isSelecting'> => {
-				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				const { ghostSelection, isSelecting, ...rest } = state;
-				return rest;
+			// Only save the change history of the tablature and instrument
+			partialize: (state): Pick<TablatureEditorStore, 'tablature' | 'instrument'> => {
+				const { tablature, instrument } = state;
+				return { tablature, instrument };
 			},
 			equality: shallow,
 			limit: 50,
