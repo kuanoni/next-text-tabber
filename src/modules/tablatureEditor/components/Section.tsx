@@ -9,9 +9,12 @@ interface Props {
 	section: Section;
 }
 
+const currentSelectionSelector = (state: TablatureEditorStore) => state.currentSelection;
+const ghostSelectionSelector = (state: TablatureEditorStore) => state.ghostSelection;
+
 const Section = ({ sectionIndex, section }: Props) => {
-	const selectedColumns = useTablatureEditorStore((state) => state.currentSelection);
-	const ghostSelectedColumns = useTablatureEditorStore((state) => state.ghostSelection);
+	const selectedColumns = useTablatureEditorStore(currentSelectionSelector);
+	const ghostSelectedColumns = useTablatureEditorStore(ghostSelectionSelector);
 
 	return (
 		<div className={styles.section} data-testid='section'>
