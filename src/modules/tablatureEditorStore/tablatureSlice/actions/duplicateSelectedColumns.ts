@@ -9,5 +9,5 @@ export const duplicateSelectedColumns = () =>
 
 		const columns = state.tablature.sections[section].columns.slice(start, end + 1);
 
-		insertColumns(state, section, end, columns);
+		insertColumns(state, state.currentSelection, columns);
 	});
