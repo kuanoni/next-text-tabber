@@ -9,8 +9,9 @@ import { insertColumnsAtSelection } from '@modules/tablatureEditorStore/tablatur
 import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
 import { pushBlankSection } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankSection';
 import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
+import { setSelectedColumnsCellModifiers } from '@modules/tablatureEditorStore/tablatureSlice/actions/setSelectedColumnsCellModifiers';
 import { setSelectedColumnsFret } from '@modules/tablatureEditorStore/tablatureSlice/actions/setSelectedColumnsFret';
-import { electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
+import { CELL_MODIFIERS, electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
@@ -190,5 +191,21 @@ describe('useTablatureEditorStore', () => {
 		});
 
 		expect(result.current.tablature.sections[0].columns[1]).toEqual(column);
+	});
+
+	it('[setSelectedColumnsCellModifiers] sets modifiers of cells with non-blank frets in selected columns.', () => {
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+		const modifier = CELL_MODIFIERS['Hammer-on'];
+		const cellIndex = 3;
+
+		act(() => {
+			setColumnSelection(0, 0, 0);
+			setSelectedColumnsFret(cellIndex, 5);
+			setSelectedColumnsCellModifiers(modifier);
+		});
+
+		expect(result.current.tablature.sections[0].columns[0].cells[cellIndex].modifier).toEqual(modifier);
+		expect(result.current.tablature.sections[0].columns[0].cells[cellIndex + 1].modifier).toEqual(null);
 	});
 });

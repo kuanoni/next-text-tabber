@@ -12,7 +12,7 @@ const Fret = ({ stringNumber, fretNumber }: Props) => {
 		setSelectedColumnsFret(stringNumber, fretNumber);
 	};
 
-	return <div className={styles.fret} onClick={onClick}></div>;
+	return <div data-testid={`fret ${fretNumber} ${stringNumber}`} className={styles.fret} onClick={onClick}></div>;
 };
 
 export default Fret;

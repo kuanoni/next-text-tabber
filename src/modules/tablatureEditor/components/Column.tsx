@@ -1,4 +1,4 @@
-import { Fragment, memo, MouseEventHandler, useMemo } from 'react';
+import { memo, MouseEventHandler, useMemo } from 'react';
 
 import { columnSelectionFinish } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionFinish';
 import { columnSelectionHover } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionHover';
@@ -15,6 +15,57 @@ interface Props {
 	isSelected: boolean;
 	isGhostSelected: boolean;
 }
+
+const getColumnFormattingInfo = (cells: Cell[]) => {
+	// These are flags which will determine the type of end-padding the column gets
+	let isColumnSnapping = false;
+	let isColumnBlank = true;
+
+	const columnWidth = cells.reduce((prevWidth, cell) => {
+		// Get character length of cell fret minus the the negative sign (-)
+		let curWidth = Math.abs(cell.fret).toString().length;
+
+		// Trip column flags if necessary
+		if (cell.modifier?.behavior === 'snap') isColumnSnapping = true;
+		if (cell.fret !== -1) isColumnBlank = false;
+
+		// If cell has a modifier, add its symbol character lengths
+		if (cell.modifier) {
+			curWidth += cell.modifier.symbolRight.length;
+			if (cell.modifier.behavior === 'wrap') curWidth += cell.modifier.symbolLeft.length;
+		}
+
+		// Return the higher width between the current and previous cell
+		return Math.max(prevWidth, curWidth);
+	}, 0);
+
+	const requiresPadding = !isColumnBlank && !isColumnSnapping;
+
+	return { columnWidth, requiresPadding };
+};
+
+const formatInnerRows = (cells: Cell[]) => {
+	const { columnWidth, requiresPadding } = getColumnFormattingInfo(cells);
+
+	return cells.map((cell) => {
+		let rowString = cell.fret.toString();
+
+		// Replace '-1's with the proper blank cell character
+		if (cell.fret === -1) rowString = BLANK_NOTE_CHAR;
+		// Concatinates fret characters with modifier symbol characters
+		else if (cell.modifier?.behavior === 'snap') rowString += cell.modifier.symbolRight;
+		else if (cell.modifier?.behavior === 'wrap')
+			rowString = cell.modifier.symbolLeft + rowString + cell.modifier.symbolRight;
+
+		// Fill blank spaces with blank note characters (-)
+		rowString = rowString.padStart(columnWidth, BLANK_NOTE_CHAR);
+
+		// Apply end-padding if required
+		if (requiresPadding) rowString += BLANK_NOTE_CHAR;
+
+		return rowString;
+	});
+};
 
 const isSelectingSelector = (state: EditorSlice) => state.isSelecting;
 
@@ -38,24 +89,7 @@ const Column = memo<Props>(({ sectionIndex, columnIndex, column, isSelected, isG
 		if (isSelecting) columnSelectionHover(sectionIndex, columnIndex);
 	};
 
-	// vertical columns built from splitting the fret characters
-	const innerColumns = useMemo(() => {
-		const outputArray = [];
-
-		// find character length of largest fret in the column
-		const maxLength = column.cells.reduce((acc, obj) => Math.max(acc, String(Math.max(obj.fret, 0)).length), 0);
-
-		for (let i = 0; i < maxLength; i++) {
-			const innerColumn = [];
-			for (let j = 0; j < column.cells.length; j++) {
-				if (column.cells[j].fret === -1) innerColumn.push(BLANK_NOTE_CHAR);
-				else innerColumn.push(String(column.cells[j].fret)[i] || BLANK_NOTE_CHAR);
-			}
-			outputArray.push(innerColumn.join(''));
-		}
-
-		return outputArray;
-	}, [column]);
+	const innerRows = useMemo(() => formatInnerRows(column.cells), [column]);
 
 	return (
 		<div
@@ -66,14 +100,9 @@ const Column = memo<Props>(({ sectionIndex, columnIndex, column, isSelected, isG
 			onMouseDown={onMouseDown}
 			onMouseOver={onMouseOver}
 		>
-			{innerColumns.map((subcolumn, i) => {
-				return (
-					<Fragment key={i}>
-						{subcolumn}
-						<br />
-					</Fragment>
-				);
-			})}
+			{innerRows.map((row, i) => (
+				<div key={i}>{row}</div>
+			))}
 		</div>
 	);
 });

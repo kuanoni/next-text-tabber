@@ -2,9 +2,14 @@ import { Instrument } from '@common/Instrument';
 
 export const BLANK_NOTE_CHAR = '-';
 
-export const NOTE_MODIFIERS: { [i: string]: NoteModifier } = {
-	Ghost: { behavior: 'wrap', symbolLeft: '(', symbolRight: ')' },
-	'Hammer on': { behavior: 'snap', symbolRight: 'h' },
+export const CELL_MODIFIERS: { [i: string]: CellModifier } = {
+	'Ghost note': { behavior: 'wrap', symbolLeft: '(', symbolRight: ')' },
+	'Natural harmonic': { behavior: 'wrap', symbolLeft: '<', symbolRight: '>' },
+	'Hammer-on': { behavior: 'snap', symbolRight: 'h' },
+	'Pull-off': { behavior: 'snap', symbolRight: 'p' },
+	Bend: { behavior: 'snap', symbolRight: 'b' },
+	'Slide up': { behavior: 'snap', symbolRight: '/' },
+	'Slide down': { behavior: 'snap', symbolRight: '\\' },
 };
 
 export const COLUMN_MODIFIERS: { [i: string]: ColumnModifier } = {

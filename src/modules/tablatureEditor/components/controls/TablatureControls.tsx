@@ -4,7 +4,8 @@ import { insertColumnsAtSelection } from '@modules/tablatureEditorStore/tablatur
 import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
 import { pushBlankSection } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankSection';
 import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
-import { electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
+import { setSelectedColumnsCellModifiers } from '@modules/tablatureEditorStore/tablatureSlice/actions/setSelectedColumnsCellModifiers';
+import { CELL_MODIFIERS, electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
 import { useTablatureHistoryStore } from '@modules/tablatureEditorStore/useTablatureHistoryStore';
 
 import styles from './TablatureControls.module.scss';
@@ -40,6 +41,50 @@ const TablatureControls = () => {
 			<button data-testid='redo' onClick={() => redo()}>
 				redo
 			</button>
+			<div className={styles['button-group']}>
+				<button
+					data-testid='set-cell-modifier Hammer-on'
+					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Hammer-on'])}
+				>
+					h
+				</button>
+				<button
+					data-testid='set-cell-modifier Pull-off'
+					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Pull-off'])}
+				>
+					p
+				</button>
+				<button
+					data-testid='set-cell-modifier Bend'
+					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Bend'])}
+				>
+					b
+				</button>
+				<button
+					data-testid='set-cell-modifier Slide up'
+					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Slide up'])}
+				>
+					/
+				</button>
+				<button
+					data-testid='set-cell-modifier Slide down'
+					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Slide down'])}
+				>
+					\
+				</button>
+				<button
+					data-testid='set-cell-modifier Ghost note'
+					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Ghost note'])}
+				>
+					( )
+				</button>
+				<button
+					data-testid='set-cell-modifier Natural harmonic'
+					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Natural harmonic'])}
+				>
+					{'< >'}
+				</button>
+			</div>
 		</div>
 	);
 };
