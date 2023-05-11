@@ -1,5 +1,6 @@
 import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
 import { clearSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/clearSelectedColumns';
+import { duplicateSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/duplicateSelectedColumns';
 import { insertColumnsAtSelection } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertColumnsAtSelection';
 import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
 import { pushBlankSection } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankSection';
@@ -22,6 +23,9 @@ const TablatureControls = () => {
 			</button>
 			<button data-testid='clearSelectedColumns' onClick={() => clearSelectedColumns()}>
 				clearSelectedColumns
+			</button>
+			<button data-testid='duplicateSelectedColumns' onClick={() => duplicateSelectedColumns()}>
+				duplicateSelectedColumns
 			</button>
 			<button data-testid='pushBlankSection' onClick={() => pushBlankSection()}>
 				pushBlankSection

@@ -1,6 +1,6 @@
 import { useTablatureEditorStore } from '../../useTablatureEditorStore';
+import { validateColumnSelection } from '../../utils/validateColumnSelection';
 import { BLANK_SELECTION } from '../constants';
-import { validateColumnSelection } from './utils/validateColumnSelection';
 
 export const columnSelectionFinish = () =>
 	useTablatureEditorStore.setState((state) => {
