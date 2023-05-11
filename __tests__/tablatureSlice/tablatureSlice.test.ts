@@ -5,6 +5,7 @@ import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/ac
 import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
 import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
 import { clearSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/clearSelectedColumns';
+import { duplicateSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/duplicateSelectedColumns';
 import { insertColumnsAtSelection } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertColumnsAtSelection';
 import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
 import { pushBlankSection } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankSection';
@@ -177,6 +178,27 @@ describe('useTablatureEditorStore', () => {
 
 		result.current.tablature.sections[section].columns.forEach((column, i) => {
 			if (i >= end && i <= start) expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
+		});
+	});
+
+	it('[duplicateSelectedColumns] duplicates selected columns.', () => {
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+		const { section, start, end } = createForwardSelection();
+		const selectionSize = end - start + 1;
+		const stringNumber = 3;
+		const fretNumber = 5;
+
+		act(() => {
+			setColumnSelection(section, start, end);
+			setSelectedColumnsFret(stringNumber, fretNumber);
+			duplicateSelectedColumns();
+		});
+
+		result.current.tablature.sections[section].columns.forEach((column, i) => {
+			if (numIsBetweenRange(i, start, end + selectionSize))
+				expect(column.cells[stringNumber].fret).toEqual(fretNumber);
+			else expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
 		});
 	});
 
