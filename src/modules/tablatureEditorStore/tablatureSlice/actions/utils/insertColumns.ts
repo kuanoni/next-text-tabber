@@ -1,11 +1,7 @@
-export const insertColumns = (
-	state: TablatureEditorStore,
-	sectionIndex: number,
-	insertIndex: number,
-	columnsToInsert: Column[]
-) => {
-	const preInserted = state.tablature.sections[sectionIndex].columns.slice(0, insertIndex + 1);
-	const postInserted = state.tablature.sections[sectionIndex].columns.slice(insertIndex + 1);
+import { validateColumnSelection } from '@modules/tablatureEditorStore/utils/validateColumnSelection';
 
-	state.tablature.sections[sectionIndex].columns = [...preInserted, ...columnsToInsert, ...postInserted];
+export const insertColumns = (state: TablatureEditorStore, selection: ColumnSelection, columnsToInsert: Column[]) => {
+	const { section, end } = validateColumnSelection(selection, state.tablature);
+
+	state.tablature.sections[section].columns.splice(end + 1, 0, ...columnsToInsert);
 };
