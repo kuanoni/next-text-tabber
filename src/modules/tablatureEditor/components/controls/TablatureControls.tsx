@@ -1,3 +1,6 @@
+import { copySelectedColumns } from '@modules/tablatureEditorStore/editorSlice/actions/copySelectedColumns';
+import { insertClipboard } from '@modules/tablatureEditorStore/editorSlice/actions/insertClipboard';
+import { pasteClipboard } from '@modules/tablatureEditorStore/editorSlice/actions/pasteClipboard';
 import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
 import { clearSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/clearSelectedColumns';
 import { duplicateSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/duplicateSelectedColumns';
@@ -26,6 +29,15 @@ const TablatureControls = () => {
 			</button>
 			<button data-testid='duplicateSelectedColumns' onClick={() => duplicateSelectedColumns()}>
 				duplicateSelectedColumns
+			</button>
+			<button data-testid='copySelectedColumns' onClick={() => copySelectedColumns()}>
+				copySelectedColumns
+			</button>
+			<button data-testid='insertClipboard' onClick={() => insertClipboard()}>
+				insertClipboard
+			</button>
+			<button data-testid='pasteClipboard' onClick={() => pasteClipboard()}>
+				pasteClipboard
 			</button>
 			<button data-testid='pushBlankSection' onClick={() => pushBlankSection()}>
 				pushBlankSection
