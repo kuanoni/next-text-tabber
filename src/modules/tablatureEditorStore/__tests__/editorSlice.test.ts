@@ -4,7 +4,7 @@ import { editorInitialState } from '@modules/tablatureEditorStore/editorSlice/co
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
-describe('useTablatureEditorStore', () => {
+describe('Editor slice actions', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
 		cleanup();

@@ -29,126 +29,128 @@ const cleanupStore = () =>
 		});
 	});
 
-describe('[changeInstrument]', () => {
-	cleanupStore();
+describe('Undo/redo temporal store actions', () => {
+	describe('[changeInstrument]', () => {
+		cleanupStore();
 
-	it('undoes change to electricBass.', () => {
-		const store = getTablatureStore();
-		const { undo } = getHistoryFns();
+		it('undoes change to electricBass.', () => {
+			const store = getTablatureStore();
+			const { undo } = getHistoryFns();
 
-		expect(store.current.instrument).toEqual(electricGuitar);
+			expect(store.current.instrument).toEqual(electricGuitar);
 
-		act(() => {
-			changeInstrument(electricBass);
+			act(() => {
+				changeInstrument(electricBass);
+			});
+
+			expect(store.current.instrument).toEqual(electricBass);
+
+			act(() => {
+				undo();
+			});
+
+			expect(store.current.instrument).toEqual(electricGuitar);
 		});
 
-		expect(store.current.instrument).toEqual(electricBass);
+		it('redoes change to electricBass.', () => {
+			const store = getTablatureStore();
+			const { redo } = getHistoryFns();
 
-		act(() => {
-			undo();
-		});
+			expect(store.current.instrument).toEqual(electricGuitar);
 
-		expect(store.current.instrument).toEqual(electricGuitar);
-	});
+			act(() => {
+				redo();
+			});
 
-	it('redoes change to electricBass.', () => {
-		const store = getTablatureStore();
-		const { redo } = getHistoryFns();
-
-		expect(store.current.instrument).toEqual(electricGuitar);
-
-		act(() => {
-			redo();
-		});
-
-		expect(store.current.instrument).toEqual(electricBass);
-	});
-});
-
-describe('[setSelectedColumnFret]', () => {
-	cleanupStore();
-	const stringNumber = 3;
-	const fretNumber = 7;
-	const section = 0;
-	const start = 1;
-	const end = 4;
-
-	it('undoes setting column frets.', () => {
-		const store = getTablatureStore();
-		const { undo } = getHistoryFns();
-
-		act(() => {
-			setColumnSelection(section, start, end);
-			setSelectedColumnsFret(stringNumber, fretNumber);
-		});
-
-		store.current.tablature.sections[section].columns.forEach((column, i) => {
-			if (numIsBetweenRange(i, start, end)) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
-			else expect(column).toEqual(store.current.instrument.BLANK_COLUMN);
-		});
-
-		act(() => {
-			undo();
-		});
-
-		store.current.tablature.sections[section].columns.forEach((column) => {
-			expect(column).toEqual(store.current.instrument.BLANK_COLUMN);
+			expect(store.current.instrument).toEqual(electricBass);
 		});
 	});
 
-	it('redoes change to tuning.', () => {
-		const store = getTablatureStore();
-		const { redo } = getHistoryFns();
+	describe('[setSelectedColumnFret]', () => {
+		cleanupStore();
+		const stringNumber = 3;
+		const fretNumber = 7;
+		const section = 0;
+		const start = 1;
+		const end = 4;
 
-		store.current.tablature.sections[section].columns.forEach((column) => {
-			expect(column).toEqual(store.current.instrument.BLANK_COLUMN);
+		it('undoes setting column frets.', () => {
+			const store = getTablatureStore();
+			const { undo } = getHistoryFns();
+
+			act(() => {
+				setColumnSelection(section, start, end);
+				setSelectedColumnsFret(stringNumber, fretNumber);
+			});
+
+			store.current.tablature.sections[section].columns.forEach((column, i) => {
+				if (numIsBetweenRange(i, start, end)) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
+				else expect(column).toEqual(store.current.instrument.BLANK_COLUMN);
+			});
+
+			act(() => {
+				undo();
+			});
+
+			store.current.tablature.sections[section].columns.forEach((column) => {
+				expect(column).toEqual(store.current.instrument.BLANK_COLUMN);
+			});
 		});
 
-		act(() => {
-			redo();
-		});
-		store.current.tablature.sections[section].columns.forEach((column, i) => {
-			if (numIsBetweenRange(i, start, end)) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
-			else expect(column).toEqual(store.current.instrument.BLANK_COLUMN);
+		it('redoes setting column frets.', () => {
+			const store = getTablatureStore();
+			const { redo } = getHistoryFns();
+
+			store.current.tablature.sections[section].columns.forEach((column) => {
+				expect(column).toEqual(store.current.instrument.BLANK_COLUMN);
+			});
+
+			act(() => {
+				redo();
+			});
+			store.current.tablature.sections[section].columns.forEach((column, i) => {
+				if (numIsBetweenRange(i, start, end)) expect(column.cells[stringNumber].fret).toEqual(fretNumber);
+				else expect(column).toEqual(store.current.instrument.BLANK_COLUMN);
+			});
 		});
 	});
-});
 
-describe('[insertColumnsAtSelection]', () => {
-	cleanupStore();
+	describe('[insertColumnsAtSelection]', () => {
+		cleanupStore();
 
-	it('undoes inserting column.', () => {
-		const store = getTablatureStore();
-		const { undo } = getHistoryFns();
+		it('undoes inserting column.', () => {
+			const store = getTablatureStore();
+			const { undo } = getHistoryFns();
 
-		const column: Column = store.current.instrument.createColumnFromText('--2---');
+			const column: Column = store.current.instrument.createColumnFromText('--2---');
 
-		act(() => {
-			setColumnSelection(0, 1, 1);
-			insertColumnsAtSelection([column]);
+			act(() => {
+				setColumnSelection(0, 1, 1);
+				insertColumnsAtSelection([column]);
+			});
+
+			expect(store.current.tablature.sections[0].columns[2]).toEqual(column);
+
+			act(() => {
+				undo();
+			});
+
+			expect(store.current.tablature.sections[0].columns[2]).toEqual(store.current.instrument.BLANK_COLUMN);
 		});
 
-		expect(store.current.tablature.sections[0].columns[2]).toEqual(column);
+		it('redoes inserting column.', () => {
+			const store = getTablatureStore();
+			const { redo } = getHistoryFns();
 
-		act(() => {
-			undo();
+			const column: Column = store.current.instrument.createColumnFromText('--2---');
+
+			expect(store.current.tablature.sections[0].columns[2]).toEqual(store.current.instrument.BLANK_COLUMN);
+
+			act(() => {
+				redo();
+			});
+
+			expect(store.current.tablature.sections[0].columns[2]).toEqual(column);
 		});
-
-		expect(store.current.tablature.sections[0].columns[2]).toEqual(store.current.instrument.BLANK_COLUMN);
-	});
-
-	it('redoes inserting column.', () => {
-		const store = getTablatureStore();
-		const { redo } = getHistoryFns();
-
-		const column: Column = store.current.instrument.createColumnFromText('--2---');
-
-		expect(store.current.tablature.sections[0].columns[2]).toEqual(store.current.instrument.BLANK_COLUMN);
-
-		act(() => {
-			redo();
-		});
-
-		expect(store.current.tablature.sections[0].columns[2]).toEqual(column);
 	});
 });

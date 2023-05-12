@@ -28,7 +28,7 @@ const createBackwardSelection = () => ({
 	end: 3,
 });
 
-describe('useTablatureEditorStore', () => {
+describe('Tablature slice actions', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
 		cleanup();
