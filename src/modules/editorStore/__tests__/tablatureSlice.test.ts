@@ -2,7 +2,6 @@ import numIsBetweenRange from '@common/utils/numBetweenRange';
 import { describe, expect, jest } from '@jest/globals';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
-import { changeInstrument } from '../actions/changeInstrument';
 import { changeTuning } from '../actions/changeTuning';
 import { clearSelectedColumns } from '../actions/clearSelectedColumns';
 import { setColumnSelection } from '../actions/columnSelection/setColumnSelection';
@@ -11,6 +10,7 @@ import { insertColumnsAtSelection } from '../actions/insertColumnsAtSelection';
 import { pushBlankSection } from '../actions/pushBlankSection';
 import { resetStore } from '../actions/resetStore';
 import { resetTablature } from '../actions/resetTablature';
+import { setInstrument } from '../actions/setInstrument';
 import { setSelectedColumnsCellModifiers } from '../actions/setSelectedColumnsCellModifiers';
 import { setSelectedColumnsFret } from '../actions/setSelectedColumnsFret';
 import { CELL_MODIFIERS, electricBass } from '../constants';
@@ -47,13 +47,13 @@ describe('Tablature slice actions', () => {
 		expect(result.current.tablature).toEqual(blankTablature);
 	});
 
-	it("[changeInstrument] sets the tablature, instrument, and tuning to the instrument's defaults", () => {
+	it("[setInstrument] sets the tablature, instrument, and tuning to the instrument's defaults", () => {
 		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		const instrumentInitialState = electricBass.createInitialState();
 
 		act(() => {
-			changeInstrument(electricBass);
+			setInstrument(electricBass);
 		});
 
 		for (const key of Object.keys(instrumentInitialState))

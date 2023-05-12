@@ -2,10 +2,10 @@ import numIsBetweenRange from '@common/utils/numBetweenRange';
 import { beforeAll, describe, expect, jest } from '@jest/globals';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
-import { changeInstrument } from '../actions/changeInstrument';
 import { setColumnSelection } from '../actions/columnSelection/setColumnSelection';
 import { insertColumnsAtSelection } from '../actions/insertColumnsAtSelection';
 import { resetStore } from '../actions/resetStore';
+import { setInstrument } from '../actions/setInstrument';
 import { setSelectedColumnsFret } from '../actions/setSelectedColumnsFret';
 import { electricBass, electricGuitar } from '../constants';
 import { useTablatureEditorStore } from '../useTablatureEditorStore';
@@ -29,7 +29,7 @@ const cleanupStore = () =>
 	});
 
 describe('Undo/redo temporal store actions', () => {
-	describe('[changeInstrument]', () => {
+	describe('[setInstrument]', () => {
 		cleanupStore();
 
 		it('undoes change to electricBass.', () => {
@@ -39,7 +39,7 @@ describe('Undo/redo temporal store actions', () => {
 			expect(store.current.instrument).toEqual(electricGuitar);
 
 			act(() => {
-				changeInstrument(electricBass);
+				setInstrument(electricBass);
 			});
 
 			expect(store.current.instrument).toEqual(electricBass);
