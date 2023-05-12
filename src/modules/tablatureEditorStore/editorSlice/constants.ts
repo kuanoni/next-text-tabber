@@ -4,4 +4,5 @@ export const editorInitialState: EditorSlice = {
 	isSelecting: false,
 	ghostSelection: BLANK_SELECTION,
 	currentSelection: BLANK_SELECTION,
+	clipboard: [],
 };

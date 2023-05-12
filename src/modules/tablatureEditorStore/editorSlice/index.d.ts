@@ -2,6 +2,7 @@ interface EditorSlice {
 	isSelecting: boolean;
 	ghostSelection: ColumnSelection;
 	currentSelection: ColumnSelection;
+	clipboard: Columns[];
 }
 
 interface BlankColumnSelection {
