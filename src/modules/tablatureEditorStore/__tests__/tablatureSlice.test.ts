@@ -1,42 +1,41 @@
 import numIsBetweenRange from '@common/utils/numBetweenRange';
 import { describe, expect, jest } from '@jest/globals';
-import { resetEditor } from '@modules/tablatureEditorStore/editorSlice/actions/resetEditor';
-import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/setColumnSelection';
-import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
-import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
-import { clearSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/clearSelectedColumns';
-import { duplicateSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/duplicateSelectedColumns';
-import { insertColumnsAtSelection } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertColumnsAtSelection';
-import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
-import { pushBlankSection } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankSection';
-import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
-import { setSelectedColumnsCellModifiers } from '@modules/tablatureEditorStore/tablatureSlice/actions/setSelectedColumnsCellModifiers';
-import { setSelectedColumnsFret } from '@modules/tablatureEditorStore/tablatureSlice/actions/setSelectedColumnsFret';
-import { CELL_MODIFIERS, electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
-import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
-const createForwardSelection = () => ({
+import { resetStore } from '../actions/resetStore';
+import { setColumnSelection } from '../editorSlice/actions/setColumnSelection';
+import { changeInstrument } from '../tablatureSlice/actions/changeInstrument';
+import { changeTuning } from '../tablatureSlice/actions/changeTuning';
+import { clearSelectedColumns } from '../tablatureSlice/actions/clearSelectedColumns';
+import { duplicateSelectedColumns } from '../tablatureSlice/actions/duplicateSelectedColumns';
+import { insertColumnsAtSelection } from '../tablatureSlice/actions/insertColumnsAtSelection';
+import { pushBlankSection } from '../tablatureSlice/actions/pushBlankSection';
+import { resetTablature } from '../tablatureSlice/actions/resetTablature';
+import { setSelectedColumnsCellModifiers } from '../tablatureSlice/actions/setSelectedColumnsCellModifiers';
+import { setSelectedColumnsFret } from '../tablatureSlice/actions/setSelectedColumnsFret';
+import { CELL_MODIFIERS, electricBass } from '../tablatureSlice/constants';
+import { useTablatureEditorStore } from '../useTablatureEditorStore';
+
+const createLtrSelection = () => ({
 	section: 0,
 	start: 4,
 	end: 7,
 });
 
-const createBackwardSelection = () => ({
+const createRtlSelection = () => ({
 	section: 0,
 	start: 6,
 	end: 3,
 });
 
-describe('useTablatureEditorStore', () => {
+describe('Tablature slice actions', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
 		cleanup();
-		changeInstrument(electricGuitar);
-		resetEditor();
+		resetStore();
 	});
 
-	it('[resetTablature] revert the tablature to its default state.', () => {
+	it('[resetTablature] set the tablature to its default state.', () => {
 		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		const blankTablature = result.current.instrument.BLANK_TABLATURE;
@@ -48,7 +47,7 @@ describe('useTablatureEditorStore', () => {
 		expect(result.current.tablature).toEqual(blankTablature);
 	});
 
-	it("[changeInstrument] reset the entire state to the instrument's initial state.", () => {
+	it("[changeInstrument] sets the tablature, instrument, and tuning to the instrument's defaults", () => {
 		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		const instrumentInitialState = electricBass.createInitialState();
@@ -61,6 +60,26 @@ describe('useTablatureEditorStore', () => {
 			expect(result.current[key as keyof TablatureSlice]).toEqual(
 				instrumentInitialState[key as keyof TablatureSlice]
 			);
+	});
+
+	describe('[changeTuning]', () => {
+		it('sets tuning to passed array.', () => {
+			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+			const newTuning: number[] = [27, 32, 45, 99, 0, 11];
+
+			act(() => {
+				changeTuning(newTuning);
+			});
+
+			expect(result.current.tuning).toEqual(newTuning);
+		});
+
+		it('throws an error when passed an array of invalid length.', () => {
+			const changeTuningInvalidLength = () => changeTuning([27]);
+
+			expect(changeTuningInvalidLength).toThrow('invalid length');
+		});
 	});
 
 	it('[pushBlankSection] append a blank section to the tablature.', () => {
@@ -77,22 +96,25 @@ describe('useTablatureEditorStore', () => {
 		expect(result.current.tablature).toEqual(expected);
 	});
 
-	it('[pushBlankColumn] append a blank column to the first section.', () => {
+	it('[clearSelectedColumns] sets selected columns blank.', () => {
 		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
-		const currentTablature = result.current.tablature;
-		const blankColumn = result.current.instrument.BLANK_COLUMN;
+		const { section, start, end } = createLtrSelection();
+		const stringNumber = 3;
+		const fretNumber = 5;
 
 		act(() => {
-			pushBlankColumn(0);
+			setColumnSelection(section, start, end);
+			setSelectedColumnsFret(stringNumber, fretNumber);
+			clearSelectedColumns();
 		});
 
-		expect(result.current.tablature).toEqual({
-			sections: [{ columns: [...currentTablature.sections[0].columns, blankColumn] }],
+		result.current.tablature.sections[section].columns.forEach((column, i) => {
+			if (i >= end && i <= start) expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
 		});
 	});
 
-	it('[insertBlankColumn] insert a blank column in the first section.', () => {
+	it('[insertColumnsAtSelection] insert a blank column after selection.', () => {
 		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		const currentTablature = result.current.tablature;
@@ -108,32 +130,14 @@ describe('useTablatureEditorStore', () => {
 		});
 	});
 
-	it('[changeTuning] change the state tuning to a new correctly sized array.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
-
-		const newTuning: number[] = [27, 32, 45, 99, 0, 11];
-
-		act(() => {
-			changeTuning(newTuning);
-		});
-
-		expect(result.current.tuning).toEqual(newTuning);
-	});
-
-	it('[changeTuning] throw an error when passed an array of invalid length.', () => {
-		const changeTuningInvalidLength = () => changeTuning([27]);
-
-		expect(changeTuningInvalidLength).toThrow('invalid length');
-	});
-
-	describe('[setSelectedColumnFrets] set frets of selected columns.', () => {
+	describe('[setSelectedColumnFrets] sets specific frets of selected columns.', () => {
 		const stringNumber = 3;
 		const fretNumber = 5;
 
 		it('Left-to-right selection.', () => {
 			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
-			const { section, start, end } = createForwardSelection();
+			const { section, start, end } = createLtrSelection();
 
 			act(() => {
 				setColumnSelection(section, start, end);
@@ -149,7 +153,7 @@ describe('useTablatureEditorStore', () => {
 		it('Right-to-left selection.', () => {
 			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
-			const { section, start, end } = createBackwardSelection();
+			const { section, start, end } = createRtlSelection();
 
 			act(() => {
 				setColumnSelection(section, start, end);
@@ -163,28 +167,10 @@ describe('useTablatureEditorStore', () => {
 		});
 	});
 
-	it('[clearSelectedColumns] reset selected columns.', () => {
+	it('[duplicateSelectedColumns] duplicates selected columns and inserts them after the selection end.', () => {
 		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
-		const { section, start, end } = createForwardSelection();
-		const stringNumber = 3;
-		const fretNumber = 5;
-
-		act(() => {
-			setColumnSelection(section, start, end);
-			setSelectedColumnsFret(stringNumber, fretNumber);
-			clearSelectedColumns();
-		});
-
-		result.current.tablature.sections[section].columns.forEach((column, i) => {
-			if (i >= end && i <= start) expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
-		});
-	});
-
-	it('[duplicateSelectedColumns] duplicates selected columns.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
-
-		const { section, start, end } = createForwardSelection();
+		const { section, start, end } = createLtrSelection();
 		const selectionSize = end - start + 1;
 		const stringNumber = 3;
 		const fretNumber = 5;
@@ -202,7 +188,7 @@ describe('useTablatureEditorStore', () => {
 		});
 	});
 
-	it('[insertColumnsAtSelection] inserts column after selection end.', () => {
+	it('[insertColumnsAtSelection] inserts columns after selection end.', () => {
 		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		const column: Column = result.current.instrument.createColumnFromText('--2---');
