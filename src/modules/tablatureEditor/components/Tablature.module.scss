@@ -9,23 +9,46 @@
 .section {
 	display: flex;
 	flex-wrap: wrap;
+	row-gap: 24px;
 	margin: 0.5rem 0;
 	padding: 0.4rem 1rem 0.4rem 0.5rem;
 	box-shadow: 1px 2px 7px 0 #9b9b9b;
 }
 
 .column {
-	letter-spacing: 2px;
+	display: block;
+	position: relative;
+	padding-bottom: 6px;
+	letter-spacing: 3px;
+	outline: 1px solid transparent;
 	line-height: 11px;
+	box-sizing: content-box;
 
-	&[data-selected='true'],
+	&[data-selected='true']::after,
+	&[data-ghost-selected='true']::after {
+		background-color: black;
+	}
+
+	&[data-selected='true'] {
+		background-color: #d1d1d1;
+	}
+
 	&[data-ghost-selected='true'] {
-		color: $c-background;
-		background-color: $c-foreground;
+		background-color: #e2e2e2;
 	}
 
 	&:hover {
-		background-color: $c-medium;
+		background-color: #e2e2e2;
 		cursor: pointer;
+	}
+
+	&::after {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: calc(100% - 1px);
+		height: 3px;
+		background-color: #9b9b9b;
+		content: '';
 	}
 }
