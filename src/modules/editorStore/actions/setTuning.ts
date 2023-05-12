@@ -1,7 +1,7 @@
 import type { Instrument } from '@modules/editorStore/Instrument';
 import { useTablatureEditorStore } from '../useTablatureEditorStore';
 
-export const changeTuning = (tuning: Instrument['defaultTuning']) =>
+export const setTuning = (tuning: Instrument['defaultTuning']) =>
 	useTablatureEditorStore.setState((state) => {
 		if (tuning.length !== state.instrument.defaultTuning.length)
 			throw new Error(

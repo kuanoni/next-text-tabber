@@ -2,7 +2,6 @@ import numIsBetweenRange from '@common/utils/numBetweenRange';
 import { describe, expect, jest } from '@jest/globals';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
-import { changeTuning } from '../actions/changeTuning';
 import { clearSelectedColumns } from '../actions/clearSelectedColumns';
 import { setColumnSelection } from '../actions/columnSelection/setColumnSelection';
 import { duplicateSelectedColumns } from '../actions/duplicateSelectedColumns';
@@ -13,6 +12,7 @@ import { resetTablature } from '../actions/resetTablature';
 import { setInstrument } from '../actions/setInstrument';
 import { setSelectedColumnsCellModifiers } from '../actions/setSelectedColumnsCellModifiers';
 import { setSelectedColumnsFret } from '../actions/setSelectedColumnsFret';
+import { setTuning } from '../actions/setTuning';
 import { CELL_MODIFIERS, electricBass } from '../constants';
 import { useTablatureEditorStore } from '../useTablatureEditorStore';
 
@@ -62,21 +62,21 @@ describe('Tablature slice actions', () => {
 			);
 	});
 
-	describe('[changeTuning]', () => {
+	describe('[setTuning]', () => {
 		it('sets tuning to passed array.', () => {
 			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 			const newTuning: number[] = [27, 32, 45, 99, 0, 11];
 
 			act(() => {
-				changeTuning(newTuning);
+				setTuning(newTuning);
 			});
 
 			expect(result.current.tuning).toEqual(newTuning);
 		});
 
 		it('throws an error when passed an array of invalid length.', () => {
-			const changeTuningInvalidLength = () => changeTuning([27]);
+			const changeTuningInvalidLength = () => setTuning([27]);
 
 			expect(changeTuningInvalidLength).toThrow('invalid length');
 		});

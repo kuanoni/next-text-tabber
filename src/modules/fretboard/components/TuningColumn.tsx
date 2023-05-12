@@ -1,4 +1,4 @@
-import { changeTuning } from '@modules/editorStore/actions/changeTuning';
+import { setTuning } from '@modules/editorStore/actions/setTuning';
 import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
 
 import styles from './Fretboard.module.scss';
@@ -13,7 +13,7 @@ const TuningColumn = () => {
 	const onTuningSelectorChange = (stringIndex: number, tuningValue: number) => {
 		const newTuning = [...tuning];
 		newTuning[stringIndex] = tuningValue;
-		changeTuning(newTuning);
+		setTuning(newTuning);
 	};
 
 	return (
