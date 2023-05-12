@@ -1,8 +1,9 @@
 import { describe, expect, jest } from '@jest/globals';
-import { resetEditor } from '@modules/tablatureEditorStore/editorSlice/actions/resetEditor';
-import { editorInitialState } from '@modules/tablatureEditorStore/editorSlice/constants';
-import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
+
+import { resetEditor } from '../editorSlice/actions/resetEditor';
+import { editorInitialState } from '../editorSlice/constants';
+import { useTablatureEditorStore } from '../useTablatureEditorStore';
 
 describe('Editor slice actions', () => {
 	afterEach(() => {
