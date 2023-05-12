@@ -17,12 +17,9 @@ export const useTablatureEditorStore = create(
 				return { tablature, instrument, currentSelection };
 			},
 			// Only update the change history when tablature or instrument change
-			equality: (currentState, pastState) => {
-				return (
-					shallow(currentState.tablature, pastState.tablature) &&
-					shallow(currentState.instrument, pastState.instrument)
-				);
-			},
+			equality: (currentState, pastState) =>
+				shallow(currentState.tablature, pastState.tablature) &&
+				shallow(currentState.instrument, pastState.instrument),
 			limit: 50,
 		}
 	)

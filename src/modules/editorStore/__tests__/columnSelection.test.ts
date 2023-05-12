@@ -6,7 +6,7 @@ import { columnSelectionHover } from '../actions/columnSelection/columnSelection
 import { columnSelectionStart } from '../actions/columnSelection/columnSelectionStart';
 import { setColumnSelection } from '../actions/columnSelection/setColumnSelection';
 import { resetColumnSelection } from '../actions/resetColumnSelection';
-import { resetEditor } from '../actions/resetEditor';
+import { resetStore } from '../actions/resetStore';
 import { BLANK_SELECTION } from '../constants';
 import { useTablatureEditorStore } from '../useTablatureEditorStore';
 
@@ -14,7 +14,7 @@ describe('Column Selection Tests', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
 		cleanup();
-		resetEditor();
+		resetStore();
 	});
 
 	it('[resetColumnSelection] sets currentSelection and ghostSelection blank.', () => {

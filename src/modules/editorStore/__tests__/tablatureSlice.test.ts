@@ -57,8 +57,8 @@ describe('Tablature slice actions', () => {
 		});
 
 		for (const key of Object.keys(instrumentInitialState))
-			expect(result.current[key as keyof InstrumentState]).toEqual(
-				instrumentInitialState[key as keyof InstrumentState]
+			expect(instrumentInitialState[key as keyof InstrumentState]).toEqual(
+				result.current[key as keyof InstrumentState]
 			);
 	});
 
