@@ -1,10 +1,10 @@
-import { resetColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/resetColumnSelection';
-import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
+import { resetColumnSelection } from '@modules/editorStore/actions/resetColumnSelection';
+import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
 
 import Section from './Section';
 import styles from './Tablature.module.scss';
 
-const tablatureSelector = (state: TablatureEditorStore) => state.tablature;
+const tablatureSelector = (state: EditorStore) => state.tablature;
 
 const Tablature = () => {
 	const tablature = useTablatureEditorStore(tablatureSelector);

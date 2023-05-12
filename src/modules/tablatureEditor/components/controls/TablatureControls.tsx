@@ -1,16 +1,16 @@
-import { copySelectedColumns } from '@modules/tablatureEditorStore/editorSlice/actions/copySelectedColumns';
-import { insertClipboard } from '@modules/tablatureEditorStore/editorSlice/actions/insertClipboard';
-import { pasteClipboard } from '@modules/tablatureEditorStore/editorSlice/actions/pasteClipboard';
-import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
-import { clearSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/clearSelectedColumns';
-import { duplicateSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/duplicateSelectedColumns';
-import { insertColumnsAtSelection } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertColumnsAtSelection';
-import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankColumn';
-import { pushBlankSection } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankSection';
-import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
-import { setSelectedColumnsCellModifiers } from '@modules/tablatureEditorStore/tablatureSlice/actions/setSelectedColumnsCellModifiers';
-import { CELL_MODIFIERS, electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
-import { useTablatureHistoryStore } from '@modules/tablatureEditorStore/useTablatureHistoryStore';
+import { clearSelectedColumns } from '@modules/editorStore/actions/clearSelectedColumns';
+import { copySelectedColumns } from '@modules/editorStore/actions/clipboard/copySelectedColumns';
+import { insertClipboard } from '@modules/editorStore/actions/clipboard/insertClipboard';
+import { pasteClipboard } from '@modules/editorStore/actions/clipboard/pasteClipboard';
+import { duplicateSelectedColumns } from '@modules/editorStore/actions/duplicateSelectedColumns';
+import { insertColumnsAtSelection } from '@modules/editorStore/actions/insertColumnsAtSelection';
+import { pushBlankColumn } from '@modules/editorStore/actions/pushBlankColumn';
+import { pushBlankSection } from '@modules/editorStore/actions/pushBlankSection';
+import { resetTablature } from '@modules/editorStore/actions/resetTablature';
+import { setInstrument } from '@modules/editorStore/actions/setInstrument';
+import { setSelectedColumnsCellModifiers } from '@modules/editorStore/actions/setSelectedColumnsCellModifiers';
+import { CELL_MODIFIERS, electricBass, electricGuitar } from '@modules/editorStore/constants';
+import { useTablatureHistoryStore } from '@modules/editorStore/useTablatureHistoryStore';
 
 import styles from './TablatureControls.module.scss';
 
@@ -45,11 +45,11 @@ const TablatureControls = () => {
 			<button data-testid='resetTablature' onClick={() => resetTablature()}>
 				resetTablature
 			</button>
-			<button data-testid='changeInstrument guitar' onClick={() => changeInstrument(electricGuitar)}>
-				changeInstrument electricGuitar
+			<button data-testid='setInstrument guitar' onClick={() => setInstrument(electricGuitar)}>
+				setInstrument electricGuitar
 			</button>
-			<button data-testid='changeInstrument bass' onClick={() => changeInstrument(electricBass)}>
-				changeInstrument electricBass
+			<button data-testid='setInstrument bass' onClick={() => setInstrument(electricBass)}>
+				setInstrument electricBass
 			</button>
 			<button data-testid='undo' onClick={() => undo()}>
 				undo

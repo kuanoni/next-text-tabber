@@ -1,10 +1,10 @@
 import { memo, MouseEventHandler, useMemo } from 'react';
 
-import { columnSelectionFinish } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionFinish';
-import { columnSelectionHover } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionHover';
-import { columnSelectionStart } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionStart';
-import { BLANK_NOTE_CHAR } from '@modules/tablatureEditorStore/tablatureSlice/constants';
-import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
+import { columnSelectionFinish } from '@modules/editorStore/actions/columnSelection/columnSelectionFinish';
+import { columnSelectionHover } from '@modules/editorStore/actions/columnSelection/columnSelectionHover';
+import { columnSelectionStart } from '@modules/editorStore/actions/columnSelection/columnSelectionStart';
+import { BLANK_NOTE_CHAR } from '@modules/editorStore/constants';
+import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
 
 import styles from './Tablature.module.scss';
 
@@ -67,7 +67,7 @@ const formatInnerRows = (cells: Cell[]) => {
 	});
 };
 
-const isSelectingSelector = (state: EditorSlice) => state.isSelecting;
+const isSelectingSelector = (state: EditorStore) => state.isSelecting;
 
 const Column = memo<Props>(({ sectionIndex, columnIndex, column, isSelected, isGhostSelected }) => {
 	const isSelecting = useTablatureEditorStore(isSelectingSelector);

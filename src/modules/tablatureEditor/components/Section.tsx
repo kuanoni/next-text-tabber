@@ -1,5 +1,5 @@
 import numIsBetweenRange from '@common/utils/numBetweenRange';
-import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
+import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
 
 import Column from './Column';
 import styles from './Tablature.module.scss';
@@ -9,8 +9,8 @@ interface Props {
 	section: Section;
 }
 
-const currentSelectionSelector = (state: TablatureEditorStore) => state.currentSelection;
-const ghostSelectionSelector = (state: TablatureEditorStore) => state.ghostSelection;
+const currentSelectionSelector = (state: EditorStore) => state.currentSelection;
+const ghostSelectionSelector = (state: EditorStore) => state.ghostSelection;
 
 const Section = ({ sectionIndex, section }: Props) => {
 	const selectedColumns = useTablatureEditorStore(currentSelectionSelector);
