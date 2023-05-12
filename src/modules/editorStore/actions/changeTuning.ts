@@ -1,4 +1,4 @@
-import type { Instrument } from '@common/Instrument';
+import type { Instrument } from '@modules/editorStore/Instrument';
 import { useTablatureEditorStore } from '../useTablatureEditorStore';
 
 export const changeTuning = (tuning: Instrument['defaultTuning']) =>

@@ -1,4 +1,4 @@
-import type { Instrument } from '@common/Instrument';
+import type { Instrument } from '@modules/editorStore/Instrument';
 
 import { useTablatureEditorStore } from '../useTablatureEditorStore';
 import { resetEditor } from './resetEditor';

@@ -52,8 +52,8 @@ interface NonBlankColumnSelection {
 type ColumnSelection = BlankColumnSelection | NonBlankColumnSelection;
 
 interface EditorStore {
-	instrument: import('@common/Instrument').Instrument;
-	tuning: import('@common/Instrument').Instrument['defaultTuning'];
+	instrument: import('@modules/editorStore/Instrument').Instrument;
+	tuning: import('@modules/editorStore/Instrument').Instrument['defaultTuning'];
 	tablature: Tablature;
 
 	isSelecting: boolean;

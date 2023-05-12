@@ -1,4 +1,4 @@
-import { Instrument } from '@common/Instrument';
+import { Instrument } from '@modules/editorStore/Instrument';
 
 export const BLANK_NOTE_CHAR = '-';
 export const BLANK_SELECTION: ColumnSelection = { section: null, start: null, end: null };
