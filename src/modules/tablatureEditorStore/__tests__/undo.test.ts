@@ -1,14 +1,15 @@
 import numIsBetweenRange from '@common/utils/numBetweenRange';
 import { beforeAll, describe, expect, jest } from '@jest/globals';
-import { resetStore } from '@modules/tablatureEditorStore/actions/resetStore';
-import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/setColumnSelection';
-import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
-import { insertColumnsAtSelection } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertColumnsAtSelection';
-import { setSelectedColumnsFret } from '@modules/tablatureEditorStore/tablatureSlice/actions/setSelectedColumnsFret';
-import { electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
-import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
-import { useTablatureHistoryStore } from '@modules/tablatureEditorStore/useTablatureHistoryStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
+
+import { resetStore } from '../actions/resetStore';
+import { setColumnSelection } from '../editorSlice/actions/setColumnSelection';
+import { changeInstrument } from '../tablatureSlice/actions/changeInstrument';
+import { insertColumnsAtSelection } from '../tablatureSlice/actions/insertColumnsAtSelection';
+import { setSelectedColumnsFret } from '../tablatureSlice/actions/setSelectedColumnsFret';
+import { electricBass, electricGuitar } from '../tablatureSlice/constants';
+import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useTablatureHistoryStore } from '../useTablatureHistoryStore';
 
 const getTablatureStore = () => {
 	const { result } = renderHook(() => useTablatureEditorStore((state) => state));
@@ -24,9 +25,7 @@ const cleanupStore = () =>
 	beforeAll(() => {
 		jest.clearAllMocks();
 		cleanup();
-		act(() => {
-			resetStore();
-		});
+		resetStore();
 	});
 
 describe('Undo/redo temporal store actions', () => {
