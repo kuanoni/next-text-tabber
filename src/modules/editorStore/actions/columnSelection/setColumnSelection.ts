@@ -1,4 +1,4 @@
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useTablatureEditorStore } from '../../useTablatureEditorStore';
 
 export const setColumnSelection = (section: number, start: number, end: number) =>
 	useTablatureEditorStore.setState((state) => {

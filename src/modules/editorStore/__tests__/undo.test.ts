@@ -3,9 +3,9 @@ import { beforeAll, describe, expect, jest } from '@jest/globals';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
 import { changeInstrument } from '../actions/changeInstrument';
+import { setColumnSelection } from '../actions/columnSelection/setColumnSelection';
 import { insertColumnsAtSelection } from '../actions/insertColumnsAtSelection';
 import { resetStore } from '../actions/resetStore';
-import { setColumnSelection } from '../actions/setColumnSelection';
 import { setSelectedColumnsFret } from '../actions/setSelectedColumnsFret';
 import { electricBass, electricGuitar } from '../constants';
 import { useTablatureEditorStore } from '../useTablatureEditorStore';

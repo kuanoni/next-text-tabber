@@ -1,8 +1,8 @@
 import { memo, MouseEventHandler, useMemo } from 'react';
 
-import { columnSelectionFinish } from '@modules/editorStore/actions/columnSelectionFinish';
-import { columnSelectionHover } from '@modules/editorStore/actions/columnSelectionHover';
-import { columnSelectionStart } from '@modules/editorStore/actions/columnSelectionStart';
+import { columnSelectionFinish } from '@modules/editorStore/actions/columnSelection/columnSelectionFinish';
+import { columnSelectionHover } from '@modules/editorStore/actions/columnSelection/columnSelectionHover';
+import { columnSelectionStart } from '@modules/editorStore/actions/columnSelection/columnSelectionStart';
 import { BLANK_NOTE_CHAR } from '@modules/editorStore/constants';
 import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
 

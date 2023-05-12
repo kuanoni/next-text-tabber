@@ -1,12 +1,12 @@
 import { describe, expect, jest } from '@jest/globals';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
-import { columnSelectionFinish } from '../actions/columnSelectionFinish';
-import { columnSelectionHover } from '../actions/columnSelectionHover';
-import { columnSelectionStart } from '../actions/columnSelectionStart';
+import { columnSelectionFinish } from '../actions/columnSelection/columnSelectionFinish';
+import { columnSelectionHover } from '../actions/columnSelection/columnSelectionHover';
+import { columnSelectionStart } from '../actions/columnSelection/columnSelectionStart';
+import { setColumnSelection } from '../actions/columnSelection/setColumnSelection';
 import { resetColumnSelection } from '../actions/resetColumnSelection';
 import { resetEditor } from '../actions/resetEditor';
-import { setColumnSelection } from '../actions/setColumnSelection';
 import { BLANK_SELECTION } from '../constants';
 import { useTablatureEditorStore } from '../useTablatureEditorStore';
 

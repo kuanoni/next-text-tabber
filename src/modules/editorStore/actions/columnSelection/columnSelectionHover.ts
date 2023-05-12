@@ -1,5 +1,5 @@
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
-import { validateColumnSelection } from '../utils/validateColumnSelection';
+import { useTablatureEditorStore } from '../../useTablatureEditorStore';
+import { validateColumnSelection } from '../../utils/validateColumnSelection';
 
 export const columnSelectionHover = (sectionIndex: number, columnIndex: number) =>
 	useTablatureEditorStore.setState((state) => {
