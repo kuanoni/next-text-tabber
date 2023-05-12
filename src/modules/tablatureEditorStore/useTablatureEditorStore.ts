@@ -13,12 +13,18 @@ export const useTablatureEditorStore = create(
 			...createEditorSlice(...a),
 		})),
 		{
-			// Only save the change history of the tablature and instrument
-			partialize: (state): Pick<TablatureEditorStore, 'tablature' | 'instrument'> => {
-				const { tablature, instrument } = state;
-				return { tablature, instrument };
+			// Only store the tablature, instrument, and currentSelection in the temporal store
+			partialize: (state): Pick<TablatureEditorStore, 'tablature' | 'instrument' | 'currentSelection'> => {
+				const { tablature, instrument, currentSelection } = state;
+				return { tablature, instrument, currentSelection };
 			},
-			equality: shallow,
+			// Only update the change history when tablature or instrument change
+			equality: (currentState, pastState) => {
+				return (
+					shallow(currentState.tablature, pastState.tablature) &&
+					shallow(currentState.instrument, pastState.instrument)
+				);
+			},
 			limit: 50,
 		}
 	)
