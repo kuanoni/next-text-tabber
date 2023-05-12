@@ -1,13 +1,14 @@
 import { expect, jest } from '@jest/globals';
-import { resetStore } from '@modules/tablatureEditorStore/actions/resetStore';
-import { copySelectedColumns } from '@modules/tablatureEditorStore/editorSlice/actions/copySelectedColumns';
-import { pasteClipboard } from '@modules/tablatureEditorStore/editorSlice/actions/pasteClipboard';
-import { setClipboard } from '@modules/tablatureEditorStore/editorSlice/actions/setClipboard';
-import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/setColumnSelection';
-import { setSelectedColumnsFret } from '@modules/tablatureEditorStore/tablatureSlice/actions/setSelectedColumnsFret';
-import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
-import { validateColumnSelection } from '@modules/tablatureEditorStore/utils/validateColumnSelection';
 import { act, cleanup, renderHook } from '@testing-library/react';
+
+import { resetStore } from '../actions/resetStore';
+import { copySelectedColumns } from '../editorSlice/actions/copySelectedColumns';
+import { pasteClipboard } from '../editorSlice/actions/pasteClipboard';
+import { setClipboard } from '../editorSlice/actions/setClipboard';
+import { setColumnSelection } from '../editorSlice/actions/setColumnSelection';
+import { setSelectedColumnsFret } from '../tablatureSlice/actions/setSelectedColumnsFret';
+import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { validateColumnSelection } from '../utils/validateColumnSelection';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const printSectionColumns = (section: Section) =>
