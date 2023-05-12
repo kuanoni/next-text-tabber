@@ -1,1 +1,0 @@
-type TablatureEditorStore = TablatureSlice & EditorSlice;

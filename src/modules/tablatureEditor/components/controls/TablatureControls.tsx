@@ -1,7 +1,8 @@
+import { changeInstrument } from '@modules/tablatureEditorStore/actions/changeInstrument';
+import { CELL_MODIFIERS, electricBass, electricGuitar } from '@modules/tablatureEditorStore/constants';
 import { copySelectedColumns } from '@modules/tablatureEditorStore/editorSlice/actions/copySelectedColumns';
 import { insertClipboard } from '@modules/tablatureEditorStore/editorSlice/actions/insertClipboard';
 import { pasteClipboard } from '@modules/tablatureEditorStore/editorSlice/actions/pasteClipboard';
-import { changeInstrument } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeInstrument';
 import { clearSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/clearSelectedColumns';
 import { duplicateSelectedColumns } from '@modules/tablatureEditorStore/tablatureSlice/actions/duplicateSelectedColumns';
 import { insertColumnsAtSelection } from '@modules/tablatureEditorStore/tablatureSlice/actions/insertColumnsAtSelection';
@@ -9,7 +10,6 @@ import { pushBlankColumn } from '@modules/tablatureEditorStore/tablatureSlice/ac
 import { pushBlankSection } from '@modules/tablatureEditorStore/tablatureSlice/actions/pushBlankSection';
 import { resetTablature } from '@modules/tablatureEditorStore/tablatureSlice/actions/resetTablature';
 import { setSelectedColumnsCellModifiers } from '@modules/tablatureEditorStore/tablatureSlice/actions/setSelectedColumnsCellModifiers';
-import { CELL_MODIFIERS, electricBass, electricGuitar } from '@modules/tablatureEditorStore/tablatureSlice/constants';
 import { useTablatureHistoryStore } from '@modules/tablatureEditorStore/useTablatureHistoryStore';
 
 import styles from './TablatureControls.module.scss';

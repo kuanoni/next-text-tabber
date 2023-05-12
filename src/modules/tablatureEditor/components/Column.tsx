@@ -1,9 +1,9 @@
 import { memo, MouseEventHandler, useMemo } from 'react';
 
-import { columnSelectionFinish } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionFinish';
+import { columnSelectionFinish } from '@modules/tablatureEditorStore/actions/columnSelectionFinish';
+import { BLANK_NOTE_CHAR } from '@modules/tablatureEditorStore/constants';
 import { columnSelectionHover } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionHover';
 import { columnSelectionStart } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionStart';
-import { BLANK_NOTE_CHAR } from '@modules/tablatureEditorStore/tablatureSlice/constants';
 import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 
 import styles from './Tablature.module.scss';

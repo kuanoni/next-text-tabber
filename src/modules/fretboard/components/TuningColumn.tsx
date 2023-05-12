@@ -5,7 +5,7 @@ import styles from './Fretboard.module.scss';
 import TuningSelector from './TuningSelector';
 import TuningSelectorCommon from './TuningSelectorCommon';
 
-const tuningSelector = (state: TablatureEditorStore) => state.tuning;
+const tuningSelector = (state: EditorStore) => state.tuning;
 
 const TuningColumn = () => {
 	const tuning = useTablatureEditorStore(tuningSelector);

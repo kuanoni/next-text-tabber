@@ -9,8 +9,8 @@ interface Props {
 	section: Section;
 }
 
-const currentSelectionSelector = (state: TablatureEditorStore) => state.currentSelection;
-const ghostSelectionSelector = (state: TablatureEditorStore) => state.ghostSelection;
+const currentSelectionSelector = (state: EditorStore) => state.currentSelection;
+const ghostSelectionSelector = (state: EditorStore) => state.ghostSelection;
 
 const Section = ({ sectionIndex, section }: Props) => {
 	const selectedColumns = useTablatureEditorStore(currentSelectionSelector);

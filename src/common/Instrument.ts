@@ -1,4 +1,4 @@
-import { BLANK_NOTE_CHAR } from '@modules/tablatureEditorStore/tablatureSlice/constants';
+import { BLANK_NOTE_CHAR } from '@modules/tablatureEditorStore/constants';
 
 export class Instrument {
 	readonly name: string;
@@ -36,7 +36,7 @@ export class Instrument {
 		this.BLANK_TABLATURE = { sections: [this.BLANK_SECTION] };
 	}
 
-	createInitialState(): TablatureSlice {
+	createInitialState(): InstrumentState {
 		return {
 			instrument: this,
 			tuning: this.defaultTuning,
