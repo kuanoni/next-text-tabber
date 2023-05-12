@@ -1,7 +1,6 @@
-import { validateColumnSelection } from '@modules/tablatureEditorStore/utils/validateColumnSelection';
-
 import { useTablatureEditorStore } from '../useTablatureEditorStore';
 import { insertColumns } from '../utils/insertColumns';
+import { validateColumnSelection } from '../utils/validateColumnSelection';
 
 export const duplicateSelectedColumns = () =>
 	useTablatureEditorStore.setState((state) => {

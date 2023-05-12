@@ -1,4 +1,4 @@
-import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
+import { useTablatureEditorStore } from '../useTablatureEditorStore';
 
 type DeepNonNullable<T> = {
 	[P in keyof T]-?: NonNullable<T[P]>;

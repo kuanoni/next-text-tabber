@@ -1,5 +1,5 @@
-import { changeTuning } from '@modules/tablatureEditorStore/tablatureSlice/actions/changeTuning';
-import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
+import { changeTuning } from '@modules/editorStore/actions/changeTuning';
+import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
 
 import styles from './Fretboard.module.scss';
 import TuningSelector from './TuningSelector';

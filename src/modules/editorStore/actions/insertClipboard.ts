@@ -1,6 +1,5 @@
-import { insertColumns } from '@modules/tablatureEditorStore/utils/insertColumns';
-
 import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { insertColumns } from '../utils/insertColumns';
 
 export const insertClipboard = () =>
 	useTablatureEditorStore.setState((state) => {

@@ -1,5 +1,5 @@
 import numIsBetweenRange from '@common/utils/numBetweenRange';
-import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
+import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
 
 import Column from './Column';
 import styles from './Tablature.module.scss';

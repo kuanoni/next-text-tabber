@@ -1,4 +1,4 @@
-import { BLANK_NOTE_CHAR } from '@modules/tablatureEditorStore/constants';
+import { BLANK_NOTE_CHAR } from '@modules/editorStore/constants';
 
 export class Instrument {
 	readonly name: string;

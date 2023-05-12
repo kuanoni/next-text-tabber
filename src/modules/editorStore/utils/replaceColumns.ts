@@ -1,6 +1,5 @@
-import { validateColumnSelection } from '@modules/tablatureEditorStore/utils/validateColumnSelection';
-
 import { insertColumns } from './insertColumns';
+import { validateColumnSelection } from './validateColumnSelection';
 
 export const replaceColumns = (state: EditorStore, selection: ColumnSelection, columnsToInsert: Column[]) => {
 	const { section, start, end } = validateColumnSelection(selection, state.tablature);

@@ -1,4 +1,4 @@
-import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
+import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
 
 import styles from './Fretboard.module.scss';
 import FretColumn from './FretColumn';

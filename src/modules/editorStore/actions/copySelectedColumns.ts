@@ -1,6 +1,5 @@
-import { validateColumnSelection } from '@modules/tablatureEditorStore/utils/validateColumnSelection';
-
 import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { validateColumnSelection } from '../utils/validateColumnSelection';
 
 export const copySelectedColumns = () =>
 	useTablatureEditorStore.setState((state) => {

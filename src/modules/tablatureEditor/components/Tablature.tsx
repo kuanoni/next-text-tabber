@@ -1,5 +1,5 @@
-import { resetColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/resetColumnSelection';
-import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
+import { resetColumnSelection } from '@modules/editorStore/actions/resetColumnSelection';
+import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
 
 import Section from './Section';
 import styles from './Tablature.module.scss';
