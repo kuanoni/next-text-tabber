@@ -1,10 +1,10 @@
 import { changeInstrument } from '@modules/editorStore/actions/changeInstrument';
 import { clearSelectedColumns } from '@modules/editorStore/actions/clearSelectedColumns';
-import { copySelectedColumns } from '@modules/editorStore/actions/copySelectedColumns';
+import { copySelectedColumns } from '@modules/editorStore/actions/clipboard/copySelectedColumns';
+import { insertClipboard } from '@modules/editorStore/actions/clipboard/insertClipboard';
+import { pasteClipboard } from '@modules/editorStore/actions/clipboard/pasteClipboard';
 import { duplicateSelectedColumns } from '@modules/editorStore/actions/duplicateSelectedColumns';
-import { insertClipboard } from '@modules/editorStore/actions/insertClipboard';
 import { insertColumnsAtSelection } from '@modules/editorStore/actions/insertColumnsAtSelection';
-import { pasteClipboard } from '@modules/editorStore/actions/pasteClipboard';
 import { pushBlankColumn } from '@modules/editorStore/actions/pushBlankColumn';
 import { pushBlankSection } from '@modules/editorStore/actions/pushBlankSection';
 import { resetTablature } from '@modules/editorStore/actions/resetTablature';

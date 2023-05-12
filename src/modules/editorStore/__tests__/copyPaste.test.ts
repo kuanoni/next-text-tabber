@@ -1,11 +1,11 @@
 import { expect, jest } from '@jest/globals';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
+import { copySelectedColumns } from '../actions/clipboard/copySelectedColumns';
+import { pasteClipboard } from '../actions/clipboard/pasteClipboard';
+import { setClipboard } from '../actions/clipboard/setClipboard';
 import { setColumnSelection } from '../actions/columnSelection/setColumnSelection';
-import { copySelectedColumns } from '../actions/copySelectedColumns';
-import { pasteClipboard } from '../actions/pasteClipboard';
 import { resetStore } from '../actions/resetStore';
-import { setClipboard } from '../actions/setClipboard';
 import { setSelectedColumnsFret } from '../actions/setSelectedColumnsFret';
 import { useTablatureEditorStore } from '../useTablatureEditorStore';
 import { validateColumnSelection } from '../utils/validateColumnSelection';

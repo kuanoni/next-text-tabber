@@ -1,4 +1,4 @@
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useTablatureEditorStore } from '../../useTablatureEditorStore';
 
 export const setClipboard = (columns: Column[]) =>
 	useTablatureEditorStore.setState((state) => {
