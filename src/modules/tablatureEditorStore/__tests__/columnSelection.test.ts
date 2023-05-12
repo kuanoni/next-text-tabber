@@ -1,13 +1,14 @@
 import { describe, expect, jest } from '@jest/globals';
-import { columnSelectionFinish } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionFinish';
-import { columnSelectionHover } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionHover';
-import { columnSelectionStart } from '@modules/tablatureEditorStore/editorSlice/actions/columnSelectionStart';
-import { resetColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/resetColumnSelection';
-import { resetEditor } from '@modules/tablatureEditorStore/editorSlice/actions/resetEditor';
-import { setColumnSelection } from '@modules/tablatureEditorStore/editorSlice/actions/setColumnSelection';
-import { BLANK_SELECTION } from '@modules/tablatureEditorStore/editorSlice/constants';
-import { useTablatureEditorStore } from '@modules/tablatureEditorStore/useTablatureEditorStore';
 import { act, cleanup, renderHook } from '@testing-library/react';
+
+import { columnSelectionFinish } from '../editorSlice/actions/columnSelectionFinish';
+import { columnSelectionHover } from '../editorSlice/actions/columnSelectionHover';
+import { columnSelectionStart } from '../editorSlice/actions/columnSelectionStart';
+import { resetColumnSelection } from '../editorSlice/actions/resetColumnSelection';
+import { resetEditor } from '../editorSlice/actions/resetEditor';
+import { setColumnSelection } from '../editorSlice/actions/setColumnSelection';
+import { BLANK_SELECTION } from '../editorSlice/constants';
+import { useTablatureEditorStore } from '../useTablatureEditorStore';
 
 describe('Column Selection Tests', () => {
 	afterEach(() => {
@@ -16,37 +17,26 @@ describe('Column Selection Tests', () => {
 		resetEditor();
 	});
 
-	describe('[resetColumnSelection]', () => {
-		it('sets currentSelection and ghostSelection to blank selection.', () => {
-			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+	it('[resetColumnSelection] sets currentSelection and ghostSelection blank.', () => {
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
-			act(() => {
-				setColumnSelection(0, 1, 4);
-				resetColumnSelection();
-			});
-
-			expect(result.current.isSelecting).toBe(false);
-			expect(result.current.currentSelection).toEqual(BLANK_SELECTION);
-			expect(result.current.ghostSelection).toEqual(BLANK_SELECTION);
+		act(() => {
+			setColumnSelection(0, 1, 4);
+			resetColumnSelection();
 		});
+
+		expect(result.current.isSelecting).toBe(false);
+		expect(result.current.currentSelection).toEqual(BLANK_SELECTION);
+		expect(result.current.ghostSelection).toEqual(BLANK_SELECTION);
 	});
 
-	describe('[columnSelectionStart]', () => {
-		it('sets "isSelecting" true.', () => {
-			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+	it('[columnSelectionStart] sets "isSelecting" true, "currentSelection" blank, and "ghostSelection" appropriately.', () => {
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
-			act(() => columnSelectionStart(0, 1));
+		act(() => columnSelectionStart(0, 1));
 
-			expect(result.current.isSelecting).toBe(true);
-		});
-
-		it('sets "ghostSelection" appropriately.', () => {
-			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
-
-			act(() => columnSelectionStart(0, 1));
-
-			expect(result.current.ghostSelection).toEqual({ section: 0, start: 1, end: 1 });
-		});
+		expect(result.current.isSelecting).toBe(true);
+		expect(result.current.ghostSelection).toEqual({ section: 0, start: 1, end: 1 });
 	});
 
 	describe('[columnSelectionHover]', () => {
@@ -84,7 +74,7 @@ describe('Column Selection Tests', () => {
 	});
 
 	describe('[columnSelectionFinish]', () => {
-		it('sets "isSelecting" flag false.', () => {
+		it('sets "isSelecting" false, "currentSelection" to "ghostSelection", and "ghostSelection" to blank.', () => {
 			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 			act(() => {
@@ -94,29 +84,7 @@ describe('Column Selection Tests', () => {
 			});
 
 			expect(result.current.isSelecting).toEqual(false);
-		});
-
-		it('sets "currentSelection" to equal "ghostSelection".', () => {
-			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
-
-			act(() => {
-				columnSelectionStart(0, 1);
-				columnSelectionHover(0, 5);
-				columnSelectionFinish();
-			});
-
 			expect(result.current.currentSelection).toEqual({ section: 0, start: 1, end: 5 });
-		});
-
-		it('resets "ghostSelection" to blank selection.', () => {
-			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
-
-			act(() => {
-				columnSelectionStart(0, 1);
-				columnSelectionHover(0, 5);
-				columnSelectionFinish();
-			});
-
 			expect(result.current.ghostSelection).toEqual(BLANK_SELECTION);
 		});
 
@@ -129,7 +97,7 @@ describe('Column Selection Tests', () => {
 			expect(finishWithNullSelection).toThrow('section is null');
 		});
 
-		it('finish with "start" > "end".', () => {
+		it('"currentSelection.start" <= "currentSelection.end".', () => {
 			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 			act(() => {
