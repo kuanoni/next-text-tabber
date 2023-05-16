@@ -1,5 +1,6 @@
 import { memo, MouseEventHandler, useMemo } from 'react';
 
+import numIsBetweenRange from '@common/utils/numBetweenRange';
 import { columnSelectionFinish } from '@modules/editorStore/actions/columnSelection/columnSelectionFinish';
 import { columnSelectionHover } from '@modules/editorStore/actions/columnSelection/columnSelectionHover';
 import { columnSelectionStart } from '@modules/editorStore/actions/columnSelection/columnSelectionStart';
@@ -10,12 +11,24 @@ import styles from './Tablature.module.scss';
 
 interface Props {
 	sectionIndex: number;
-	columnIndex: number;
 	column: Column;
-	isSelected: boolean;
-	isGhostSelected: boolean;
-	modifierPosition: ColumnModifierPosition;
+	columnIndex: number;
 }
+
+// Check adjacent columns to see if column with modifier is the start or end of the modified column group
+const getColumnModifierPosition = (columnIndex: number, columns: Column[]): ColumnModifierPosition => {
+	const column = columns[columnIndex];
+	if (!column.modifier) return undefined;
+
+	const prevColumn = columns[columnIndex - 1];
+	const nextColumn = columns[columnIndex + 1];
+
+	if (prevColumn?.modifier !== column.modifier && nextColumn?.modifier !== column.modifier) return 'solo';
+
+	if (prevColumn?.modifier !== column.modifier) return 'start';
+	else if (nextColumn?.modifier !== column.modifier) return 'end';
+	else return 'middle';
+};
 
 const getColumnFormattingInfo = (cells: Cell[]) => {
 	// These are flags which will determine the type of end-padding the column gets
@@ -92,10 +105,26 @@ const formatInnerRows = (column: Column, modifierPosition: ColumnModifierPositio
 	return [modifierRow, ...cellRows];
 };
 
-const isSelectingSelector = (state: EditorStore) => state.isSelecting;
+const isColumnInSelection = (selection: ColumnSelection, columnIndex: number, sectionIndex: number) =>
+	selection.start !== null &&
+	selection.end !== null &&
+	sectionIndex === selection.section &&
+	numIsBetweenRange(columnIndex, selection.start, selection.end);
 
-const Column = memo<Props>(({ sectionIndex, columnIndex, column, isSelected, isGhostSelected, modifierPosition }) => {
-	const isSelecting = useTablatureEditorStore(isSelectingSelector);
+const Column = memo<Props>(({ sectionIndex, column, columnIndex }) => {
+	const isSelecting = useTablatureEditorStore(
+		(state) => state.isSelecting && state.ghostSelection.section === sectionIndex
+	);
+	const isSelected = useTablatureEditorStore((state) =>
+		isColumnInSelection(state.currentSelection, columnIndex, sectionIndex)
+	);
+	const isGhostSelected = useTablatureEditorStore((state) =>
+		isColumnInSelection(state.ghostSelection, columnIndex, sectionIndex)
+	);
+
+	const modifierPosition2 = useTablatureEditorStore((state) =>
+		getColumnModifierPosition(columnIndex, state.tablature.sections[sectionIndex].columns)
+	);
 
 	const onMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
 		e.stopPropagation();
@@ -114,7 +143,7 @@ const Column = memo<Props>(({ sectionIndex, columnIndex, column, isSelected, isG
 		if (isSelecting) columnSelectionHover(sectionIndex, columnIndex);
 	};
 
-	const innerRows = useMemo(() => formatInnerRows(column, modifierPosition), [column, modifierPosition]);
+	const innerRows = useMemo(() => formatInnerRows(column, modifierPosition2), [column, modifierPosition2]);
 
 	return (
 		<div
