@@ -8,7 +8,7 @@ import { pushBlankSection } from '@modules/editorStore/actions/pushBlankSection'
 import { resetTablature } from '@modules/editorStore/actions/resetTablature';
 import { setInstrument } from '@modules/editorStore/actions/setInstrument';
 import { setSelectedColumnsCellModifiers } from '@modules/editorStore/actions/setSelectedColumnsCellModifiers';
-import { setSelectedColumnsColumnModifiers } from '@modules/editorStore/actions/setSelectedColumnsColumnsModifiers';
+import { setSelectedColumnModifiers } from '@modules/editorStore/actions/setSelectedColumnsModifiers';
 import { CELL_MODIFIERS, COLUMN_MODIFIERS, electricBass, electricGuitar } from '@modules/editorStore/constants';
 import { useTablatureHistoryStore } from '@modules/editorStore/useTablatureHistoryStore';
 
@@ -101,13 +101,13 @@ const TablatureControls = () => {
 			<div className={styles['button-group']}>
 				<button
 					data-testid='set-column-modifier Palm mute'
-					onClick={() => setSelectedColumnsColumnModifiers(COLUMN_MODIFIERS['Palm mute'])}
+					onClick={() => setSelectedColumnModifiers(COLUMN_MODIFIERS['Palm mute'])}
 				>
 					PM
 				</button>
 				<button
 					data-testid='set-column-modifier Vibrato'
-					onClick={() => setSelectedColumnsColumnModifiers(COLUMN_MODIFIERS['Vibrato'])}
+					onClick={() => setSelectedColumnModifiers(COLUMN_MODIFIERS['Vibrato'])}
 				>
 					~
 				</button>
