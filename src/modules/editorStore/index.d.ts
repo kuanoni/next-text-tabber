@@ -32,7 +32,6 @@ type CellModifier = CellModifierSnap | CellModifierWrap;
 
 interface ColumnModifier {
 	start?: string;
-	middle?: string;
 	end?: string;
 	filler: string;
 }

@@ -14,8 +14,8 @@ export const CELL_MODIFIERS: { [i: string]: CellModifier } = {
 };
 
 export const COLUMN_MODIFIERS: { [i: string]: ColumnModifier } = {
-	'Palm mute': { start: 'PM', end: '-|', filler: '-' },
-	Vibrato: { filler: '~' },
+	'Palm mute': { start: 'PM', end: '|', filler: '-' },
+	Vibrato: { start: 'V', filler: '~' },
 };
 
 const SIX_STRING_TUNINGS = {
