@@ -14,7 +14,7 @@ interface Props {
 	column: Column;
 	isSelected: boolean;
 	isGhostSelected: boolean;
-	modifierPosition: keyof ColumnModifier | undefined;
+	modifierPosition: ColumnModifierPosition;
 }
 
 const getColumnFormattingInfo = (cells: Cell[]) => {
@@ -45,29 +45,30 @@ const getColumnFormattingInfo = (cells: Cell[]) => {
 	return { columnWidth, requiresPadding };
 };
 
-const formatInnerRows = (column: Column, modifierPosition?: keyof ColumnModifier) => {
+const formatInnerRows = (column: Column, modifierPosition: ColumnModifierPosition) => {
 	const { cells, modifier } = column;
 	const { columnWidth, requiresPadding } = getColumnFormattingInfo(cells);
 
 	let modifierRow = '\u00A0';
-	if (modifier)
+	if (modifier) {
+		const start = modifier.start || modifier.filler;
+		const end = modifier.end || modifier.filler;
+
 		switch (modifierPosition) {
 			case 'start':
-				modifierRow = ((modifier[modifierPosition] as string) || modifier.filler).padEnd(
-					columnWidth + 1,
-					modifier.filler
-				);
+				modifierRow = start.padEnd(columnWidth + (requiresPadding ? 1 : 0), modifier.filler);
 				break;
 			case 'end':
-				modifierRow = ((modifier[modifierPosition] as string) || modifier.filler).padStart(
-					columnWidth,
-					modifier.filler
-				);
+				modifierRow = end.padStart(columnWidth, modifier.filler);
+				break;
+			case 'solo':
+				modifierRow = start.padEnd(columnWidth, modifier.filler);
 				break;
 			default:
-				modifierRow = modifier.filler.repeat(columnWidth + 1);
+				modifierRow = modifier.filler.padEnd(columnWidth + (requiresPadding ? 1 : 0), modifier.filler);
 				break;
 		}
+	}
 
 	const cellRows = cells.map((cell) => {
 		let rowString = cell.fret.toString();
