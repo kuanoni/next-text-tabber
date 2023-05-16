@@ -30,12 +30,12 @@ const getColumnModifierPosition = (columnIndex: number, columns: Column[]): Colu
 	else return 'middle';
 };
 
-const getColumnFormattingInfo = (cells: Cell[]) => {
+const getColumnFormattingInfo = (column: Column) => {
 	// These are flags which will determine the type of end-padding the column gets
 	let isColumnSnapping = false;
 	let isColumnBlank = true;
 
-	const columnWidth = cells.reduce((prevWidth, cell) => {
+	const columnWidth = column.cells.reduce((prevWidth, cell) => {
 		// Get character length of cell fret minus the the negative sign (-)
 		let curWidth = Math.abs(cell.fret).toString().length;
 
@@ -60,7 +60,8 @@ const getColumnFormattingInfo = (cells: Cell[]) => {
 
 const formatInnerRows = (column: Column, modifierPosition: ColumnModifierPosition) => {
 	const { cells, modifier } = column;
-	const { columnWidth, requiresPadding } = getColumnFormattingInfo(cells);
+	const { columnWidth, requiresPadding: _requiresPadding } = getColumnFormattingInfo(column);
+	let requiresPadding = _requiresPadding;
 
 	let modifierRow = '\u00A0';
 	if (modifier) {
@@ -81,6 +82,8 @@ const formatInnerRows = (column: Column, modifierPosition: ColumnModifierPositio
 				modifierRow = modifier.filler.padEnd(columnWidth + (requiresPadding ? 1 : 0), modifier.filler);
 				break;
 		}
+
+		if (modifierRow.length > columnWidth) requiresPadding = true;
 	}
 
 	const cellRows = cells.map((cell) => {
@@ -121,8 +124,7 @@ const Column = memo<Props>(({ sectionIndex, column, columnIndex }) => {
 	const isGhostSelected = useTablatureEditorStore((state) =>
 		isColumnInSelection(state.ghostSelection, columnIndex, sectionIndex)
 	);
-
-	const modifierPosition2 = useTablatureEditorStore((state) =>
+	const modifierPosition = useTablatureEditorStore((state) =>
 		getColumnModifierPosition(columnIndex, state.tablature.sections[sectionIndex].columns)
 	);
 
@@ -143,7 +145,7 @@ const Column = memo<Props>(({ sectionIndex, column, columnIndex }) => {
 		if (isSelecting) columnSelectionHover(sectionIndex, columnIndex);
 	};
 
-	const innerRows = useMemo(() => formatInnerRows(column, modifierPosition2), [column, modifierPosition2]);
+	const innerRows = useMemo(() => formatInnerRows(column, modifierPosition), [column, modifierPosition]);
 
 	return (
 		<div
