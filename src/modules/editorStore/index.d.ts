@@ -37,6 +37,8 @@ interface ColumnModifier {
 	filler: string;
 }
 
+type ColumnModifierPosition = 'start' | 'end' | 'middle' | 'solo' | undefined;
+
 interface BlankColumnSelection {
 	section: null;
 	start: null;
