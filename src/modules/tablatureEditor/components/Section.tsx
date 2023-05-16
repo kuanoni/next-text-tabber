@@ -29,6 +29,11 @@ const Section = ({ sectionIndex, section }: Props) => {
 				const isGhostSelected = isColumnInSelection(ghostSelection, columnIndex, sectionIndex);
 				let modifierPosition: keyof ColumnModifier | undefined;
 
+				if (column.modifier) {
+					if (section.columns[columnIndex - 1]?.modifier !== column.modifier) modifierPosition = 'start';
+					else if (section.columns[columnIndex + 1]?.modifier !== column.modifier) modifierPosition = 'end';
+					else modifierPosition = 'filler';
+				}
 				return (
 					<Column
 						key={columnIndex}
