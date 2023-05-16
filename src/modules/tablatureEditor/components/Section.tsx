@@ -12,24 +12,22 @@ interface Props {
 const currentSelectionSelector = (state: EditorStore) => state.currentSelection;
 const ghostSelectionSelector = (state: EditorStore) => state.ghostSelection;
 
+const isColumnInSelection = (selection: ColumnSelection, columnIndex: number, sectionIndex: number) =>
+	selection.start !== null &&
+	selection.end !== null &&
+	sectionIndex === selection.section &&
+	numIsBetweenRange(columnIndex, selection.start, selection.end);
+
 const Section = ({ sectionIndex, section }: Props) => {
-	const selectedColumns = useTablatureEditorStore(currentSelectionSelector);
-	const ghostSelectedColumns = useTablatureEditorStore(ghostSelectionSelector);
+	const currentSelection = useTablatureEditorStore(currentSelectionSelector);
+	const ghostSelection = useTablatureEditorStore(ghostSelectionSelector);
 
 	return (
 		<div className={styles.section} data-testid='section'>
 			{section.columns.map((column, columnIndex) => {
-				const isSelected =
-					selectedColumns.start !== null &&
-					selectedColumns.end !== null &&
-					sectionIndex === selectedColumns.section &&
-					numIsBetweenRange(columnIndex, selectedColumns.start, selectedColumns.end);
-
-				const isGhostSelected =
-					ghostSelectedColumns.start !== null &&
-					ghostSelectedColumns.end !== null &&
-					sectionIndex === ghostSelectedColumns.section &&
-					numIsBetweenRange(columnIndex, ghostSelectedColumns.start, ghostSelectedColumns.end);
+				const isSelected = isColumnInSelection(currentSelection, columnIndex, sectionIndex);
+				const isGhostSelected = isColumnInSelection(ghostSelection, columnIndex, sectionIndex);
+				let modifierPosition: keyof ColumnModifier | undefined;
 
 				return (
 					<Column
@@ -39,6 +37,7 @@ const Section = ({ sectionIndex, section }: Props) => {
 						columnIndex={columnIndex}
 						isSelected={isSelected}
 						isGhostSelected={isGhostSelected}
+						modifierPosition={modifierPosition}
 					/>
 				);
 			})}
