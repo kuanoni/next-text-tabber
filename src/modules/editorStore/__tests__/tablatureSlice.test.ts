@@ -3,6 +3,7 @@ import { describe, expect, jest } from '@jest/globals';
 import { act, cleanup, renderHook } from '@testing-library/react';
 
 import { clearSelectedColumns } from '../actions/clearSelectedColumns';
+import { clearSelectedColumnsModifiers } from '../actions/clearSelectedColumnsModifiers';
 import { setColumnSelection } from '../actions/columnSelection/setColumnSelection';
 import { duplicateSelectedColumns } from '../actions/duplicateSelectedColumns';
 import { insertColumnsAtSelection } from '../actions/insertColumnsAtSelection';
@@ -12,8 +13,9 @@ import { resetTablature } from '../actions/resetTablature';
 import { setInstrument } from '../actions/setInstrument';
 import { setSelectedColumnsCellModifiers } from '../actions/setSelectedColumnsCellModifiers';
 import { setSelectedColumnsFret } from '../actions/setSelectedColumnsFret';
+import { setSelectedColumnsModifiers } from '../actions/setSelectedColumnsModifiers';
 import { setTuning } from '../actions/setTuning';
-import { CELL_MODIFIERS, electricBass } from '../constants';
+import { CELL_MODIFIERS, COLUMN_MODIFIERS, electricBass } from '../constants';
 import { useTablatureEditorStore } from '../useTablatureEditorStore';
 
 const createLtrSelection = () => ({
@@ -215,5 +217,36 @@ describe('Tablature slice actions', () => {
 
 		expect(result.current.tablature.sections[0].columns[0].cells[cellIndex].modifier).toEqual(modifier);
 		expect(result.current.tablature.sections[0].columns[0].cells[cellIndex + 1].modifier).toEqual(null);
+	});
+
+	it('[setSelectedColumnsModifiers] sets modifiers of selected columns.', () => {
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+		const modifier = COLUMN_MODIFIERS['Vibrato'];
+
+		act(() => {
+			setColumnSelection(0, 0, 4);
+			setSelectedColumnsModifiers(modifier);
+		});
+
+		for (let i = 0; i < 4; i++) {
+			expect(result.current.tablature.sections[0].columns[i].modifier).toEqual(modifier);
+		}
+	});
+
+	it('[clearSelectedColumnsModifiers] clears modifiers of selected columns.', () => {
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+		const modifier = COLUMN_MODIFIERS['Vibrato'];
+
+		act(() => {
+			setColumnSelection(0, 0, 4);
+			setSelectedColumnsModifiers(modifier);
+			clearSelectedColumnsModifiers;
+		});
+
+		for (let i = 0; i < 4; i++) {
+			expect(result.current.tablature.sections[0].columns[i].modifier).toEqual(null);
+		}
 	});
 });
