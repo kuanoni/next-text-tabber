@@ -4,7 +4,7 @@ import numIsBetweenRange from '@common/utils/numBetweenRange';
 import { columnSelectionFinish } from '@modules/editorStore/actions/columnSelection/columnSelectionFinish';
 import { columnSelectionHover } from '@modules/editorStore/actions/columnSelection/columnSelectionHover';
 import { columnSelectionStart } from '@modules/editorStore/actions/columnSelection/columnSelectionStart';
-import { BLANK_NOTE_CHAR } from '@modules/editorStore/constants';
+import { BLANK_COLUMN_MODIFIER_CHAR, BLANK_NOTE_CHAR } from '@modules/editorStore/constants';
 import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
 
 import styles from './Tablature.module.scss';
@@ -63,7 +63,7 @@ const formatInnerRows = (column: Column, modifierPosition: ColumnModifierPositio
 	const { columnWidth, requiresPadding: _requiresPadding } = getColumnFormattingInfo(column);
 	let requiresPadding = _requiresPadding;
 
-	let modifierRow = '\u00A0';
+	let modifierRow = BLANK_COLUMN_MODIFIER_CHAR;
 	if (modifier) {
 		const start = modifier.start || modifier.filler;
 		const end = modifier.end || modifier.filler;

@@ -18,6 +18,8 @@ export const COLUMN_MODIFIERS: { [i: string]: ColumnModifier } = {
 	Vibrato: { filler: '~' },
 };
 
+export const BLANK_COLUMN_MODIFIER_CHAR = '\u00A0';
+
 const SIX_STRING_TUNINGS = {
 	'Drop D': [26, 33, 38, 43, 47, 52],
 };
