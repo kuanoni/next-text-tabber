@@ -1,5 +1,5 @@
 import { clearSelectedColumns } from '@modules/editorStore/actions/clearSelectedColumns';
-import { clearSelectedColumnsModifier } from '@modules/editorStore/actions/clearSelectedColumnsModifier';
+import { clearSelectedColumnsModifiers } from '@modules/editorStore/actions/clearSelectedColumnsModifiers';
 import { copySelectedColumns } from '@modules/editorStore/actions/clipboard/copySelectedColumns';
 import { pasteClipboard } from '@modules/editorStore/actions/clipboard/pasteClipboard';
 import { duplicateSelectedColumns } from '@modules/editorStore/actions/duplicateSelectedColumns';
@@ -9,7 +9,7 @@ import { pushBlankSection } from '@modules/editorStore/actions/pushBlankSection'
 import { resetTablature } from '@modules/editorStore/actions/resetTablature';
 import { setInstrument } from '@modules/editorStore/actions/setInstrument';
 import { setSelectedColumnsCellModifiers } from '@modules/editorStore/actions/setSelectedColumnsCellModifiers';
-import { setSelectedColumnModifiers } from '@modules/editorStore/actions/setSelectedColumnsModifiers';
+import { setSelectedColumnsModifiers } from '@modules/editorStore/actions/setSelectedColumnsModifiers';
 import { CELL_MODIFIERS, COLUMN_MODIFIERS, electricBass, electricGuitar } from '@modules/editorStore/constants';
 import { useTablatureHistoryStore } from '@modules/editorStore/useTablatureHistoryStore';
 
@@ -102,18 +102,18 @@ const TablatureControls = () => {
 			<div className={styles['button-group']}>
 				<button
 					data-testid='set-column-modifier Palm mute'
-					onClick={() => setSelectedColumnModifiers(COLUMN_MODIFIERS['Palm mute'])}
+					onClick={() => setSelectedColumnsModifiers(COLUMN_MODIFIERS['Palm mute'])}
 				>
 					PM
 				</button>
 				<button
 					data-testid='set-column-modifier Vibrato'
-					onClick={() => setSelectedColumnModifiers(COLUMN_MODIFIERS['Vibrato'])}
+					onClick={() => setSelectedColumnsModifiers(COLUMN_MODIFIERS['Vibrato'])}
 				>
 					~
 				</button>
 			</div>
-			<button data-testid='clearSelectedColumnsModifier' onClick={() => clearSelectedColumnsModifier()}>
+			<button data-testid='clearSelectedColumnsModifier' onClick={() => clearSelectedColumnsModifiers()}>
 				clearSelectedColumnsModifier
 			</button>
 		</div>
