@@ -1,4 +1,5 @@
 import { clearSelectedColumns } from '@modules/editorStore/actions/clearSelectedColumns';
+import { clearSelectedColumnsModifier } from '@modules/editorStore/actions/clearSelectedColumnsModifier';
 import { copySelectedColumns } from '@modules/editorStore/actions/clipboard/copySelectedColumns';
 import { pasteClipboard } from '@modules/editorStore/actions/clipboard/pasteClipboard';
 import { duplicateSelectedColumns } from '@modules/editorStore/actions/duplicateSelectedColumns';
@@ -112,6 +113,9 @@ const TablatureControls = () => {
 					~
 				</button>
 			</div>
+			<button data-testid='clearSelectedColumnsModifier' onClick={() => clearSelectedColumnsModifier()}>
+				clearSelectedColumnsModifier
+			</button>
 		</div>
 	);
 };
