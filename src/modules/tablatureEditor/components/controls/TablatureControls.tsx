@@ -1,6 +1,6 @@
 import { clearSelectedColumns } from '@modules/editorStore/actions/clearSelectedColumns';
+import { clearSelectedColumnsModifiers } from '@modules/editorStore/actions/clearSelectedColumnsModifiers';
 import { copySelectedColumns } from '@modules/editorStore/actions/clipboard/copySelectedColumns';
-import { insertClipboard } from '@modules/editorStore/actions/clipboard/insertClipboard';
 import { pasteClipboard } from '@modules/editorStore/actions/clipboard/pasteClipboard';
 import { duplicateSelectedColumns } from '@modules/editorStore/actions/duplicateSelectedColumns';
 import { insertColumnsAtSelection } from '@modules/editorStore/actions/insertColumnsAtSelection';
@@ -9,7 +9,8 @@ import { pushBlankSection } from '@modules/editorStore/actions/pushBlankSection'
 import { resetTablature } from '@modules/editorStore/actions/resetTablature';
 import { setInstrument } from '@modules/editorStore/actions/setInstrument';
 import { setSelectedColumnsCellModifiers } from '@modules/editorStore/actions/setSelectedColumnsCellModifiers';
-import { CELL_MODIFIERS, electricBass, electricGuitar } from '@modules/editorStore/constants';
+import { setSelectedColumnsModifiers } from '@modules/editorStore/actions/setSelectedColumnsModifiers';
+import { CELL_MODIFIERS, COLUMN_MODIFIERS, electricBass, electricGuitar } from '@modules/editorStore/constants';
 import { useTablatureHistoryStore } from '@modules/editorStore/useTablatureHistoryStore';
 
 import styles from './TablatureControls.module.scss';
@@ -32,9 +33,6 @@ const TablatureControls = () => {
 			</button>
 			<button data-testid='copySelectedColumns' onClick={() => copySelectedColumns()}>
 				copySelectedColumns
-			</button>
-			<button data-testid='insertClipboard' onClick={() => insertClipboard()}>
-				insertClipboard
 			</button>
 			<button data-testid='pasteClipboard' onClick={() => pasteClipboard()}>
 				pasteClipboard
@@ -101,6 +99,23 @@ const TablatureControls = () => {
 					{'< >'}
 				</button>
 			</div>
+			<div className={styles['button-group']}>
+				<button
+					data-testid='set-column-modifier Palm mute'
+					onClick={() => setSelectedColumnsModifiers(COLUMN_MODIFIERS['Palm mute'])}
+				>
+					PM
+				</button>
+				<button
+					data-testid='set-column-modifier Vibrato'
+					onClick={() => setSelectedColumnsModifiers(COLUMN_MODIFIERS['Vibrato'])}
+				>
+					~
+				</button>
+			</div>
+			<button data-testid='clearSelectedColumnsModifier' onClick={() => clearSelectedColumnsModifiers()}>
+				clearSelectedColumnsModifier
+			</button>
 		</div>
 	);
 };

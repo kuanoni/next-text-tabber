@@ -32,10 +32,11 @@ type CellModifier = CellModifierSnap | CellModifierWrap;
 
 interface ColumnModifier {
 	start?: string;
-	middle?: string;
 	end?: string;
 	filler: string;
 }
+
+type ColumnModifierPosition = 'start' | 'end' | 'middle' | 'solo' | undefined;
 
 interface BlankColumnSelection {
 	section: null;
