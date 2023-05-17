@@ -242,7 +242,7 @@ describe('Tablature slice actions', () => {
 		act(() => {
 			setColumnSelection(0, 0, 4);
 			setSelectedColumnsModifiers(modifier);
-			clearSelectedColumnsModifiers;
+			clearSelectedColumnsModifiers();
 		});
 
 		for (let i = 0; i < 4; i++) {
