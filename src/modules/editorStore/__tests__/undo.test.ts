@@ -7,6 +7,7 @@ import { insertColumnsAtSelection } from '../actions/insertColumnsAtSelection';
 import { resetStore } from '../actions/resetStore';
 import { setInstrument } from '../actions/setInstrument';
 import { setSelectedColumnsFret } from '../actions/setSelectedColumnsFret';
+import { setTuning } from '../actions/setTuning';
 import { electricBass, electricGuitar } from '../constants';
 import { useTablatureEditorStore } from '../useTablatureEditorStore';
 import { useTablatureHistoryStore } from '../useTablatureHistoryStore';
@@ -32,7 +33,7 @@ describe('Undo/redo temporal store actions', () => {
 	describe('[setInstrument]', () => {
 		cleanupStore();
 
-		it('undoes change to electricBass.', () => {
+		it('does NOT undo change to instrument.', () => {
 			const store = getTablatureStore();
 			const { undo } = getHistoryFns();
 
@@ -48,20 +49,32 @@ describe('Undo/redo temporal store actions', () => {
 				undo();
 			});
 
-			expect(store.current.instrument).toEqual(electricGuitar);
+			expect(store.current.instrument).toEqual(electricBass);
 		});
+	});
 
-		it('redoes change to electricBass.', () => {
+	describe('[setTuning]', () => {
+		cleanupStore();
+
+		it('does NOT undo change to tuning.', () => {
 			const store = getTablatureStore();
-			const { redo } = getHistoryFns();
+			const { undo } = getHistoryFns();
 
-			expect(store.current.instrument).toEqual(electricGuitar);
+			const tuning = electricGuitar.commonTunings['Drop D'];
+
+			expect(store.current.tuning).toEqual(electricGuitar.defaultTuning);
 
 			act(() => {
-				redo();
+				setTuning(tuning);
 			});
 
-			expect(store.current.instrument).toEqual(electricBass);
+			expect(store.current.tuning).toEqual(tuning);
+
+			act(() => {
+				undo();
+			});
+
+			expect(store.current.tuning).toEqual(tuning);
 		});
 	});
 
