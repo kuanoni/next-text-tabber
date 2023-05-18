@@ -24,6 +24,17 @@
 	line-height: 11px;
 	box-sizing: content-box;
 
+	&.tuning {
+		&::after {
+			display: none;
+		}
+
+		&:hover {
+			background: none;
+			cursor: auto;
+		}
+	}
+
 	&[data-selected='true']::after,
 	&[data-ghost-selected='true']::after {
 		background-color: black;

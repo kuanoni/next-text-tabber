@@ -7,7 +7,7 @@ import TuningSelectorCommon from './TuningSelectorCommon';
 
 const tuningSelector = (state: EditorStore) => state.tuning;
 
-const TuningColumn = () => {
+const FretboardTuningColumn = () => {
 	const tuning = useTablatureEditorStore(tuningSelector);
 
 	const onTuningSelectorChange = (stringIndex: number, tuningValue: number) => {
@@ -31,4 +31,4 @@ const TuningColumn = () => {
 	);
 };
 
-export default TuningColumn;
+export default FretboardTuningColumn;

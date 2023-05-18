@@ -1,14 +1,14 @@
 import React from 'react';
 
-import TuningColumn from './TuningColumn';
+import FretboardTuningColumn from './FretboardTuningColumn';
 
-describe('<TuningColumn />', () => {
+describe('<FretboardTuningColumn />', () => {
 	it('renders', () => {
-		cy.mount(<TuningColumn />);
+		cy.mount(<FretboardTuningColumn />);
 	});
 
 	it('has default (E Standard) tunings selected', () => {
-		cy.mount(<TuningColumn />);
+		cy.mount(<FretboardTuningColumn />);
 
 		cy.getTestElement('tuning-selector-common').find('option:selected').should('have.text', 'E Standard (Default)');
 		cy.getTestElement('tuning-selector-0').find('option:selected').should('have.text', 'E2');
@@ -20,7 +20,7 @@ describe('<TuningColumn />', () => {
 	});
 
 	it('TuningSelectorCommon correctly changes tunings when changed', () => {
-		cy.mount(<TuningColumn />);
+		cy.mount(<FretboardTuningColumn />);
 
 		cy.getTestElement('tuning-selector-common').select('Drop D');
 
