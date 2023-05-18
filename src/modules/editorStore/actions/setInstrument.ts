@@ -1,9 +1,10 @@
 import type { Instrument } from '@modules/editorStore/Instrument';
 
 import { useTablatureEditorStore } from '../useTablatureEditorStore';
-import { resetColumnSelection } from './resetColumnSelection';
+import { resetStore } from './resetStore';
 
 export const setInstrument = (instrument: Instrument) => {
+	resetStore();
 	useTablatureEditorStore.setState(instrument.createInitialState());
-	resetColumnSelection();
+	useTablatureEditorStore.temporal.getState().clear();
 };
