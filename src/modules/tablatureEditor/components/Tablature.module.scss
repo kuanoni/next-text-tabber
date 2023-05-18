@@ -1,6 +1,5 @@
 .tablature {
 	padding: 1rem;
-	border: 1px solid $c-foreground;
 	font-family: $font-mono;
 	font-size: 12px;
 	user-select: none;
@@ -12,15 +11,17 @@
 	row-gap: 24px;
 	margin: 0.5rem 0;
 	padding: 0.4rem 1rem 0.4rem 0.5rem;
-	box-shadow: 1px 2px 7px 0 #9b9b9b;
+	background-color: $c-neutral-grey-050;
+	border-radius: $border-radius-m;
+	box-shadow: $shadow-light-s;
 }
 
 .column {
 	display: block;
 	position: relative;
 	padding-bottom: 6px;
-	letter-spacing: 3px;
-	outline: 1px solid transparent;
+	letter-spacing: 2px;
+	font-family: 'Courier New', Courier, monospace;
 	line-height: 11px;
 	box-sizing: content-box;
 
@@ -37,29 +38,33 @@
 
 	&[data-selected='true']::after,
 	&[data-ghost-selected='true']::after {
-		background-color: black;
+		background-color: $c-primary-600;
 	}
 
 	&[data-selected='true'] {
-		background-color: #d1d1d1;
+		background: linear-gradient(0deg, $c-success-100 60%, transparent);
 	}
 
 	&[data-ghost-selected='true'] {
-		background-color: #e2e2e2;
+		background: linear-gradient(0deg, $c-neutral-grey-200 60%, transparent);
+	}
+
+	&:active {
+		background: linear-gradient(0deg, $c-neutral-grey-200 60%, transparent) !important;
 	}
 
 	&:hover {
-		background-color: #e2e2e2;
+		background: linear-gradient(0deg, $c-neutral-grey-300 60%, transparent);
 		cursor: pointer;
 	}
 
 	&::after {
 		position: absolute;
 		bottom: 0;
-		left: 0;
-		width: calc(100% - 1px);
+		left: 1px;
+		width: calc(100% - 2px);
 		height: 3px;
-		background-color: #9b9b9b;
+		background-color: $c-neutral-grey-400;
 		content: '';
 	}
 }
