@@ -32,7 +32,7 @@ export class Instrument {
 			modifier: null,
 			cells: new Array<Cell>(amountOfStrings).fill(this.BLANK_CELL),
 		};
-		this.BLANK_SECTION = { columns: new Array(8).fill(this.BLANK_COLUMN) };
+		this.BLANK_SECTION = { name: 'Section 1', columns: new Array(8).fill(this.BLANK_COLUMN) };
 		this.BLANK_TABLATURE = { sections: [this.BLANK_SECTION] };
 	}
 

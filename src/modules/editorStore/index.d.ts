@@ -9,7 +9,7 @@ interface Column {
 }
 
 interface Section {
-	name?: string;
+	name: string;
 	columns: Column[];
 }
 

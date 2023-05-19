@@ -88,14 +88,13 @@ describe('Tablature slice actions', () => {
 		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
 
 		const currentTablature = result.current.tablature;
-		const blankSection = result.current.instrument.BLANK_SECTION;
-		const expected: Tablature = { sections: [...currentTablature.sections, blankSection] };
+		const blankSection = { ...result.current.instrument.BLANK_SECTION, name: 'Section 2' };
 
 		act(() => {
 			pushBlankSection();
 		});
 
-		expect(result.current.tablature).toEqual(expected);
+		expect(result.current.tablature.sections).toEqual([currentTablature.sections[0], blankSection]);
 	});
 
 	it('[clearSelectedColumns] sets selected columns blank.', () => {
@@ -127,9 +126,10 @@ describe('Tablature slice actions', () => {
 			insertColumnsAtSelection();
 		});
 
-		expect(result.current.tablature).toEqual({
-			sections: [{ columns: [blankColumn, ...currentTablature.sections[0].columns] }],
-		});
+		expect(result.current.tablature.sections[0].columns).toEqual([
+			blankColumn,
+			...currentTablature.sections[0].columns,
+		]);
 	});
 
 	describe('[setSelectedColumnFrets] sets specific frets of selected columns.', () => {
