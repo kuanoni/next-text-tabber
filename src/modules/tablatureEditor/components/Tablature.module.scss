@@ -28,6 +28,9 @@
 }
 
 .column {
+	$selectedBorder: 2px solid $c-success-600;
+	$ghostSelectedBorder: 2px solid $c-success-300;
+
 	display: block;
 	position: relative;
 	padding-bottom: 6px;
@@ -36,22 +39,45 @@
 	line-height: 11px;
 	box-sizing: content-box;
 
-	&[data-selected='true']::after,
-	&[data-ghost-selected='true']::after {
-		background-color: $c-primary-600;
+	&[data-selected-status='selected']::before,
+	&[data-selected-status='selected-start']::before,
+	&[data-selected-status='selected-end']::before,
+	&[data-selected-status='selected-solo']::before {
+		border: $selectedBorder;
 	}
 
-	&[data-selected='true'] {
-		background: linear-gradient(0deg, $c-success-100 60%, transparent);
+	&[data-selected-status='ghost-selected']::before,
+	&[data-selected-status='ghost-selected-start']::before,
+	&[data-selected-status='ghost-selected-end']::before,
+	&[data-selected-status='ghost-selected-solo']::before {
+		border: $ghostSelectedBorder;
 	}
 
-	&[data-ghost-selected='true'] {
-		background-color: $c-neutral-grey-200;
+	&[data-selected-status='selected']::before,
+	&[data-selected-status='ghost-selected']::before {
+		border-right: none;
+		border-left: none;
 	}
 
-	&:active {
-		background-color: $c-neutral-grey-200;
-		outline: 1px dashed $c-primary-400;
+	&[data-selected-status='selected-start']::before,
+	&[data-selected-status='ghost-selected-start']::before {
+		left: -1px;
+		border-right: none;
+	}
+
+	&[data-selected-status='selected-end']::before,
+	&[data-selected-status='ghost-selected-end']::before {
+		left: -1px;
+		border-left: none;
+	}
+
+	&::before {
+		position: absolute;
+		top: -4px;
+		right: 0;
+		bottom: -4px;
+		left: 0;
+		content: '';
 	}
 
 	&:hover {
@@ -60,6 +86,7 @@
 	}
 
 	&::after {
+		display: none;
 		position: absolute;
 		bottom: 0;
 		left: 1px;

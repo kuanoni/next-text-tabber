@@ -118,12 +118,34 @@ const Column = memo<Props>(({ sectionIndex, column, columnIndex }) => {
 	const isSelecting = useTablatureEditorStore(
 		(state) => state.isSelecting && state.ghostSelection.section === sectionIndex
 	);
-	const isSelected = useTablatureEditorStore((state) =>
-		isColumnInSelection(state.currentSelection, columnIndex, sectionIndex)
-	);
-	const isGhostSelected = useTablatureEditorStore((state) =>
-		isColumnInSelection(state.ghostSelection, columnIndex, sectionIndex)
-	);
+
+	const selectedStatus = useTablatureEditorStore((state) => {
+		if (isColumnInSelection(state.ghostSelection, columnIndex, sectionIndex)) {
+			// make sure that the selection start < end
+			const [adjustedStart, adjustedEnd] =
+				state.ghostSelection.start !== null &&
+				state.ghostSelection.end !== null &&
+				state.ghostSelection.start <= state.ghostSelection.end
+					? [state.ghostSelection.start, state.ghostSelection.end]
+					: [state.ghostSelection.end, state.ghostSelection.start];
+
+			if (columnIndex === adjustedStart && columnIndex === adjustedEnd) return 'ghost-selected-solo';
+			else if (columnIndex === adjustedStart) return 'ghost-selected-start';
+			else if (columnIndex === adjustedEnd) return 'ghost-selected-end';
+			else return 'ghost-selected';
+		}
+
+		if (isColumnInSelection(state.currentSelection, columnIndex, sectionIndex)) {
+			if (columnIndex === state.currentSelection.start && columnIndex === state.currentSelection.end)
+				return 'selected-solo';
+			if (columnIndex === state.currentSelection.start) return 'selected-start';
+			else if (columnIndex === state.currentSelection.end) return 'selected-end';
+			else return 'selected';
+		}
+
+		return '';
+	});
+
 	const modifierPosition = useTablatureEditorStore((state) =>
 		getColumnModifierPosition(columnIndex, state.tablature.sections[sectionIndex].columns)
 	);
@@ -150,8 +172,7 @@ const Column = memo<Props>(({ sectionIndex, column, columnIndex }) => {
 	return (
 		<div
 			data-testid='column'
-			data-selected={isSelected}
-			data-ghost-selected={isGhostSelected}
+			data-selected-status={selectedStatus}
 			className={styles.column}
 			onMouseDown={onMouseDown}
 			onMouseOver={onMouseOver}
