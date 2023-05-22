@@ -33,11 +33,15 @@
 
 	display: block;
 	position: relative;
-	padding-bottom: 6px;
+	padding-bottom: 1em;
 	letter-spacing: 2px;
 	font-family: 'Courier New', Courier, monospace;
-	line-height: 11px;
+	line-height: 1em;
 	box-sizing: content-box;
+
+	&:not(:last-child) {
+		border-right: 1px solid $c-neutral-grey-200;
+	}
 
 	&[data-selected-status='selected']::before,
 	&[data-selected-status='selected-start']::before,
@@ -76,9 +80,9 @@
 	&::before {
 		position: absolute;
 		top: -4px;
-		right: 0;
+		right: -1px;
 		bottom: -4px;
-		left: 0;
+		left: -1px;
 		content: '';
 	}
 
@@ -99,6 +103,8 @@
 	}
 
 	&.tuning {
+		border: none;
+
 		&::after {
 			display: none;
 		}
