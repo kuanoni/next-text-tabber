@@ -4,31 +4,20 @@ import { setSelectedColumnsCellModifiers } from '@modules/editorStore/actions/se
 import { setSelectedColumnsFret } from '@modules/editorStore/actions/setSelectedColumnsFret';
 import { setSelectedColumnsModifiers } from '@modules/editorStore/actions/setSelectedColumnsModifiers';
 import { BLANK_COLUMN_MODIFIER_CHAR, CELL_MODIFIERS, COLUMN_MODIFIERS } from '@modules/editorStore/constants';
-import Fretboard from '@modules/fretboard/components/Fretboard';
-import TablatureControls from '@modules/tablatureEditor/components/controls/TablatureControls';
 import Tablature from '@modules/tablatureEditor/components/Tablature';
+
+import { getColumnCell } from './utils';
 
 const columnIndex = 1;
 const stringNumber = 3;
 const singleDigitFretNumber = 5;
 const doubleDigitFretNumber = 12;
 
-const getColumn = (columnIndex: number, sectionIndex = 0) =>
-	cy.getTestElement('section').eq(sectionIndex).find('[data-testid="column"]').eq(columnIndex);
-
-const getColumnCell = (columnIndex: number, cellIndex: number) => getColumn(columnIndex).children().eq(cellIndex);
-
 const cleanupBefore = () => {
 	before(() => resetTablature());
 
 	beforeEach(() => {
-		cy.mount(
-			<>
-				<Fretboard />
-				<Tablature />
-				<TablatureControls />
-			</>
-		);
+		cy.mount(<Tablature />);
 
 		setColumnSelection(0, columnIndex, columnIndex);
 	});

@@ -1,21 +1,11 @@
-import TablatureControls from './controls/TablatureControls';
-import Tablature from './Tablature';
+import { pushBlankSection } from '@modules/editorStore/actions/pushBlankSection';
 
-const getTablature = () => cy.getTestElement('tablature');
-const getColumn = (columnIndex: number, sectionIndex = 0) =>
-	cy.getTestElement('section').eq(sectionIndex).find('[data-testid="column"]').eq(columnIndex);
-const columnIsSelected = (e: JQuery<HTMLElement>) => expect(e).to.have.attr('data-selected', 'true');
-const columnIsGhostSelected = (e: JQuery<HTMLElement>) => expect(e).to.have.attr('data-ghost-selected', 'true');
-const columnIsNotSelected = (e: JQuery<HTMLElement>) => expect(e).to.have.attr('data-selected', 'false');
+import Tablature from '../components/Tablature';
+import { columnIsGhostSelected, columnIsNotSelected, columnIsSelected, getColumn, getTablature } from './utils';
 
 describe('Column selection', () => {
 	beforeEach(() => {
-		cy.mount(
-			<>
-				<Tablature />
-				<TablatureControls />
-			</>
-		);
+		cy.mount(<Tablature />);
 	});
 
 	it('can select multiple columns from left-to-right.', () => {
@@ -63,7 +53,7 @@ describe('Column selection', () => {
 	});
 
 	it('prevents starting a selection on one section, and ending on another.', () => {
-		cy.getTestElement('pushBlankSection').click();
+		pushBlankSection();
 		getColumn(0).trigger('mousedown').should(columnIsGhostSelected);
 		getColumn(0, 1).trigger('mouseover').trigger('mouseup').should(columnIsNotSelected);
 	});
