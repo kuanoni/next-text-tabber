@@ -1,5 +1,5 @@
-import TablatureControls from './controls/TablatureControls';
-import Tablature from './Tablature';
+import TablatureControls from '../components/controls/TablatureControls';
+import Tablature from '../components/Tablature';
 
 const getTablature = () => cy.getTestElement('tablature');
 const getColumn = (columnIndex: number, sectionIndex = 0) =>
