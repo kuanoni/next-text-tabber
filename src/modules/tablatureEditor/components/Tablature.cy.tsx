@@ -4,9 +4,15 @@ import Tablature from './Tablature';
 const getTablature = () => cy.getTestElement('tablature');
 const getColumn = (columnIndex: number, sectionIndex = 0) =>
 	cy.getTestElement('section').eq(sectionIndex).find('[data-testid="column"]').eq(columnIndex);
-const columnIsSelected = (e: JQuery<HTMLElement>) => expect(e).to.have.attr('data-selected', 'true');
-const columnIsGhostSelected = (e: JQuery<HTMLElement>) => expect(e).to.have.attr('data-ghost-selected', 'true');
-const columnIsNotSelected = (e: JQuery<HTMLElement>) => expect(e).to.have.attr('data-selected', 'false');
+const columnIsSelected = (e: JQuery<HTMLElement>) =>
+	expect(e)
+		.to.have.attr('data-selected-status')
+		.match(/^selected/);
+const columnIsGhostSelected = (e: JQuery<HTMLElement>) =>
+	expect(e)
+		.to.have.attr('data-selected-status')
+		.match(/^ghost-selected/);
+const columnIsNotSelected = (e: JQuery<HTMLElement>) => expect(e).to.have.attr('data-selected-status', '');
 
 describe('Column selection', () => {
 	beforeEach(() => {
