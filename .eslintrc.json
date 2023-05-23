@@ -1,7 +1,15 @@
 {
-	"extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended", "prettier"],
-	"rules": {
-		"prefer-const": "error",
-		"jsx-quotes": ["error", "prefer-single"]
-	}
+ "extends": [
+  "next/core-web-vitals",
+  "plugin:@typescript-eslint/recommended",
+  "prettier",
+  "plugin:storybook/recommended"
+ ],
+ "rules": {
+  "prefer-const": "error",
+  "jsx-quotes": [
+   "error",
+   "prefer-single"
+  ]
+ }
 }
