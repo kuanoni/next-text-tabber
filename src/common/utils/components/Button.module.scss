@@ -6,7 +6,6 @@ $primary: (
 	'outline-active-fill': transparent,
 	'outline-active-text': $c-primary-500,
 	'outline-disabled-border': $c-primary-100,
-	'outline-disabled-fill': $c-primary-100,
 	'outline-disabled-text': $c-primary-200,
 
 	'contained-fill': $c-primary-600,
@@ -28,7 +27,6 @@ $secondary: (
 	'outline-active-fill': transparent,
 	'outline-active-text': $c-success-500,
 	'outline-disabled-border': $c-success-100,
-	'outline-disabled-fill': $c-success-100,
 	'outline-disabled-text': $c-success-200,
 
 	'contained-fill': $c-success-600,
@@ -50,7 +48,6 @@ $neutral: (
 	'outline-active-fill': $c-white,
 	'outline-active-text': $c-neutral-grey-600,
 	'outline-disabled-border': $c-neutral-grey-200,
-	'outline-disabled-fill': $c-neutral-grey-200,
 	'outline-disabled-text': $c-neutral-grey-200,
 
 	'contained-fill': $c-neutral-grey-200,
@@ -115,7 +112,6 @@ $neutral: (
 
 			&:disabled {
 				color: map-get($colors, 'outline-disabled-text');
-				background-color: map-get($colors, 'outline-disabled-fill');
 				border-color: map-get($colors, 'outline-disabled-border');
 			}
 		}
