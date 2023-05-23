@@ -120,6 +120,31 @@ $neutral: (
 			}
 		}
 	}
+
+	&.text {
+		&.#{$name} {
+			color: map-get($colors, 'outline-text');
+			background-color: transparent;
+			border-color: transparent;
+
+			&:not(:disabled):hover {
+				background-color: map-get($colors, 'outline-hover-fill');
+			}
+
+			&:active {
+				color: map-get($colors, 'outline-active-text');
+				background-color: map-get($colors, 'outline-active-fill');
+
+				&:hover {
+					background-color: map-get($colors, 'outline-active-fill');
+				}
+			}
+
+			&:disabled {
+				color: map-get($colors, 'outline-disabled-text');
+			}
+		}
+	}
 }
 
 .btn {
