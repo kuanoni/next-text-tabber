@@ -3,7 +3,7 @@ import { MouseEventHandler, ReactNode } from 'react';
 import styles from './Button.module.scss';
 
 interface Props {
-	variant: 'contained' | 'outline' | 'text' | 'link';
+	variant: 'contained' | 'outline' | 'text';
 	size: 'extra-small' | 'small' | 'medium' | 'large';
 	color: 'primary' | 'secondary' | 'neutral';
 
