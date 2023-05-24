@@ -1,4 +1,4 @@
-name: Test
+name: Typescript Check
 
 on: [pull_request]
 
