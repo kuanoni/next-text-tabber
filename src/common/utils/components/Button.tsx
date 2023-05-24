@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactNode } from 'react';
+import { MouseEventHandler, PropsWithChildren, ReactNode } from 'react';
 
 import styles from './Button.module.scss';
 
@@ -6,22 +6,24 @@ interface Props {
 	variant?: 'contained' | 'outline' | 'text';
 	size?: 'extra-small' | 'small' | 'medium' | 'large';
 	color?: 'primary' | 'secondary' | 'neutral';
-
-	testId?: string;
 	disabled?: boolean;
+	iconStart?: ReactNode;
+	iconEnd?: ReactNode;
+	testId?: string;
 	onClick?: MouseEventHandler;
-	children: ReactNode;
 }
 
 const Button = ({
 	variant = 'contained',
 	size = 'small',
 	color = 'neutral',
-	testId,
 	disabled = false,
+	iconStart,
+	iconEnd,
 	onClick,
+	testId,
 	children,
-}: Props) => {
+}: PropsWithChildren<Props>) => {
 	console.log(styles[color]);
 
 	return (
@@ -31,7 +33,9 @@ const Button = ({
 			disabled={disabled}
 			onClick={onClick}
 		>
-			{children}
+			{iconStart}
+			<div>{children}</div>
+			{iconEnd}
 		</button>
 	);
 };
