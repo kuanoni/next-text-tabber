@@ -1,7 +1,20 @@
 {
-	"extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended", "prettier"],
+	"extends": [
+		"next/core-web-vitals",
+		"plugin:@typescript-eslint/recommended",
+		"prettier",
+		"plugin:storybook/recommended"
+	],
 	"rules": {
 		"prefer-const": "error",
 		"jsx-quotes": ["error", "prefer-single"]
-	}
+	},
+	"overrides": [
+		{
+			"files": ["**/*.stories.tsx"],
+			"rules": {
+				"react/display-name": "off"
+			}
+		}
+	]
 }

@@ -1,0 +1,208 @@
+$primary: (
+	'outline-border': $c-primary-600,
+	'outline-text': $c-primary-600,
+	'outline-hover-fill': $c-primary-050,
+	'outline-active-border': $c-primary-500,
+	'outline-active-fill': transparent,
+	'outline-active-text': $c-primary-500,
+	'outline-disabled-border': $c-primary-100,
+	'outline-disabled-text': $c-primary-200,
+
+	'contained-fill': $c-primary-600,
+	'contained-text': $c-white,
+	'contained-hover-fill': $c-primary-700,
+	'contained-active-border': $c-primary-500,
+	'contained-active-fill': $c-primary-500,
+	'contained-active-text': $c-white,
+	'contained-disabled-border': $c-primary-200,
+	'contained-disabled-fill': $c-primary-200,
+	'contained-disabled-text': $c-white,
+);
+
+$secondary: (
+	'outline-border': $c-success-600,
+	'outline-text': $c-success-600,
+	'outline-hover-fill': $c-success-050,
+	'outline-active-border': $c-success-500,
+	'outline-active-fill': transparent,
+	'outline-active-text': $c-success-500,
+	'outline-disabled-border': $c-success-100,
+	'outline-disabled-text': $c-success-200,
+
+	'contained-fill': $c-success-600,
+	'contained-text': $c-white,
+	'contained-hover-fill': $c-success-700,
+	'contained-active-border': $c-success-500,
+	'contained-active-fill': $c-success-500,
+	'contained-active-text': $c-white,
+	'contained-disabled-border': $c-success-200,
+	'contained-disabled-fill': $c-success-200,
+	'contained-disabled-text': $c-white,
+);
+
+$neutral: (
+	'outline-border': $c-neutral-grey-300,
+	'outline-text': $c-neutral-grey-700,
+	'outline-hover-fill': $c-neutral-grey-050,
+	'outline-active-border': $c-neutral-grey-200,
+	'outline-active-fill': $c-white,
+	'outline-active-text': $c-neutral-grey-600,
+	'outline-disabled-border': $c-neutral-grey-200,
+	'outline-disabled-text': $c-neutral-grey-200,
+
+	'contained-fill': $c-neutral-grey-200,
+	'contained-text': $c-neutral-grey-700,
+	'contained-hover-fill': $c-neutral-grey-300,
+	'contained-active-border': $c-neutral-grey-100,
+	'contained-active-fill': $c-neutral-grey-100,
+	'contained-active-text': $c-neutral-grey-600,
+	'contained-disabled-border': $c-neutral-grey-100,
+	'contained-disabled-fill': $c-neutral-grey-100,
+	'contained-disabled-text': $c-neutral-grey-400,
+);
+
+@mixin color-variants($name, $colors) {
+	&.contained {
+		&.#{$name} {
+			color: map-get($colors, 'contained-text');
+			background-color: map-get($colors, 'contained-fill');
+			border-color: map-get($colors, 'contained-fill');
+
+			&:not(:disabled):hover {
+				background-color: map-get($colors, 'contained-hover-fill');
+				border-color: map-get($colors, 'contained-hover-fill');
+			}
+
+			&:active {
+				color: map-get($colors, 'contained-active-text');
+
+				&:hover {
+					background-color: map-get($colors, 'contained-active-fill');
+					border-color: map-get($colors, 'contained-active-border');
+				}
+			}
+
+			&:disabled {
+				color: map-get($colors, 'contained-disabled-text');
+				background-color: map-get($colors, 'contained-disabled-fill');
+				border-color: map-get($colors, 'contained-disabled-border');
+			}
+		}
+	}
+
+	&.outline {
+		&.#{$name} {
+			color: map-get($colors, 'outline-text');
+			background-color: transparent;
+			border-color: map-get($colors, 'outline-border');
+
+			&:not(:disabled):hover {
+				background-color: map-get($colors, 'outline-hover-fill');
+			}
+
+			&:active {
+				color: map-get($colors, 'outline-active-text');
+				background-color: map-get($colors, 'outline-active-fill');
+				border-color: map-get($colors, 'outline-active-border');
+
+				&:hover {
+					background-color: map-get($colors, 'outline-active-fill');
+				}
+			}
+
+			&:disabled {
+				color: map-get($colors, 'outline-disabled-text');
+				border-color: map-get($colors, 'outline-disabled-border');
+			}
+		}
+	}
+
+	&.text {
+		&.#{$name} {
+			color: map-get($colors, 'outline-text');
+			background-color: transparent;
+			border-color: transparent;
+
+			&:not(:disabled):hover {
+				background-color: map-get($colors, 'outline-hover-fill');
+			}
+
+			&:active {
+				color: map-get($colors, 'outline-active-text');
+				background-color: map-get($colors, 'outline-active-fill');
+
+				&:hover {
+					background-color: map-get($colors, 'outline-active-fill');
+				}
+			}
+
+			&:disabled {
+				color: map-get($colors, 'outline-disabled-text');
+			}
+		}
+	}
+}
+
+.btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+	border-width: 1px;
+	border-style: solid;
+
+	@include color-variants('primary', $primary);
+	@include color-variants('secondary', $secondary);
+	@include color-variants('neutral', $neutral);
+
+	&:not(:disabled):hover {
+		cursor: pointer;
+	}
+
+	svg {
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		vertical-align: middle;
+	}
+
+	div {
+		display: inline-block;
+		vertical-align: bottom;
+		line-height: 1;
+	}
+
+	// SIZES
+
+	&.extra-small {
+		height: 36px;
+		padding: 0.5em 1em;
+		border-radius: $border-radius-s;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	&.small {
+		height: 40px;
+		padding: 0.65em 1.3em;
+		border-radius: $border-radius-s;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	&.medium {
+		height: 44px;
+		padding: 0.65em 1.3em;
+		border-radius: $border-radius-s;
+		font-size: 16px;
+		font-weight: 600;
+	}
+
+	&.large {
+		height: 48px;
+		padding: 0.75em 1.5em;
+		border-radius: $border-radius-s;
+		font-size: 16px;
+		font-weight: 600;
+	}
+}
