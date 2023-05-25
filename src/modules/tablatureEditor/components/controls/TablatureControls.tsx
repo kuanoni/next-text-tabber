@@ -2,6 +2,7 @@ import { clearSelectedColumns } from '@modules/editorStore/actions/clearSelected
 import { clearSelectedColumnsModifiers } from '@modules/editorStore/actions/clearSelectedColumnsModifiers';
 import { copySelectedColumns } from '@modules/editorStore/actions/clipboard/copySelectedColumns';
 import { pasteClipboard } from '@modules/editorStore/actions/clipboard/pasteClipboard';
+import { deleteSelectedColumns } from '@modules/editorStore/actions/deleteSelectedColumns';
 import { duplicateSelectedColumns } from '@modules/editorStore/actions/duplicateSelectedColumns';
 import { insertColumnsAtSelection } from '@modules/editorStore/actions/insertColumnsAtSelection';
 import { pushBlankColumn } from '@modules/editorStore/actions/pushBlankColumn';
@@ -27,6 +28,9 @@ const TablatureControls = () => {
 			</button>
 			<button data-testid='clearSelectedColumns' onClick={() => clearSelectedColumns()}>
 				clearSelectedColumns
+			</button>
+			<button data-testid='deleteSelectedColumns' onClick={() => deleteSelectedColumns()}>
+				deleteSelectedColumns
 			</button>
 			<button data-testid='duplicateSelectedColumns' onClick={() => duplicateSelectedColumns()}>
 				duplicateSelectedColumns
