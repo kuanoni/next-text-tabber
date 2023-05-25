@@ -5,6 +5,7 @@ import { act, cleanup, renderHook } from '@testing-library/react';
 import { clearSelectedColumns } from '../actions/clearSelectedColumns';
 import { clearSelectedColumnsModifiers } from '../actions/clearSelectedColumnsModifiers';
 import { setColumnSelection } from '../actions/columnSelection/setColumnSelection';
+import { deleteSelectedColumns } from '../actions/deleteSelectedColumns';
 import { duplicateSelectedColumns } from '../actions/duplicateSelectedColumns';
 import { insertColumnsAtSelection } from '../actions/insertColumnsAtSelection';
 import { pushBlankSection } from '../actions/pushBlankSection';
@@ -113,6 +114,21 @@ describe('Tablature slice actions', () => {
 		result.current.tablature.sections[section].columns.forEach((column, i) => {
 			if (i >= end && i <= start) expect(column).toEqual(result.current.instrument.BLANK_COLUMN);
 		});
+	});
+
+	it('[deleteSelectedColumns] removes selected columns.', () => {
+		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+
+		const { section, start, end } = createLtrSelection();
+		const selectionSize = end - start + 1;
+		const startingLength = result.current.tablature.sections[section].columns.length;
+
+		act(() => {
+			setColumnSelection(section, start, end);
+			deleteSelectedColumns();
+		});
+
+		expect(result.current.tablature.sections[section].columns.length).toBe(startingLength - selectionSize);
 	});
 
 	it('[insertColumnsAtSelection] insert a blank column after selection.', () => {

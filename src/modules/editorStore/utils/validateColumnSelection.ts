@@ -15,10 +15,10 @@ export const validateColumnSelection = (selection: ColumnSelection, tablature: T
 	if (!section) throw new Error(`Selected section at index ${sectionIndex} is non-existant: ${section}`);
 
 	if (start < 0 || start > section.columns.length - 1)
-		throw new Error(`Selected start index ${sectionIndex} is out of bounds. Max ${section.columns.length - 1}`);
+		throw new Error(`Selected start index ${start} is out of bounds [0, ${section.columns.length - 1}]`);
 
 	if (end < 0 || end > section.columns.length - 1)
-		throw new Error(`Selected end index ${sectionIndex} is out of bounds. Max ${section.columns.length - 1}`);
+		throw new Error(`Selected end index ${end} is out of bounds [0, ${section.columns.length - 1}]`);
 
 	return selection;
 };
