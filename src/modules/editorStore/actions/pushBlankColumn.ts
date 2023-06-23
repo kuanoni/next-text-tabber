@@ -5,5 +5,5 @@ export const pushBlankColumn = (sectionIndex: number) =>
 		if (!state.tablature.sections[sectionIndex])
 			return console.error(`Tried to push column to non-existant section: ${sectionIndex}`);
 
-		state.tablature.sections[sectionIndex].columns.push(state.instrument.BLANK_COLUMN);
+		state.tablature.sections[sectionIndex].columns.push(state.instrument.createBlankColumn());
 	});
