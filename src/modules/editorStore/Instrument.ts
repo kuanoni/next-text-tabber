@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid/non-secure';
+
 import { BLANK_NOTE_CHAR } from '@modules/editorStore/constants';
 
 export class Instrument {
@@ -8,8 +10,6 @@ export class Instrument {
 	readonly defaultTuningName: string;
 	readonly commonTunings: { [i: string]: number[] };
 	readonly BLANK_CELL: Cell;
-	readonly BLANK_COLUMN: Column;
-	readonly BLANK_SECTION: Section;
 	readonly BLANK_TABLATURE: Tablature;
 
 	constructor(
@@ -28,12 +28,7 @@ export class Instrument {
 		this.commonTunings = { [defaultTuningName]: defaultTuning, ...commonTunings };
 
 		this.BLANK_CELL = { modifier: null, fret: -1 };
-		this.BLANK_COLUMN = {
-			modifier: null,
-			cells: new Array<Cell>(amountOfStrings).fill(this.BLANK_CELL),
-		};
-		this.BLANK_SECTION = { name: 'Section 1', columns: new Array(8).fill(this.BLANK_COLUMN) };
-		this.BLANK_TABLATURE = { sections: [this.BLANK_SECTION] };
+		this.BLANK_TABLATURE = { sections: [this.createBlankSection()] };
 	}
 
 	createInitialState(): InstrumentState {
@@ -41,6 +36,24 @@ export class Instrument {
 			instrument: this,
 			tuning: this.defaultTuning,
 			tablature: this.BLANK_TABLATURE,
+		};
+	}
+
+	createBlankColumn(): Column {
+		return {
+			id: nanoid(),
+			modifier: null,
+			cells: new Array<Cell>(this.amountOfStrings).fill(this.BLANK_CELL),
+		};
+	}
+
+	createBlankSection(): Section {
+		const columns: Column[] = [];
+		for (let i = 0; i < 8; i++) columns.push(this.createBlankColumn());
+
+		return {
+			name: 'Section',
+			columns,
 		};
 	}
 
@@ -59,6 +72,7 @@ export class Instrument {
 		});
 
 		const column: Column = {
+			id: nanoid(),
 			modifier: null,
 			cells: columnCells,
 		};

@@ -8,7 +8,7 @@ export const deleteColumns = (selection: ColumnSelection) =>
 
 		// Prevent columns array from becoming empty
 		if (state.tablature.sections[section].columns.length === 0)
-			state.tablature.sections[section].columns = [state.instrument.BLANK_COLUMN];
+			state.tablature.sections[section].columns = [state.instrument.createBlankColumn()];
 
 		// Reset currentSelection to prevent selection from being out of bounds
 		if (start > state.tablature.sections[section].columns.length - 1)
