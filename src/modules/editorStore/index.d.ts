@@ -4,7 +4,7 @@ interface Cell {
 }
 
 interface Column {
-	id: string;
+	id: number;
 	modifier: ColumnModifier | null;
 	cells: Cell[];
 }
