@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid/non-secure';
-
 import { BLANK_NOTE_CHAR } from '@modules/editorStore/constants';
 
 export class Instrument {
@@ -11,6 +9,7 @@ export class Instrument {
 	readonly commonTunings: { [i: string]: number[] };
 	readonly BLANK_CELL: Cell;
 	readonly BLANK_TABLATURE: Tablature;
+	columnCounter: number;
 
 	constructor(
 		name: string,
@@ -27,6 +26,8 @@ export class Instrument {
 		this.defaultTuningName = defaultTuningName;
 		this.commonTunings = { [defaultTuningName]: defaultTuning, ...commonTunings };
 
+		this.columnCounter = 0;
+
 		this.BLANK_CELL = { modifier: null, fret: -1 };
 		this.BLANK_TABLATURE = { sections: [this.createBlankSection()] };
 	}
@@ -41,7 +42,7 @@ export class Instrument {
 
 	createBlankColumn(): Column {
 		return {
-			id: nanoid(),
+			id: this.columnCounter++,
 			modifier: null,
 			cells: new Array<Cell>(this.amountOfStrings).fill(this.BLANK_CELL),
 		};
@@ -55,6 +56,14 @@ export class Instrument {
 			name: 'Section',
 			columns,
 		};
+	}
+
+	cloneColumn(column: Column): Column {
+		return { ...column, id: this.columnCounter++ };
+	}
+
+	cloneColumnSelection(columns: Column[]): Column[] {
+		return columns.map((column) => this.cloneColumn(column));
 	}
 
 	createColumnFromText(columnText: string): Column {
@@ -72,7 +81,7 @@ export class Instrument {
 		});
 
 		const column: Column = {
-			id: nanoid(),
+			id: this.columnCounter++,
 			modifier: null,
 			cells: columnCells,
 		};
