@@ -1,11 +1,11 @@
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useEditorStore } from '../useEditorStore';
 
 type DeepNonNullable<T> = {
 	[P in keyof T]-?: NonNullable<T[P]>;
 };
 
 export const iterateColumnSelection = (cb: (i: number, currentSelection: DeepNonNullable<ColumnSelection>) => void) => {
-	const currentSelection = useTablatureEditorStore.getState().currentSelection;
+	const currentSelection = useEditorStore.getState().currentSelection;
 	const { section, start, end } = currentSelection;
 
 	if (section === null || start === null || end === null)

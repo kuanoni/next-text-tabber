@@ -5,7 +5,7 @@ import { shallow } from 'zustand/shallow';
 
 import { editorInitialState } from './constants';
 
-export const useTablatureEditorStore = create(
+export const useEditorStore = create(
 	temporal(
 		immer<EditorStore>(() => ({
 			...editorInitialState,

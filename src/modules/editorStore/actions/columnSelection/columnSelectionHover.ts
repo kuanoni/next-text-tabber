@@ -1,8 +1,8 @@
-import { useTablatureEditorStore } from '../../useTablatureEditorStore';
+import { useEditorStore } from '../../useEditorStore';
 import { validateColumnSelection } from '../../utils/validateColumnSelection';
 
 export const columnSelectionHover = (sectionIndex: number, columnIndex: number) =>
-	useTablatureEditorStore.setState((state) => {
+	useEditorStore.setState((state) => {
 		// ignore if selection hovers on different section
 		if (sectionIndex !== state.ghostSelection.section) return;
 

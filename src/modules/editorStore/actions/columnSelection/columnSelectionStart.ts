@@ -1,9 +1,9 @@
 import { BLANK_SELECTION } from '../../constants';
-import { useTablatureEditorStore } from '../../useTablatureEditorStore';
+import { useEditorStore } from '../../useEditorStore';
 import { validateColumnSelection } from '../../utils/validateColumnSelection';
 
 export const columnSelectionStart = (sectionIndex: number, columnIndex: number) =>
-	useTablatureEditorStore.setState((state) => {
+	useEditorStore.setState((state) => {
 		const selection = validateColumnSelection(
 			{
 				section: sectionIndex,

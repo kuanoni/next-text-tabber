@@ -1,7 +1,7 @@
 import { editorInitialState } from '../constants';
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useEditorStore } from '../useEditorStore';
 
 export const resetStore = () => {
-	useTablatureEditorStore.setState(() => ({ ...editorInitialState }), true);
-	useTablatureEditorStore.temporal.getState().clear();
+	useEditorStore.setState(() => ({ ...editorInitialState }), true);
+	useEditorStore.temporal.getState().clear();
 };

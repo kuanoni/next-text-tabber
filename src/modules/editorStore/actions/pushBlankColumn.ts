@@ -1,7 +1,7 @@
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useEditorStore } from '../useEditorStore';
 
 export const pushBlankColumn = (sectionIndex: number) =>
-	useTablatureEditorStore.setState((state) => {
+	useEditorStore.setState((state) => {
 		if (!state.tablature.sections[sectionIndex])
 			return console.error(`Tried to push column to non-existant section: ${sectionIndex}`);
 

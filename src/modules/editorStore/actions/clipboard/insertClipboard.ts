@@ -1,7 +1,7 @@
-import { useTablatureEditorStore } from '../../useTablatureEditorStore';
+import { useEditorStore } from '../../useEditorStore';
 import { insertColumns } from '../../utils/insertColumns';
 
 export const insertClipboard = () =>
-	useTablatureEditorStore.setState((state) => {
+	useEditorStore.setState((state) => {
 		insertColumns(state, state.currentSelection, state.clipboard);
 	});

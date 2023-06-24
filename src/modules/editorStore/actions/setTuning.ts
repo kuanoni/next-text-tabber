@@ -1,8 +1,8 @@
 import type { Instrument } from '@modules/editorStore/Instrument';
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useEditorStore } from '../useEditorStore';
 
 export const setTuning = (tuning: Instrument['defaultTuning']) =>
-	useTablatureEditorStore.setState((state) => {
+	useEditorStore.setState((state) => {
 		if (tuning.length !== state.instrument.defaultTuning.length)
 			throw new Error(
 				`[changeTuning]: invalid length of tuning array (${tuning.length}). Should be ${state.instrument.defaultTuning.length}.`

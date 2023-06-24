@@ -1,9 +1,9 @@
 import type { TemporalState } from 'zundo';
 import { useStore } from 'zustand';
 
-import { useTablatureEditorStore } from './useTablatureEditorStore';
+import { useEditorStore } from './useEditorStore';
 
-export const useTablatureHistoryStore = <T>(
+export const useEditorHistoryStore = <T>(
 	selector: (state: TemporalState<Pick<EditorStore, 'tablature' | 'currentSelection'>>) => T,
 	equality?: (a: T, b: T) => boolean
-) => useStore(useTablatureEditorStore.temporal, selector, equality);
+) => useStore(useEditorStore.temporal, selector, equality);

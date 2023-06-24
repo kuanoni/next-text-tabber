@@ -17,7 +17,7 @@ import { setSelectedColumnsFret } from '../actions/setSelectedColumnsFret';
 import { setSelectedColumnsModifiers } from '../actions/setSelectedColumnsModifiers';
 import { setTuning } from '../actions/setTuning';
 import { CELL_MODIFIERS, COLUMN_MODIFIERS, electricBass } from '../constants';
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useEditorStore } from '../useEditorStore';
 
 const createLtrSelection = () => ({
 	section: 0,
@@ -39,7 +39,7 @@ describe('Tablature slice actions', () => {
 	});
 
 	it('[resetTablature] set the tablature to its default state.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		const blankTablature = result.current.instrument.BLANK_TABLATURE;
 
@@ -51,7 +51,7 @@ describe('Tablature slice actions', () => {
 	});
 
 	it("[setInstrument] sets the tablature, instrument, and tuning to the instrument's defaults", () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		const instrumentInitialState = electricBass.createInitialState();
 
@@ -67,7 +67,7 @@ describe('Tablature slice actions', () => {
 
 	describe('[setTuning]', () => {
 		it('sets tuning to passed array.', () => {
-			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+			const { result } = renderHook(() => useEditorStore((state) => state));
 
 			const newTuning: number[] = [27, 32, 45, 99, 0, 11];
 
@@ -86,7 +86,7 @@ describe('Tablature slice actions', () => {
 	});
 
 	it('[pushBlankSection] append a blank section to the tablature.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		const currentTablature = result.current.tablature;
 		const blankSection = { ...result.current.instrument.BLANK_SECTION, name: 'Section 2' };
@@ -99,7 +99,7 @@ describe('Tablature slice actions', () => {
 	});
 
 	it('[clearSelectedColumns] sets selected columns blank.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		const { section, start, end } = createLtrSelection();
 		const stringNumber = 3;
@@ -117,7 +117,7 @@ describe('Tablature slice actions', () => {
 	});
 
 	it('[deleteSelectedColumns] removes selected columns.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		const { section, start, end } = createLtrSelection();
 		const selectionSize = end - start + 1;
@@ -132,7 +132,7 @@ describe('Tablature slice actions', () => {
 	});
 
 	it('[insertColumnsAtSelection] insert a blank column after selection.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		const currentTablature = result.current.tablature;
 		const blankColumn = result.current.instrument.BLANK_COLUMN;
@@ -153,7 +153,7 @@ describe('Tablature slice actions', () => {
 		const fretNumber = 5;
 
 		it('Left-to-right selection.', () => {
-			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+			const { result } = renderHook(() => useEditorStore((state) => state));
 
 			const { section, start, end } = createLtrSelection();
 
@@ -169,7 +169,7 @@ describe('Tablature slice actions', () => {
 		});
 
 		it('Right-to-left selection.', () => {
-			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+			const { result } = renderHook(() => useEditorStore((state) => state));
 
 			const { section, start, end } = createRtlSelection();
 
@@ -186,7 +186,7 @@ describe('Tablature slice actions', () => {
 	});
 
 	it('[duplicateSelectedColumns] duplicates selected columns and inserts them after the selection end.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		const { section, start, end } = createLtrSelection();
 		const selectionSize = end - start + 1;
@@ -207,7 +207,7 @@ describe('Tablature slice actions', () => {
 	});
 
 	it('[insertColumnsAtSelection] inserts columns after selection end.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		const column: Column = result.current.instrument.createColumnFromText('--2---');
 
@@ -220,7 +220,7 @@ describe('Tablature slice actions', () => {
 	});
 
 	it('[setSelectedColumnsCellModifiers] sets modifiers of cells with non-blank frets in selected columns.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		const modifier = CELL_MODIFIERS['Hammer-on'];
 		const cellIndex = 3;
@@ -236,7 +236,7 @@ describe('Tablature slice actions', () => {
 	});
 
 	it('[setSelectedColumnsModifiers] sets modifiers of selected columns.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		const modifier = COLUMN_MODIFIERS['Vibrato'];
 
@@ -251,7 +251,7 @@ describe('Tablature slice actions', () => {
 	});
 
 	it('[clearSelectedColumnsModifiers] clears modifiers of selected columns.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		const modifier = COLUMN_MODIFIERS['Vibrato'];
 

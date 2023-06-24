@@ -1,8 +1,8 @@
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useEditorStore } from '../useEditorStore';
 import { insertColumns } from '../utils/insertColumns';
 
 export const insertColumnsAtSelection = (column?: Column[]) =>
-	useTablatureEditorStore.setState((state) => {
+	useEditorStore.setState((state) => {
 		// by default, insert single blank column
 		if (!column) column = [state.instrument.createBlankColumn()];
 

@@ -1,8 +1,8 @@
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useEditorStore } from '../useEditorStore';
 import { iterateColumnSelection } from '../utils/iterateColumnSelection';
 
 export const setSelectedColumnsFret = (stringNumber: number, fretNumber: number) =>
-	useTablatureEditorStore.setState((state) => {
+	useEditorStore.setState((state) => {
 		if (
 			state.currentSelection.section === null ||
 			state.currentSelection.start === null ||

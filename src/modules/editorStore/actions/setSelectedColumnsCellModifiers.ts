@@ -1,8 +1,8 @@
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useEditorStore } from '../useEditorStore';
 import { iterateColumnSelection } from '../utils/iterateColumnSelection';
 
 export const setSelectedColumnsCellModifiers = (modifier: CellModifier) =>
-	useTablatureEditorStore.setState((state) =>
+	useEditorStore.setState((state) =>
 		iterateColumnSelection((i, currentSelection) => {
 			const newCells = state.tablature.sections[currentSelection.section].columns[i].cells.map((cell) => {
 				if (cell.fret === -1) return cell;

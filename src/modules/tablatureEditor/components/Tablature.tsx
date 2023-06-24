@@ -1,5 +1,5 @@
 import { resetColumnSelection } from '@modules/editorStore/actions/resetColumnSelection';
-import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
+import { useEditorStore } from '@modules/editorStore/useEditorStore';
 
 import Section from './Section';
 import styles from './Tablature.module.scss';
@@ -7,7 +7,7 @@ import styles from './Tablature.module.scss';
 const tablatureSelector = (state: EditorStore) => state.tablature;
 
 const Tablature = () => {
-	const tablature = useTablatureEditorStore(tablatureSelector);
+	const tablature = useEditorStore(tablatureSelector);
 
 	return (
 		<div

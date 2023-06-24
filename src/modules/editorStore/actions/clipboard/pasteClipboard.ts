@@ -1,7 +1,7 @@
-import { useTablatureEditorStore } from '../../useTablatureEditorStore';
+import { useEditorStore } from '../../useEditorStore';
 import { replaceColumns } from '../../utils/replaceColumns';
 
 export const pasteClipboard = () =>
-	useTablatureEditorStore.setState((state) => {
+	useEditorStore.setState((state) => {
 		replaceColumns(state, state.currentSelection, state.clipboard);
 	});

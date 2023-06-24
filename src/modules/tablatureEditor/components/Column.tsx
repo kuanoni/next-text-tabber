@@ -5,7 +5,7 @@ import { columnSelectionFinish } from '@modules/editorStore/actions/columnSelect
 import { columnSelectionHover } from '@modules/editorStore/actions/columnSelection/columnSelectionHover';
 import { columnSelectionStart } from '@modules/editorStore/actions/columnSelection/columnSelectionStart';
 import { BLANK_COLUMN_MODIFIER_CHAR, BLANK_NOTE_CHAR } from '@modules/editorStore/constants';
-import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
+import { useEditorStore } from '@modules/editorStore/useEditorStore';
 
 import styles from './Tablature.module.scss';
 
@@ -115,11 +115,9 @@ const isColumnInSelection = (selection: ColumnSelection, columnIndex: number, se
 	numIsBetweenRange(columnIndex, selection.start, selection.end);
 
 const Column = memo<Props>(({ sectionIndex, column, columnIndex }) => {
-	const isSelecting = useTablatureEditorStore(
-		(state) => state.isSelecting && state.ghostSelection.section === sectionIndex
-	);
+	const isSelecting = useEditorStore((state) => state.isSelecting && state.ghostSelection.section === sectionIndex);
 
-	const selectedStatus = useTablatureEditorStore(
+	const selectedStatus = useEditorStore(
 		useCallback(
 			(state) => {
 				if (isColumnInSelection(state.ghostSelection, columnIndex, sectionIndex)) {
@@ -151,7 +149,7 @@ const Column = memo<Props>(({ sectionIndex, column, columnIndex }) => {
 		)
 	);
 
-	const modifierPosition = useTablatureEditorStore((state) =>
+	const modifierPosition = useEditorStore((state) =>
 		getColumnModifierPosition(columnIndex, state.tablature.sections[sectionIndex].columns)
 	);
 

@@ -9,16 +9,16 @@ import { setInstrument } from '../actions/setInstrument';
 import { setSelectedColumnsFret } from '../actions/setSelectedColumnsFret';
 import { setTuning } from '../actions/setTuning';
 import { electricBass, electricGuitar } from '../constants';
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
-import { useTablatureHistoryStore } from '../useTablatureHistoryStore';
+import { useEditorHistoryStore } from '../useEditorHistoryStore';
+import { useEditorStore } from '../useEditorStore';
 
 const getTablatureStore = () => {
-	const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+	const { result } = renderHook(() => useEditorStore((state) => state));
 	return result;
 };
 
 const getHistoryFns = () => {
-	const { result } = renderHook(() => useTablatureHistoryStore((state) => state));
+	const { result } = renderHook(() => useEditorHistoryStore((state) => state));
 	return result.current;
 };
 

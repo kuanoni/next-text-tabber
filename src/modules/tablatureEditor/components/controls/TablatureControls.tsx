@@ -12,12 +12,12 @@ import { setInstrument } from '@modules/editorStore/actions/setInstrument';
 import { setSelectedColumnsCellModifiers } from '@modules/editorStore/actions/setSelectedColumnsCellModifiers';
 import { setSelectedColumnsModifiers } from '@modules/editorStore/actions/setSelectedColumnsModifiers';
 import { CELL_MODIFIERS, COLUMN_MODIFIERS, electricBass, electricGuitar } from '@modules/editorStore/constants';
-import { useTablatureHistoryStore } from '@modules/editorStore/useTablatureHistoryStore';
+import { useEditorHistoryStore } from '@modules/editorStore/useEditorHistoryStore';
 
 import styles from './TablatureControls.module.scss';
 
 const TablatureControls = () => {
-	const { undo, redo } = useTablatureHistoryStore((state) => state);
+	const { undo, redo } = useEditorHistoryStore((state) => state);
 	return (
 		<div className={styles['tablature-controls']}>
 			<button data-testid='pushBlankColumn' onClick={() => pushBlankColumn(0)}>

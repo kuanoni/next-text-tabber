@@ -7,7 +7,7 @@ import { setClipboard } from '../actions/clipboard/setClipboard';
 import { setColumnSelection } from '../actions/columnSelection/setColumnSelection';
 import { resetStore } from '../actions/resetStore';
 import { setSelectedColumnsFret } from '../actions/setSelectedColumnsFret';
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useEditorStore } from '../useEditorStore';
 import { validateColumnSelection } from '../utils/validateColumnSelection';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -24,7 +24,7 @@ describe('Copy and paste clipboard actions', () => {
 	});
 
 	it('[setClipboard] sets the clipboard.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		const clipboardColumns = new Array(5).fill(result.current.instrument.createColumnFromText('----53'));
 
@@ -37,7 +37,7 @@ describe('Copy and paste clipboard actions', () => {
 	});
 
 	it('[copySelectedColumns] copies selected columns.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		act(() => {
 			setColumnSelection(0, 1, 3);
@@ -55,7 +55,7 @@ describe('Copy and paste clipboard actions', () => {
 	});
 
 	it('[pasteClipboard] inserts clipboard columns when selection size == 1.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		const clipboardColumns = new Array(5).fill(result.current.instrument.createColumnFromText('---755'));
 
@@ -87,7 +87,7 @@ describe('Copy and paste clipboard actions', () => {
 	});
 
 	it('[pasteClipboard] replaces selected columns with clipboard columns when selection size > 1.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		const clipboardColumns = new Array(7).fill(result.current.instrument.createColumnFromText('---755'));
 

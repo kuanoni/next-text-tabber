@@ -1,7 +1,7 @@
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useEditorStore } from '../useEditorStore';
 
 export const pushBlankSection = (name?: string) =>
-	useTablatureEditorStore.setState((state) => {
+	useEditorStore.setState((state) => {
 		if (!name) name = `Section ${state.tablature.sections.length + 1}`;
 		state.tablature.sections.push({ ...state.instrument.createBlankSection(), name });
 	});

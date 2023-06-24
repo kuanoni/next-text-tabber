@@ -1,8 +1,8 @@
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useEditorStore } from '../useEditorStore';
 import { validateColumnSelection } from '../utils/validateColumnSelection';
 
 export const deleteColumns = (selection: ColumnSelection) =>
-	useTablatureEditorStore.setState((state) => {
+	useEditorStore.setState((state) => {
 		const { section, start, end } = validateColumnSelection(selection, state.tablature);
 		state.tablature.sections[section].columns.splice(start, end - start + 1);
 

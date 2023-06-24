@@ -1,10 +1,10 @@
 import type { Instrument } from '@modules/editorStore/Instrument';
 
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useEditorStore } from '../useEditorStore';
 import { resetStore } from './resetStore';
 
 export const setInstrument = (instrument: Instrument) => {
 	resetStore();
-	useTablatureEditorStore.setState(instrument.createInitialState());
-	useTablatureEditorStore.temporal.getState().clear();
+	useEditorStore.setState(instrument.createInitialState());
+	useEditorStore.temporal.getState().clear();
 };

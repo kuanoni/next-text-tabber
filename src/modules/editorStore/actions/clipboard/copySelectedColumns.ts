@@ -1,8 +1,8 @@
-import { useTablatureEditorStore } from '../../useTablatureEditorStore';
+import { useEditorStore } from '../../useEditorStore';
 import { validateColumnSelection } from '../../utils/validateColumnSelection';
 
 export const copySelectedColumns = () =>
-	useTablatureEditorStore.setState((state) => {
+	useEditorStore.setState((state) => {
 		const { section, start, end } = validateColumnSelection(state.currentSelection, state.tablature);
 
 		const columns = state.tablature.sections[section].columns.slice(start, end + 1);

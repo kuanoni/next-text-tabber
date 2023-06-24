@@ -8,7 +8,7 @@ import { setColumnSelection } from '../actions/columnSelection/setColumnSelectio
 import { resetColumnSelection } from '../actions/resetColumnSelection';
 import { resetStore } from '../actions/resetStore';
 import { BLANK_SELECTION } from '../constants';
-import { useTablatureEditorStore } from '../useTablatureEditorStore';
+import { useEditorStore } from '../useEditorStore';
 
 describe('Column Selection Tests', () => {
 	afterEach(() => {
@@ -18,7 +18,7 @@ describe('Column Selection Tests', () => {
 	});
 
 	it('[resetColumnSelection] sets currentSelection and ghostSelection blank.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		act(() => {
 			setColumnSelection(0, 1, 4);
@@ -31,7 +31,7 @@ describe('Column Selection Tests', () => {
 	});
 
 	it('[columnSelectionStart] sets "isSelecting" true, "currentSelection" blank, and "ghostSelection" appropriately.', () => {
-		const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+		const { result } = renderHook(() => useEditorStore((state) => state));
 
 		act(() => columnSelectionStart(0, 1));
 
@@ -41,7 +41,7 @@ describe('Column Selection Tests', () => {
 
 	describe('[columnSelectionHover]', () => {
 		it('sets "ghostSelection.end" appropriately.', () => {
-			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+			const { result } = renderHook(() => useEditorStore((state) => state));
 
 			act(() => {
 				columnSelectionStart(0, 1);
@@ -52,7 +52,7 @@ describe('Column Selection Tests', () => {
 		});
 
 		it('ignores hovering on different section.', () => {
-			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+			const { result } = renderHook(() => useEditorStore((state) => state));
 
 			act(() => {
 				columnSelectionStart(0, 1);
@@ -75,7 +75,7 @@ describe('Column Selection Tests', () => {
 
 	describe('[columnSelectionFinish]', () => {
 		it('sets "isSelecting" false, "currentSelection" to "ghostSelection", and "ghostSelection" to blank.', () => {
-			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+			const { result } = renderHook(() => useEditorStore((state) => state));
 
 			act(() => {
 				columnSelectionStart(0, 1);
@@ -89,7 +89,7 @@ describe('Column Selection Tests', () => {
 		});
 
 		it('throws error on "ghostSelection" with null values.', () => {
-			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+			const { result } = renderHook(() => useEditorStore((state) => state));
 
 			expect(result.current.ghostSelection).toEqual(BLANK_SELECTION);
 
@@ -98,7 +98,7 @@ describe('Column Selection Tests', () => {
 		});
 
 		it('"currentSelection.start" <= "currentSelection.end".', () => {
-			const { result } = renderHook(() => useTablatureEditorStore((state) => state));
+			const { result } = renderHook(() => useEditorStore((state) => state));
 
 			act(() => {
 				columnSelectionStart(0, 6);
