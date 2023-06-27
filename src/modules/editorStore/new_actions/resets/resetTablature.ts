@@ -1,4 +1,4 @@
-import { useEditorStore } from '../useEditorStore';
+import { useEditorStore } from '../../useEditorStore';
 
 export const resetTablature = () =>
 	useEditorStore.setState((state) => {

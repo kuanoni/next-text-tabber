@@ -1,7 +1,7 @@
-import { BLANK_SELECTION } from '../constants';
-import { useEditorStore } from '../useEditorStore';
+import { BLANK_SELECTION } from '../../constants';
+import { useEditorStore } from '../../useEditorStore';
 
-export const resetColumnSelection = () =>
+export const resetSelection = () =>
 	useEditorStore.setState((state) => {
 		state.isSelecting = false;
 		state.currentSelection = BLANK_SELECTION;
