@@ -1,10 +1,11 @@
 import { BLANK_SELECTION } from '@modules/editorStore/constants';
 import { useEditorStore } from '@modules/editorStore/useEditorStore';
-import { validateColumnSelection } from '@modules/editorStore/utils/validateColumnSelection';
 
-export const columnSelectionFinish = () =>
+import { validateSelection } from '../utils';
+
+export const selectionFinish = () =>
 	useEditorStore.setState((state) => {
-		const ghostSelection = validateColumnSelection(state.ghostSelection, state.tablature);
+		const ghostSelection = validateSelection(state.ghostSelection, state.tablature);
 
 		const [start, end] =
 			ghostSelection.start <= ghostSelection.end

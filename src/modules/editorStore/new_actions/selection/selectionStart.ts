@@ -1,10 +1,10 @@
 import { BLANK_SELECTION } from '../../constants';
 import { useEditorStore } from '../../useEditorStore';
-import { validateColumnSelection } from '../../utils/validateColumnSelection';
+import { validateSelection } from '../utils';
 
-export const columnSelectionStart = (sectionIndex: number, columnIndex: number) =>
+export const selectionStart = (sectionIndex: number, columnIndex: number) =>
 	useEditorStore.setState((state) => {
-		const selection = validateColumnSelection(
+		const selection = validateSelection(
 			{
 				section: sectionIndex,
 				start: columnIndex,
