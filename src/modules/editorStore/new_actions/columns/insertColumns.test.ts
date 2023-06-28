@@ -8,16 +8,16 @@ import { resetStore } from '../resets/resetStore';
 import { setSelection } from '../selection/setSelection';
 import { insertColumns } from './insertColumns';
 
-const testColumn = {
+const testColumn: Column = {
 	id: 99,
-	modifier: null,
+	notation: null,
 	cells: [
-		{ modifier: null, fret: 7 },
-		{ modifier: null, fret: -1 },
-		{ modifier: null, fret: -1 },
-		{ modifier: null, fret: -1 },
-		{ modifier: null, fret: -1 },
-		{ modifier: null, fret: -1 },
+		{ notation: null, fret: 7 },
+		{ notation: null, fret: -1 },
+		{ notation: null, fret: -1 },
+		{ notation: null, fret: -1 },
+		{ notation: null, fret: -1 },
+		{ notation: null, fret: -1 },
 	],
 };
 
