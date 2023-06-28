@@ -1,10 +1,11 @@
 interface Cell {
-	modifier: CellModifier | null;
+	notation: CellNotation | null;
 	fret: number;
 }
 
 interface Column {
-	modifier: ColumnModifier | null;
+	id: number;
+	notation: ColumnNotation | null;
 	cells: Cell[];
 }
 
@@ -17,26 +18,26 @@ interface Tablature {
 	sections: Section[];
 }
 
-interface CellModifierSnap {
+interface CellNotationSnap {
 	behavior: 'snap';
 	symbolRight: string;
 }
 
-interface CellModifierWrap {
+interface CellNotationWrap {
 	behavior: 'wrap';
 	symbolLeft: string;
 	symbolRight: string;
 }
 
-type CellModifier = CellModifierSnap | CellModifierWrap;
+type CellNotation = CellNotationSnap | CellNotationWrap;
 
-interface ColumnModifier {
+interface ColumnNotation {
 	start?: string;
 	end?: string;
 	filler: string;
 }
 
-type ColumnModifierPosition = 'start' | 'end' | 'middle' | 'solo' | undefined;
+type ColumnNotationPosition = 'start' | 'end' | 'middle' | 'solo' | undefined;
 
 interface BlankColumnSelection {
 	section: null;
@@ -60,7 +61,7 @@ interface EditorStore {
 	isSelecting: boolean;
 	ghostSelection: ColumnSelection;
 	currentSelection: ColumnSelection;
-	clipboard: Columns[];
+	clipboard: Column[];
 }
 
 type InstrumentState = Pick<EditorStore, 'instrument' | 'tuning' | 'tablature'>;

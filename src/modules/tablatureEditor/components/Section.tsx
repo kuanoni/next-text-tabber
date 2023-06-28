@@ -15,12 +15,7 @@ const Section = ({ sectionIndex, section }: Props) => {
 				<SectionTuningColumn />
 				{section.columns.map((column, columnIndex) => {
 					return (
-						<Column
-							key={columnIndex}
-							column={column}
-							columnIndex={columnIndex}
-							sectionIndex={sectionIndex}
-						/>
+						<Column key={column.id} column={column} columnIndex={columnIndex} sectionIndex={sectionIndex} />
 					);
 				})}
 			</div>

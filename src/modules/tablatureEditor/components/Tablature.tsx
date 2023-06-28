@@ -1,5 +1,5 @@
-import { resetColumnSelection } from '@modules/editorStore/actions/resetColumnSelection';
-import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
+import { resetSelection } from '@modules/editorStore/actions';
+import { useEditorStore } from '@modules/editorStore/useEditorStore';
 
 import Section from './Section';
 import styles from './Tablature.module.scss';
@@ -7,14 +7,14 @@ import styles from './Tablature.module.scss';
 const tablatureSelector = (state: EditorStore) => state.tablature;
 
 const Tablature = () => {
-	const tablature = useTablatureEditorStore(tablatureSelector);
+	const tablature = useEditorStore(tablatureSelector);
 
 	return (
 		<div
 			data-testid='tablature'
 			className={styles.tablature}
 			// remove selection on mouse down
-			onMouseDown={() => resetColumnSelection()}
+			onMouseDown={() => resetSelection()}
 		>
 			{tablature.sections.map((section, i) => (
 				<Section key={i} sectionIndex={i} section={section} />

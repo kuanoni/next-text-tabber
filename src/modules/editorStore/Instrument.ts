@@ -8,9 +8,8 @@ export class Instrument {
 	readonly defaultTuningName: string;
 	readonly commonTunings: { [i: string]: number[] };
 	readonly BLANK_CELL: Cell;
-	readonly BLANK_COLUMN: Column;
-	readonly BLANK_SECTION: Section;
 	readonly BLANK_TABLATURE: Tablature;
+	columnCounter: number;
 
 	constructor(
 		name: string,
@@ -27,13 +26,10 @@ export class Instrument {
 		this.defaultTuningName = defaultTuningName;
 		this.commonTunings = { [defaultTuningName]: defaultTuning, ...commonTunings };
 
-		this.BLANK_CELL = { modifier: null, fret: -1 };
-		this.BLANK_COLUMN = {
-			modifier: null,
-			cells: new Array<Cell>(amountOfStrings).fill(this.BLANK_CELL),
-		};
-		this.BLANK_SECTION = { name: 'Section 1', columns: new Array(8).fill(this.BLANK_COLUMN) };
-		this.BLANK_TABLATURE = { sections: [this.BLANK_SECTION] };
+		this.columnCounter = 0;
+
+		this.BLANK_CELL = { notation: null, fret: -1 };
+		this.BLANK_TABLATURE = { sections: [this.createBlankSection()] };
 	}
 
 	createInitialState(): InstrumentState {
@@ -42,6 +38,32 @@ export class Instrument {
 			tuning: this.defaultTuning,
 			tablature: this.BLANK_TABLATURE,
 		};
+	}
+
+	createBlankColumn(): Column {
+		return {
+			id: this.columnCounter++,
+			notation: null,
+			cells: new Array<Cell>(this.amountOfStrings).fill(this.BLANK_CELL),
+		};
+	}
+
+	createBlankSection(name = 'Section'): Section {
+		const columns: Column[] = [];
+		for (let i = 0; i < 8; i++) columns.push(this.createBlankColumn());
+
+		return {
+			name,
+			columns,
+		};
+	}
+
+	cloneColumn(column: Column): Column {
+		return { ...column, id: this.columnCounter++ };
+	}
+
+	cloneColumnSelection(columns: Column[]): Column[] {
+		return columns.map((column) => this.cloneColumn(column));
 	}
 
 	createColumnFromText(columnText: string): Column {
@@ -53,13 +75,14 @@ export class Instrument {
 		const columnCells = new Array<Cell>(this.amountOfStrings).fill(this.BLANK_CELL).map((_, i): Cell => {
 			const fret = columnText[i] === BLANK_NOTE_CHAR ? -1 : parseInt(columnText[i]);
 			return {
-				modifier: null,
+				notation: null,
 				fret,
 			};
 		});
 
 		const column: Column = {
-			modifier: null,
+			id: this.columnCounter++,
+			notation: null,
 			cells: columnCells,
 		};
 
