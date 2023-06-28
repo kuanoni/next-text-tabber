@@ -5,7 +5,7 @@ import {
 	setFretsNotation,
 	setSelection,
 	toggleFret,
-} from '@modules/editorStore/new_actions';
+} from '@modules/editorStore/actions';
 import Tablature from '@modules/tablatureEditor/components/Tablature';
 
 import { getColumnCell } from './utils';

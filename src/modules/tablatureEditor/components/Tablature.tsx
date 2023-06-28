@@ -1,4 +1,4 @@
-import { resetSelection } from '@modules/editorStore/new_actions';
+import { resetSelection } from '@modules/editorStore/actions';
 import { useEditorStore } from '@modules/editorStore/useEditorStore';
 
 import Section from './Section';

@@ -1,4 +1,4 @@
-import { toggleFret } from '@modules/editorStore/new_actions';
+import { toggleFret } from '@modules/editorStore/actions';
 
 import styles from './Fretboard.module.scss';
 

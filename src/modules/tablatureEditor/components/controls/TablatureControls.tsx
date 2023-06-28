@@ -1,4 +1,3 @@
-import { CELL_NOTATIONS, COLUMN_NOTATIONS, electricBass, electricGuitar } from '@modules/editorStore/constants';
 import {
 	clearColumns,
 	copyColumns,
@@ -7,10 +6,11 @@ import {
 	resetTablature,
 	setColumnsNotation,
 	setFretsNotation,
-} from '@modules/editorStore/new_actions';
+	setInstrument,
+} from '@modules/editorStore/actions';
+import { CELL_NOTATIONS, COLUMN_NOTATIONS, electricBass, electricGuitar } from '@modules/editorStore/constants';
 import { useEditorHistoryStore } from '@modules/editorStore/useEditorHistoryStore';
 
-import { setInstrument } from '../../../editorStore/new_actions';
 import styles from './TablatureControls.module.scss';
 
 const TablatureControls = () => {

@@ -1,4 +1,4 @@
-import { setTuning } from '@modules/editorStore/new_actions';
+import { setTuning } from '@modules/editorStore/actions';
 import { useEditorStore } from '@modules/editorStore/useEditorStore';
 
 import styles from './Fretboard.module.scss';

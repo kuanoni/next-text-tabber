@@ -1,4 +1,4 @@
-import { createSection } from '@modules/editorStore/new_actions';
+import { createSection } from '@modules/editorStore/actions';
 
 import Tablature from '../components/Tablature';
 import { columnIsGhostSelected, columnIsNotSelected, columnIsSelected, getColumn, getTablature } from './utils';
