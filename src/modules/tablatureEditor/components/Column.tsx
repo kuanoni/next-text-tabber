@@ -1,11 +1,9 @@
 import { memo, MouseEventHandler, useCallback, useMemo } from 'react';
 
 import numIsBetweenRange from '@common/utils/numBetweenRange';
-import { columnSelectionFinish } from '@modules/editorStore/actions/columnSelection/columnSelectionFinish';
-import { columnSelectionHover } from '@modules/editorStore/actions/columnSelection/columnSelectionHover';
-import { columnSelectionStart } from '@modules/editorStore/actions/columnSelection/columnSelectionStart';
-import { BLANK_COLUMN_MODIFIER_CHAR, BLANK_NOTE_CHAR } from '@modules/editorStore/constants';
-import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
+import { BLANK_COLUMN_NOTATION_CHAR, BLANK_NOTE_CHAR } from '@modules/editorStore/constants';
+import { selectionFinish, selectionHover, selectionStart } from '@modules/editorStore/actions';
+import { useEditorStore } from '@modules/editorStore/useEditorStore';
 
 import styles from './Tablature.module.scss';
 
@@ -15,18 +13,18 @@ interface Props {
 	columnIndex: number;
 }
 
-// Check adjacent columns to see if column with modifier is the start or end of the modified column group
-const getColumnModifierPosition = (columnIndex: number, columns: Column[]): ColumnModifierPosition => {
+// Check adjacent columns to see if column with notation is the start or end of the modified column group
+const getColumnNotationPosition = (columnIndex: number, columns: Column[]): ColumnNotationPosition => {
 	const column = columns[columnIndex];
-	if (!column.modifier) return undefined;
+	if (!column.notation) return undefined;
 
 	const prevColumn = columns[columnIndex - 1];
 	const nextColumn = columns[columnIndex + 1];
 
-	if (prevColumn?.modifier !== column.modifier && nextColumn?.modifier !== column.modifier) return 'solo';
+	if (prevColumn?.notation !== column.notation && nextColumn?.notation !== column.notation) return 'solo';
 
-	if (prevColumn?.modifier !== column.modifier) return 'start';
-	else if (nextColumn?.modifier !== column.modifier) return 'end';
+	if (prevColumn?.notation !== column.notation) return 'start';
+	else if (nextColumn?.notation !== column.notation) return 'end';
 	else return 'middle';
 };
 
@@ -40,13 +38,13 @@ const getColumnFormattingInfo = (column: Column) => {
 		let curWidth = Math.abs(cell.fret).toString().length;
 
 		// Trip column flags if necessary
-		if (cell.modifier?.behavior === 'snap') isColumnSnapping = true;
+		if (cell.notation?.behavior === 'snap') isColumnSnapping = true;
 		if (cell.fret !== -1) isColumnBlank = false;
 
-		// If cell has a modifier, add its symbol character lengths
-		if (cell.modifier) {
-			curWidth += cell.modifier.symbolRight.length;
-			if (cell.modifier.behavior === 'wrap') curWidth += cell.modifier.symbolLeft.length;
+		// If cell has a notation, add its symbol character lengths
+		if (cell.notation) {
+			curWidth += cell.notation.symbolRight.length;
+			if (cell.notation.behavior === 'wrap') curWidth += cell.notation.symbolLeft.length;
 		}
 
 		// Return the higher width between the current and previous cell
@@ -58,32 +56,32 @@ const getColumnFormattingInfo = (column: Column) => {
 	return { columnWidth, requiresPadding };
 };
 
-const formatInnerRows = (column: Column, modifierPosition: ColumnModifierPosition) => {
-	const { cells, modifier } = column;
+const formatInnerRows = (column: Column, notationPosition: ColumnNotationPosition) => {
+	const { cells, notation: notation } = column;
 	const { columnWidth, requiresPadding: _requiresPadding } = getColumnFormattingInfo(column);
 	let requiresPadding = _requiresPadding;
 
-	let modifierRow = BLANK_COLUMN_MODIFIER_CHAR;
-	if (modifier) {
-		const start = modifier.start || modifier.filler;
-		const end = modifier.end || modifier.filler;
+	let notationRow = BLANK_COLUMN_NOTATION_CHAR;
+	if (notation) {
+		const start = notation.start || notation.filler;
+		const end = notation.end || notation.filler;
 
-		switch (modifierPosition) {
+		switch (notationPosition) {
 			case 'start':
-				modifierRow = start.padEnd(columnWidth + (requiresPadding ? 1 : 0), modifier.filler);
+				notationRow = start.padEnd(columnWidth + (requiresPadding ? 1 : 0), notation.filler);
 				break;
 			case 'end':
-				modifierRow = end.padStart(columnWidth, modifier.filler);
+				notationRow = end.padStart(columnWidth, notation.filler);
 				break;
 			case 'solo':
-				modifierRow = start.padEnd(columnWidth, modifier.filler);
+				notationRow = start.padEnd(columnWidth, notation.filler);
 				break;
 			default:
-				modifierRow = modifier.filler.padEnd(columnWidth + (requiresPadding ? 1 : 0), modifier.filler);
+				notationRow = notation.filler.padEnd(columnWidth + (requiresPadding ? 1 : 0), notation.filler);
 				break;
 		}
 
-		if (modifierRow.length > columnWidth) requiresPadding = true;
+		if (notationRow.length > columnWidth) requiresPadding = true;
 	}
 
 	const cellRows = cells.map((cell) => {
@@ -91,10 +89,10 @@ const formatInnerRows = (column: Column, modifierPosition: ColumnModifierPositio
 
 		// Replace '-1's with the proper blank cell character
 		if (cell.fret === -1) rowString = BLANK_NOTE_CHAR;
-		// Concatinates fret characters with modifier symbol characters
-		else if (cell.modifier?.behavior === 'snap') rowString += cell.modifier.symbolRight;
-		else if (cell.modifier?.behavior === 'wrap')
-			rowString = cell.modifier.symbolLeft + rowString + cell.modifier.symbolRight;
+		// Concatinates fret characters with notation symbol characters
+		else if (cell.notation?.behavior === 'snap') rowString += cell.notation.symbolRight;
+		else if (cell.notation?.behavior === 'wrap')
+			rowString = cell.notation.symbolLeft + rowString + cell.notation.symbolRight;
 
 		// Fill blank spaces with blank note characters (-)
 		rowString = rowString.padStart(columnWidth, BLANK_NOTE_CHAR);
@@ -105,7 +103,7 @@ const formatInnerRows = (column: Column, modifierPosition: ColumnModifierPositio
 		return rowString;
 	});
 
-	return [modifierRow, ...cellRows];
+	return [notationRow, ...cellRows];
 };
 
 const isColumnInSelection = (selection: ColumnSelection, columnIndex: number, sectionIndex: number) =>
@@ -115,11 +113,9 @@ const isColumnInSelection = (selection: ColumnSelection, columnIndex: number, se
 	numIsBetweenRange(columnIndex, selection.start, selection.end);
 
 const Column = memo<Props>(({ sectionIndex, column, columnIndex }) => {
-	const isSelecting = useTablatureEditorStore(
-		(state) => state.isSelecting && state.ghostSelection.section === sectionIndex
-	);
+	const isSelecting = useEditorStore((state) => state.isSelecting && state.ghostSelection.section === sectionIndex);
 
-	const selectedStatus = useTablatureEditorStore(
+	const selectedStatus = useEditorStore(
 		useCallback(
 			(state) => {
 				if (isColumnInSelection(state.ghostSelection, columnIndex, sectionIndex)) {
@@ -151,28 +147,28 @@ const Column = memo<Props>(({ sectionIndex, column, columnIndex }) => {
 		)
 	);
 
-	const modifierPosition = useTablatureEditorStore((state) =>
-		getColumnModifierPosition(columnIndex, state.tablature.sections[sectionIndex].columns)
+	const notationPosition = useEditorStore((state) =>
+		getColumnNotationPosition(columnIndex, state.tablature.sections[sectionIndex].columns)
 	);
 
 	const onMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
 		e.stopPropagation();
-		columnSelectionStart(sectionIndex, columnIndex);
+		selectionStart(sectionIndex, columnIndex);
 		document.addEventListener(
 			'mouseup',
 			(e) => {
 				e.stopPropagation();
-				columnSelectionFinish();
+				selectionFinish();
 			},
 			{ once: true }
 		);
 	};
 
 	const onMouseOver: MouseEventHandler<HTMLDivElement> = () => {
-		if (isSelecting) columnSelectionHover(sectionIndex, columnIndex);
+		if (isSelecting) selectionHover(sectionIndex, columnIndex);
 	};
 
-	const innerRows = useMemo(() => formatInnerRows(column, modifierPosition), [column, modifierPosition]);
+	const innerRows = useMemo(() => formatInnerRows(column, notationPosition), [column, notationPosition]);
 
 	return (
 		<div

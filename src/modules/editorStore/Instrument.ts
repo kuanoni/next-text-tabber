@@ -28,7 +28,7 @@ export class Instrument {
 
 		this.columnCounter = 0;
 
-		this.BLANK_CELL = { modifier: null, fret: -1 };
+		this.BLANK_CELL = { notation: null, fret: -1 };
 		this.BLANK_TABLATURE = { sections: [this.createBlankSection()] };
 	}
 
@@ -43,17 +43,17 @@ export class Instrument {
 	createBlankColumn(): Column {
 		return {
 			id: this.columnCounter++,
-			modifier: null,
+			notation: null,
 			cells: new Array<Cell>(this.amountOfStrings).fill(this.BLANK_CELL),
 		};
 	}
 
-	createBlankSection(): Section {
+	createBlankSection(name = 'Section'): Section {
 		const columns: Column[] = [];
 		for (let i = 0; i < 8; i++) columns.push(this.createBlankColumn());
 
 		return {
-			name: 'Section',
+			name,
 			columns,
 		};
 	}
@@ -75,14 +75,14 @@ export class Instrument {
 		const columnCells = new Array<Cell>(this.amountOfStrings).fill(this.BLANK_CELL).map((_, i): Cell => {
 			const fret = columnText[i] === BLANK_NOTE_CHAR ? -1 : parseInt(columnText[i]);
 			return {
-				modifier: null,
+				notation: null,
 				fret,
 			};
 		});
 
 		const column: Column = {
 			id: this.columnCounter++,
-			modifier: null,
+			notation: null,
 			cells: columnCells,
 		};
 

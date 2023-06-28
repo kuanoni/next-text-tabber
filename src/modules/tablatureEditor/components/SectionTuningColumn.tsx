@@ -1,4 +1,4 @@
-import { useTablatureEditorStore } from '@modules/editorStore/useTablatureEditorStore';
+import { useEditorStore } from '@modules/editorStore/useEditorStore';
 import { OCTAVE_NOTES } from '@modules/fretboard/constants';
 
 import styles from './Tablature.module.scss';
@@ -6,7 +6,7 @@ import styles from './Tablature.module.scss';
 const tuningSelector = (state: EditorStore) => state.tuning;
 
 const SectionTuningColumn = () => {
-	const tuning = useTablatureEditorStore(tuningSelector);
+	const tuning = useEditorStore(tuningSelector);
 
 	return (
 		<>

@@ -3,7 +3,7 @@ import { Instrument } from '@modules/editorStore/Instrument';
 export const BLANK_NOTE_CHAR = '-';
 export const BLANK_SELECTION: ColumnSelection = { section: null, start: null, end: null };
 
-export const CELL_MODIFIERS: { [i: string]: CellModifier } = {
+export const CELL_NOTATIONS: { [i: string]: CellNotation } = {
 	'Ghost note': { behavior: 'wrap', symbolLeft: '(', symbolRight: ')' },
 	'Natural harmonic': { behavior: 'wrap', symbolLeft: '<', symbolRight: '>' },
 	'Hammer-on': { behavior: 'snap', symbolRight: 'h' },
@@ -13,12 +13,12 @@ export const CELL_MODIFIERS: { [i: string]: CellModifier } = {
 	'Slide down': { behavior: 'snap', symbolRight: '\\' },
 };
 
-export const COLUMN_MODIFIERS: { [i: string]: ColumnModifier } = {
+export const COLUMN_NOTATIONS: { [i: string]: ColumnNotation } = {
 	'Palm mute': { start: 'PM', end: '|', filler: '-' },
 	Vibrato: { filler: '~' },
 };
 
-export const BLANK_COLUMN_MODIFIER_CHAR = '\u00A0';
+export const BLANK_COLUMN_NOTATION_CHAR = '\u00A0';
 
 const SIX_STRING_TUNINGS = {
 	'Drop D': [26, 33, 38, 43, 47, 52],
