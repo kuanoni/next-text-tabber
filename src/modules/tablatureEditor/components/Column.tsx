@@ -2,8 +2,7 @@ import { memo, MouseEventHandler, useCallback, useMemo } from 'react';
 
 import numIsBetweenRange from '@common/utils/numBetweenRange';
 import { BLANK_COLUMN_NOTATION_CHAR, BLANK_NOTE_CHAR } from '@modules/editorStore/constants';
-import { selectionHover, selectionStart } from '@modules/editorStore/new_actions';
-import { selectionFinish } from '@modules/editorStore/new_actions/selection/selectionFinish';
+import { selectionFinish, selectionHover, selectionStart } from '@modules/editorStore/new_actions';
 import { useEditorStore } from '@modules/editorStore/useEditorStore';
 
 import styles from './Tablature.module.scss';

@@ -1,48 +1,33 @@
-import { clearSelectedColumns } from '@modules/editorStore/actions/clearSelectedColumns';
-import { clearSelectedColumnsModifiers } from '@modules/editorStore/actions/clearSelectedColumnsModifiers';
-import { copySelectedColumns } from '@modules/editorStore/actions/clipboard/copySelectedColumns';
-import { pasteClipboard } from '@modules/editorStore/actions/clipboard/pasteClipboard';
-import { deleteSelectedColumns } from '@modules/editorStore/actions/deleteSelectedColumns';
-import { duplicateSelectedColumns } from '@modules/editorStore/actions/duplicateSelectedColumns';
-import { insertColumnsAtSelection } from '@modules/editorStore/actions/insertColumnsAtSelection';
-import { pushBlankColumn } from '@modules/editorStore/actions/pushBlankColumn';
-import { pushBlankSection } from '@modules/editorStore/actions/pushBlankSection';
-import { resetTablature } from '@modules/editorStore/actions/resetTablature';
-import { setInstrument } from '@modules/editorStore/actions/setInstrument';
-import { setSelectedColumnsCellModifiers } from '@modules/editorStore/actions/setSelectedColumnsCellModifiers';
-import { setSelectedColumnsModifiers } from '@modules/editorStore/actions/setSelectedColumnsModifiers';
-import { CELL_MODIFIERS, COLUMN_MODIFIERS, electricBass, electricGuitar } from '@modules/editorStore/constants';
+import { CELL_NOTATIONS, COLUMN_NOTATIONS, electricBass, electricGuitar } from '@modules/editorStore/constants';
+import {
+	clearColumns,
+	copyColumns,
+	deleteColumns,
+	pasteClipboard,
+	resetTablature,
+	setColumnsNotation,
+	setFretsNotation,
+} from '@modules/editorStore/new_actions';
 import { useEditorHistoryStore } from '@modules/editorStore/useEditorHistoryStore';
 
+import { setInstrument } from '../../../editorStore/new_actions';
 import styles from './TablatureControls.module.scss';
 
 const TablatureControls = () => {
 	const { undo, redo } = useEditorHistoryStore((state) => state);
 	return (
 		<div className={styles['tablature-controls']}>
-			<button data-testid='pushBlankColumn' onClick={() => pushBlankColumn(0)}>
-				pushBlankColumn
-			</button>
-			<button data-testid='insertColumnAtSelection' onClick={() => insertColumnsAtSelection()}>
-				insertColumnAtSelection
-			</button>
-			<button data-testid='clearSelectedColumns' onClick={() => clearSelectedColumns()}>
+			<button data-testid='clearSelectedColumns' onClick={() => clearColumns()}>
 				clearSelectedColumns
 			</button>
-			<button data-testid='deleteSelectedColumns' onClick={() => deleteSelectedColumns()}>
+			<button data-testid='deleteSelectedColumns' onClick={() => deleteColumns()}>
 				deleteSelectedColumns
 			</button>
-			<button data-testid='duplicateSelectedColumns' onClick={() => duplicateSelectedColumns()}>
-				duplicateSelectedColumns
-			</button>
-			<button data-testid='copySelectedColumns' onClick={() => copySelectedColumns()}>
+			<button data-testid='copySelectedColumns' onClick={() => copyColumns()}>
 				copySelectedColumns
 			</button>
 			<button data-testid='pasteClipboard' onClick={() => pasteClipboard()}>
 				pasteClipboard
-			</button>
-			<button data-testid='pushBlankSection' onClick={() => pushBlankSection()}>
-				pushBlankSection
 			</button>
 			<button data-testid='resetTablature' onClick={() => resetTablature()}>
 				resetTablature
@@ -61,64 +46,61 @@ const TablatureControls = () => {
 			</button>
 			<div className={styles['button-group']}>
 				<button
-					data-testid='set-cell-modifier Hammer-on'
-					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Hammer-on'])}
+					data-testid='set-cell-notation Hammer-on'
+					onClick={() => setFretsNotation(CELL_NOTATIONS['Hammer-on'])}
 				>
 					h
 				</button>
 				<button
-					data-testid='set-cell-modifier Pull-off'
-					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Pull-off'])}
+					data-testid='set-cell-notation Pull-off'
+					onClick={() => setFretsNotation(CELL_NOTATIONS['Pull-off'])}
 				>
 					p
 				</button>
-				<button
-					data-testid='set-cell-modifier Bend'
-					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Bend'])}
-				>
+				<button data-testid='set-cell-notation Bend' onClick={() => setFretsNotation(CELL_NOTATIONS['Bend'])}>
 					b
 				</button>
 				<button
-					data-testid='set-cell-modifier Slide up'
-					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Slide up'])}
+					data-testid='set-cell-notation Slide up'
+					onClick={() => setFretsNotation(CELL_NOTATIONS['Slide up'])}
 				>
 					/
 				</button>
 				<button
-					data-testid='set-cell-modifier Slide down'
-					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Slide down'])}
+					data-testid='set-cell-notation Slide down'
+					onClick={() => setFretsNotation(CELL_NOTATIONS['Slide down'])}
 				>
 					\
 				</button>
 				<button
-					data-testid='set-cell-modifier Ghost note'
-					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Ghost note'])}
+					data-testid='set-cell-notation Ghost note'
+					onClick={() => setFretsNotation(CELL_NOTATIONS['Ghost note'])}
 				>
 					( )
 				</button>
 				<button
-					data-testid='set-cell-modifier Natural harmonic'
-					onClick={() => setSelectedColumnsCellModifiers(CELL_MODIFIERS['Natural harmonic'])}
+					data-testid='set-cell-notation Natural harmonic'
+					onClick={() => setFretsNotation(CELL_NOTATIONS['Natural harmonic'])}
 				>
 					{'< >'}
 				</button>
 			</div>
 			<div className={styles['button-group']}>
 				<button
-					data-testid='set-column-modifier Palm mute'
-					onClick={() => setSelectedColumnsModifiers(COLUMN_MODIFIERS['Palm mute'])}
+					data-testid='set-column-notation Palm mute'
+					onClick={() => setColumnsNotation(COLUMN_NOTATIONS['Palm mute'])}
 				>
 					PM
 				</button>
 				<button
-					data-testid='set-column-modifier Vibrato'
-					onClick={() => setSelectedColumnsModifiers(COLUMN_MODIFIERS['Vibrato'])}
+					data-testid='set-column-notation Vibrato'
+					onClick={() => setColumnsNotation(COLUMN_NOTATIONS['Vibrato'])}
 				>
 					~
 				</button>
 			</div>
-			<button data-testid='clearSelectedColumnsModifier' onClick={() => clearSelectedColumnsModifiers()}>
-				clearSelectedColumnsModifier
+			<button data-testid='clearSelectedColumnsNotation' onClick={() => setColumnsNotation(null)}>
+				clearSelectedColumnsNotation
 			</button>
 		</div>
 	);

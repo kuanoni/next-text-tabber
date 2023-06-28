@@ -1,9 +1,11 @@
-import { setColumnSelection } from '@modules/editorStore/actions/columnSelection/setColumnSelection';
-import { resetTablature } from '@modules/editorStore/actions/resetTablature';
-import { setSelectedColumnsCellModifiers } from '@modules/editorStore/actions/setSelectedColumnsCellModifiers';
-import { setSelectedColumnsFret } from '@modules/editorStore/actions/setSelectedColumnsFret';
-import { setSelectedColumnsModifiers } from '@modules/editorStore/actions/setSelectedColumnsModifiers';
-import { BLANK_COLUMN_MODIFIER_CHAR, CELL_MODIFIERS, COLUMN_MODIFIERS } from '@modules/editorStore/constants';
+import { BLANK_COLUMN_NOTATION_CHAR, CELL_NOTATIONS, COLUMN_NOTATIONS } from '@modules/editorStore/constants';
+import {
+	resetTablature,
+	setColumnsNotation,
+	setFretsNotation,
+	setSelection,
+	toggleFret,
+} from '@modules/editorStore/new_actions';
 import Tablature from '@modules/tablatureEditor/components/Tablature';
 
 import { getColumnCell } from './utils';
@@ -19,7 +21,7 @@ const cleanupBefore = () => {
 	beforeEach(() => {
 		cy.mount(<Tablature />);
 
-		setColumnSelection(0, columnIndex, columnIndex);
+		setSelection(0, columnIndex, columnIndex);
 	});
 };
 
@@ -27,14 +29,14 @@ describe('Column cell frets rendering', () => {
 	cleanupBefore();
 
 	it('blank column renders with just single dashes per row.', () => {
-		getColumnCell(columnIndex, 0).should('be.text', BLANK_COLUMN_MODIFIER_CHAR);
+		getColumnCell(columnIndex, 0).should('be.text', BLANK_COLUMN_NOTATION_CHAR);
 		for (let i = 1; i < 7; i++) {
 			getColumnCell(columnIndex, i).should('be.text', '-');
 		}
 	});
 
 	it('columns with single digit frets render in 2 wide rows.', () => {
-		setSelectedColumnsFret(stringNumber, singleDigitFretNumber);
+		toggleFret(stringNumber, singleDigitFretNumber);
 		for (let i = 1; i < 7; i++) {
 			if (i - 1 === stringNumber) {
 				getColumnCell(columnIndex, i).should('be.text', `${singleDigitFretNumber}-`);
@@ -45,7 +47,7 @@ describe('Column cell frets rendering', () => {
 	});
 
 	it('columns with double digit frets render in 3 wide rows.', () => {
-		setSelectedColumnsFret(stringNumber, doubleDigitFretNumber);
+		toggleFret(stringNumber, doubleDigitFretNumber);
 		for (let i = 1; i < 7; i++) {
 			if (i - 1 === stringNumber) {
 				getColumnCell(columnIndex, i).should('be.text', `${doubleDigitFretNumber}-`);
@@ -56,8 +58,8 @@ describe('Column cell frets rendering', () => {
 	});
 
 	it('columns with single and double digit frets render in 3 wide rows, with the single digit fret in the middle.', () => {
-		setSelectedColumnsFret(stringNumber, singleDigitFretNumber);
-		setSelectedColumnsFret(stringNumber - 1, doubleDigitFretNumber);
+		toggleFret(stringNumber, singleDigitFretNumber);
+		toggleFret(stringNumber - 1, doubleDigitFretNumber);
 		for (let i = 1; i < 7; i++) {
 			if (i - 1 === stringNumber) {
 				getColumnCell(columnIndex, i).should('be.text', `-${singleDigitFretNumber}-`);
@@ -72,16 +74,16 @@ describe('Column cell frets rendering', () => {
 	});
 });
 
-describe('Column cell modifiers rendering', () => {
-	describe('wrapping modifiers', () => {
-		const ghostNoteModifier = CELL_MODIFIERS['Ghost note'];
+describe('Column cell notations rendering', () => {
+	describe('wrapping notations', () => {
+		const ghostNoteNotation = CELL_NOTATIONS['Ghost note'];
 
 		cleanupBefore();
 
-		it('columns with single digit frets and wrapping cell modifiers render in 4 wide rows.', () => {
-			setSelectedColumnsFret(stringNumber, singleDigitFretNumber);
-			setSelectedColumnsFret(stringNumber, singleDigitFretNumber);
-			setSelectedColumnsCellModifiers(ghostNoteModifier);
+		it('columns with single digit frets and wrapping cell notations render in 4 wide rows.', () => {
+			toggleFret(stringNumber, singleDigitFretNumber);
+			toggleFret(stringNumber, singleDigitFretNumber);
+			setFretsNotation(ghostNoteNotation);
 			for (let i = 1; i < 7; i++) {
 				if (i - 1 === stringNumber) {
 					getColumnCell(columnIndex, i).should('be.text', `(${singleDigitFretNumber})-`);
@@ -91,9 +93,9 @@ describe('Column cell modifiers rendering', () => {
 			}
 		});
 
-		it('columns with double digit frets and wrapping cell modifiers render in 5 wide rows.', () => {
-			setSelectedColumnsFret(stringNumber, doubleDigitFretNumber);
-			setSelectedColumnsCellModifiers(ghostNoteModifier);
+		it('columns with double digit frets and wrapping cell notations render in 5 wide rows.', () => {
+			toggleFret(stringNumber, doubleDigitFretNumber);
+			setFretsNotation(ghostNoteNotation);
 			for (let i = 1; i < 7; i++) {
 				if (i - 1 === stringNumber) {
 					getColumnCell(columnIndex, i).should('be.text', `(${doubleDigitFretNumber})-`);
@@ -103,10 +105,10 @@ describe('Column cell modifiers rendering', () => {
 			}
 		});
 
-		it('columns with single and double digit frets and wrapping cell modifiers render in 5 wide rows, with the single digit wrapped in the middle', () => {
-			setSelectedColumnsFret(stringNumber, singleDigitFretNumber);
-			setSelectedColumnsFret(stringNumber - 1, doubleDigitFretNumber);
-			setSelectedColumnsCellModifiers(ghostNoteModifier);
+		it('columns with single and double digit frets and wrapping cell notations render in 5 wide rows, with the single digit wrapped in the middle', () => {
+			toggleFret(stringNumber, singleDigitFretNumber);
+			toggleFret(stringNumber - 1, doubleDigitFretNumber);
+			setFretsNotation(ghostNoteNotation);
 			for (let i = 1; i < 7; i++) {
 				if (i - 1 === stringNumber) {
 					getColumnCell(columnIndex, i).should('be.text', `-(${singleDigitFretNumber})-`);
@@ -121,14 +123,14 @@ describe('Column cell modifiers rendering', () => {
 		});
 	});
 
-	describe('snapping modifiers', () => {
-		const hammerOnModifier = CELL_MODIFIERS['Hammer-on'];
+	describe('snapping notations', () => {
+		const hammerOnNotation = CELL_NOTATIONS['Hammer-on'];
 
 		cleanupBefore();
 
-		it('columns with single digit frets and snapping cell modifiers render in 2 wide rows.', () => {
-			setSelectedColumnsFret(stringNumber, singleDigitFretNumber);
-			setSelectedColumnsCellModifiers(hammerOnModifier);
+		it('columns with single digit frets and snapping cell notations render in 2 wide rows.', () => {
+			toggleFret(stringNumber, singleDigitFretNumber);
+			setFretsNotation(hammerOnNotation);
 			for (let i = 1; i < 7; i++) {
 				if (i - 1 === stringNumber) {
 					getColumnCell(columnIndex, i).should('be.text', `${singleDigitFretNumber}h`);
@@ -138,9 +140,9 @@ describe('Column cell modifiers rendering', () => {
 			}
 		});
 
-		it('columns with double digit frets and snapping cell modifiers render in 3 wide rows.', () => {
-			setSelectedColumnsFret(stringNumber, doubleDigitFretNumber);
-			setSelectedColumnsCellModifiers(hammerOnModifier);
+		it('columns with double digit frets and snapping cell notations render in 3 wide rows.', () => {
+			toggleFret(stringNumber, doubleDigitFretNumber);
+			setFretsNotation(hammerOnNotation);
 			for (let i = 1; i < 7; i++) {
 				if (i - 1 === stringNumber) {
 					getColumnCell(columnIndex, i).should('be.text', `${doubleDigitFretNumber}h`);
@@ -150,10 +152,10 @@ describe('Column cell modifiers rendering', () => {
 			}
 		});
 
-		it('columns with single and double digit frets and snapping cell modifiers render in 3 wide rows, with the single digit in the middle', () => {
-			setSelectedColumnsFret(stringNumber, singleDigitFretNumber);
-			setSelectedColumnsFret(stringNumber - 1, doubleDigitFretNumber);
-			setSelectedColumnsCellModifiers(hammerOnModifier);
+		it('columns with single and double digit frets and snapping cell notations render in 3 wide rows, with the single digit in the middle', () => {
+			toggleFret(stringNumber, singleDigitFretNumber);
+			toggleFret(stringNumber - 1, doubleDigitFretNumber);
+			setFretsNotation(hammerOnNotation);
 			for (let i = 1; i < 7; i++) {
 				if (i - 1 === stringNumber) {
 					getColumnCell(columnIndex, i).should('be.text', `-${singleDigitFretNumber}h`);
@@ -169,33 +171,33 @@ describe('Column cell modifiers rendering', () => {
 	});
 });
 
-describe('Column modifiers rendering', () => {
-	const palmMuteModifier = COLUMN_MODIFIERS['Palm mute'] as Required<ColumnModifier>;
-	const vibratoModifier = COLUMN_MODIFIERS['Vibrato'];
+describe('Column notations rendering', () => {
+	const palmMuteNotation = COLUMN_NOTATIONS['Palm mute'] as Required<ColumnNotation>;
+	const vibratoNotation = COLUMN_NOTATIONS['Vibrato'];
 
 	describe('solo columns', () => {
 		cleanupBefore();
 
-		it('blank columns with vibrato modifier renders in 1 wide rows.', () => {
-			setSelectedColumnsModifiers(vibratoModifier);
-			getColumnCell(columnIndex, 0).should('be.text', vibratoModifier.filler);
+		it('blank columns with vibrato notation renders in 1 wide rows.', () => {
+			setColumnsNotation(vibratoNotation);
+			getColumnCell(columnIndex, 0).should('be.text', vibratoNotation.filler);
 			for (let i = 1; i < 7; i++) {
 				getColumnCell(columnIndex, i).should('be.text', '-');
 			}
 		});
 
-		it('blank column with palm mute modifier renders in 2 wide rows.', () => {
-			setSelectedColumnsModifiers(palmMuteModifier);
-			getColumnCell(columnIndex, 0).should('be.text', palmMuteModifier.start);
+		it('blank column with palm mute notation renders in 2 wide rows.', () => {
+			setColumnsNotation(palmMuteNotation);
+			getColumnCell(columnIndex, 0).should('be.text', palmMuteNotation.start);
 			for (let i = 1; i < 7; i++) {
 				getColumnCell(columnIndex, i).should('be.text', '--');
 			}
 		});
 
-		it('column with single digit frets and palm mute modifier renders in 2 wide rows.', () => {
-			setSelectedColumnsFret(stringNumber, singleDigitFretNumber);
-			setSelectedColumnsModifiers(palmMuteModifier);
-			getColumnCell(columnIndex, 0).should('be.text', palmMuteModifier.start);
+		it('column with single digit frets and palm mute notation renders in 2 wide rows.', () => {
+			toggleFret(stringNumber, singleDigitFretNumber);
+			setColumnsNotation(palmMuteNotation);
+			getColumnCell(columnIndex, 0).should('be.text', palmMuteNotation.start);
 			for (let i = 1; i < 7; i++) {
 				if (i - 1 === stringNumber) {
 					getColumnCell(columnIndex, i).should('be.text', `${singleDigitFretNumber}-`);
@@ -205,10 +207,10 @@ describe('Column modifiers rendering', () => {
 			}
 		});
 
-		it('column with double digit frets and palm mute modifier renders in 3 wide rows.', () => {
-			setSelectedColumnsFret(stringNumber, doubleDigitFretNumber);
-			setSelectedColumnsModifiers(palmMuteModifier);
-			getColumnCell(columnIndex, 0).should('be.text', palmMuteModifier.start);
+		it('column with double digit frets and palm mute notation renders in 3 wide rows.', () => {
+			toggleFret(stringNumber, doubleDigitFretNumber);
+			setColumnsNotation(palmMuteNotation);
+			getColumnCell(columnIndex, 0).should('be.text', palmMuteNotation.start);
 			for (let i = 1; i < 7; i++) {
 				if (i - 1 === stringNumber) {
 					getColumnCell(columnIndex, i).should('be.text', `${doubleDigitFretNumber}-`);
@@ -218,11 +220,11 @@ describe('Column modifiers rendering', () => {
 			}
 		});
 
-		it('column with single and double digit frets and palm mute modifier renders in 3 wide rows. ', () => {
-			setSelectedColumnsFret(stringNumber, singleDigitFretNumber);
-			setSelectedColumnsFret(stringNumber - 1, doubleDigitFretNumber);
-			setSelectedColumnsModifiers(palmMuteModifier);
-			getColumnCell(columnIndex, 0).should('be.text', palmMuteModifier.start);
+		it('column with single and double digit frets and palm mute notation renders in 3 wide rows. ', () => {
+			toggleFret(stringNumber, singleDigitFretNumber);
+			toggleFret(stringNumber - 1, doubleDigitFretNumber);
+			setColumnsNotation(palmMuteNotation);
+			getColumnCell(columnIndex, 0).should('be.text', palmMuteNotation.start);
 
 			for (let i = 1; i < 7; i++) {
 				if (i - 1 === stringNumber) {
@@ -241,48 +243,48 @@ describe('Column modifiers rendering', () => {
 	describe('group of 3 columns', () => {
 		cleanupBefore();
 
-		const expectColumnModifiers = (start: string, middle: string, end: string) => {
+		const expectColumnNotations = (start: string, middle: string, end: string) => {
 			getColumnCell(columnIndex, 0).should('be.text', start);
 			getColumnCell(columnIndex + 1, 0).should('be.text', middle);
 			getColumnCell(columnIndex + 2, 0).should('be.text', end);
 		};
 
 		beforeEach(() => {
-			setColumnSelection(0, columnIndex, columnIndex + 2);
+			setSelection(0, columnIndex, columnIndex + 2);
 		});
 
-		it('each column with single digit frets and "Palm mute" modifiers render their column modifier according to column position.', () => {
-			setSelectedColumnsFret(stringNumber, singleDigitFretNumber);
-			setSelectedColumnsModifiers(palmMuteModifier);
+		it('each column with single digit frets and "Palm mute" notations render their column notation according to column position.', () => {
+			toggleFret(stringNumber, singleDigitFretNumber);
+			setColumnsNotation(palmMuteNotation);
 
-			expectColumnModifiers(
-				palmMuteModifier.start,
-				palmMuteModifier.filler.padEnd(2, palmMuteModifier.filler),
-				palmMuteModifier.end
+			expectColumnNotations(
+				palmMuteNotation.start,
+				palmMuteNotation.filler.padEnd(2, palmMuteNotation.filler),
+				palmMuteNotation.end
 			);
 		});
 
-		it('each column with double digit frets and "Palm mute" modifiers render their column modifier according to column position.', () => {
-			setSelectedColumnsFret(stringNumber, doubleDigitFretNumber);
-			setSelectedColumnsModifiers(palmMuteModifier);
+		it('each column with double digit frets and "Palm mute" notations render their column notation according to column position.', () => {
+			toggleFret(stringNumber, doubleDigitFretNumber);
+			setColumnsNotation(palmMuteNotation);
 
-			expectColumnModifiers(
-				palmMuteModifier.start.padEnd(3, palmMuteModifier.filler),
-				palmMuteModifier.filler.padEnd(3, palmMuteModifier.filler),
-				palmMuteModifier.end.padStart(2, palmMuteModifier.filler)
+			expectColumnNotations(
+				palmMuteNotation.start.padEnd(3, palmMuteNotation.filler),
+				palmMuteNotation.filler.padEnd(3, palmMuteNotation.filler),
+				palmMuteNotation.end.padStart(2, palmMuteNotation.filler)
 			);
 		});
 
-		it('each column with mixed digit frets and "Palm mute" modifiers render their column modifier according to column position.', () => {
-			setSelectedColumnsFret(stringNumber, singleDigitFretNumber);
-			setSelectedColumnsModifiers(palmMuteModifier);
-			setColumnSelection(0, columnIndex + 2, columnIndex + 2);
-			setSelectedColumnsFret(stringNumber, doubleDigitFretNumber);
+		it('each column with mixed digit frets and "Palm mute" notations render their column notation according to column position.', () => {
+			toggleFret(stringNumber, singleDigitFretNumber);
+			setColumnsNotation(palmMuteNotation);
+			setSelection(0, columnIndex + 2, columnIndex + 2);
+			toggleFret(stringNumber, doubleDigitFretNumber);
 
-			expectColumnModifiers(
-				palmMuteModifier.start.padEnd(2, palmMuteModifier.filler),
-				palmMuteModifier.filler.padEnd(2, palmMuteModifier.filler),
-				palmMuteModifier.end.padStart(2, palmMuteModifier.filler)
+			expectColumnNotations(
+				palmMuteNotation.start.padEnd(2, palmMuteNotation.filler),
+				palmMuteNotation.filler.padEnd(2, palmMuteNotation.filler),
+				palmMuteNotation.end.padStart(2, palmMuteNotation.filler)
 			);
 		});
 	});

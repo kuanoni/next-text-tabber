@@ -1,6 +1,6 @@
 import { ChangeEventHandler } from 'react';
 
-import { setTuning } from '@modules/editorStore/actions/setTuning';
+import { setTuning } from '@modules/editorStore/new_actions';
 import { useEditorStore } from '@modules/editorStore/useEditorStore';
 
 const instrumentSelector = (state: EditorStore) => state.instrument;

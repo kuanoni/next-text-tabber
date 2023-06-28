@@ -1,4 +1,4 @@
-import { resetColumnSelection } from '@modules/editorStore/actions/resetColumnSelection';
+import { resetSelection } from '@modules/editorStore/new_actions';
 import { useEditorStore } from '@modules/editorStore/useEditorStore';
 
 import Section from './Section';
@@ -14,7 +14,7 @@ const Tablature = () => {
 			data-testid='tablature'
 			className={styles.tablature}
 			// remove selection on mouse down
-			onMouseDown={() => resetColumnSelection()}
+			onMouseDown={() => resetSelection()}
 		>
 			{tablature.sections.map((section, i) => (
 				<Section key={i} sectionIndex={i} section={section} />

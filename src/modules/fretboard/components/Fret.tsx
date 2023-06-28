@@ -1,4 +1,4 @@
-import { setSelectedColumnsFret } from '@modules/editorStore/actions/setSelectedColumnsFret';
+import { toggleFret } from '@modules/editorStore/new_actions';
 
 import styles from './Fretboard.module.scss';
 
@@ -9,7 +9,11 @@ interface Props {
 
 const Fret = ({ stringNumber, fretNumber }: Props) => {
 	const onClick = () => {
-		setSelectedColumnsFret(stringNumber, fretNumber);
+		try {
+			toggleFret(stringNumber, fretNumber);
+		} catch (err) {
+			console.warn(err);
+		}
 	};
 
 	return <div data-testid={`fret ${fretNumber} ${stringNumber}`} className={styles.fret} onClick={onClick}></div>;

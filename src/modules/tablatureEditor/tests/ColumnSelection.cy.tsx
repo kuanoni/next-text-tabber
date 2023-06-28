@@ -1,4 +1,4 @@
-import { pushBlankSection } from '@modules/editorStore/actions/pushBlankSection';
+import { createSection } from '@modules/editorStore/new_actions';
 
 import Tablature from '../components/Tablature';
 import { columnIsGhostSelected, columnIsNotSelected, columnIsSelected, getColumn, getTablature } from './utils';
@@ -53,7 +53,7 @@ describe('Column selection', () => {
 	});
 
 	it('prevents starting a selection on one section, and ending on another.', () => {
-		pushBlankSection();
+		createSection();
 		getColumn(0).trigger('mousedown').should(columnIsGhostSelected);
 		getColumn(0, 1).trigger('mouseover').trigger('mouseup').should(columnIsNotSelected);
 	});
