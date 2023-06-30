@@ -6,7 +6,7 @@ import { cleanup, renderHook } from '@testing-library/react';
 import { CELL_NOTATIONS } from '../../constants';
 import { useEditorStore } from '../../useEditorStore';
 import { resetStore } from '../resets/resetStore';
-import { test_setSelection } from '../testUtils';
+import { test_setSelection } from '../utils';
 import { setFretsNotation } from './setFretsNotation';
 
 const setupCellFrets = () => {

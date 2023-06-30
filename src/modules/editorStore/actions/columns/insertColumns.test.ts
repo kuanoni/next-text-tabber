@@ -5,7 +5,7 @@ import { useEditorStore } from '@modules/editorStore/useEditorStore';
 import { cleanup, renderHook } from '@testing-library/react';
 
 import { resetStore } from '../resets/resetStore';
-import { test_setSelection } from '../testUtils';
+import { test_setSelection } from '../utils';
 import { insertColumns } from './insertColumns';
 
 const testColumn: Column = {
