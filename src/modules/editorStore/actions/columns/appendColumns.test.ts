@@ -3,10 +3,10 @@ import { act } from 'react-dom/test-utils';
 import { expect, jest } from '@jest/globals';
 import { cleanup, renderHook } from '@testing-library/react';
 
-import { appendColumns } from '../';
 import { useEditorStore } from '../../useEditorStore';
 import { resetStore } from '../resets/resetStore';
-import { setSelection } from '../selection/setSelection';
+import { test_setSelection } from '../testUtils';
+import { appendColumns } from './appendColumns';
 
 const testColumn: Column = {
 	id: 99,
@@ -35,7 +35,7 @@ it('appends columns after [0] when selection is {0, 0, 0}.', () => {
 	const { result } = renderHook(() => useEditorStore((state) => state.tablature.sections[0].columns));
 
 	act(() => {
-		setSelection(0, 0, 0);
+		test_setSelection(0, 0, 0);
 		appendColumns(...testColumns);
 	});
 
@@ -59,7 +59,7 @@ it('appends columns after [7] when selection is {0, 7, 7}.', () => {
 	const { result } = renderHook(() => useEditorStore((state) => state.tablature.sections[0].columns));
 
 	act(() => {
-		setSelection(0, 7, 7);
+		test_setSelection(0, 7, 7);
 		appendColumns(...testColumns);
 	});
 
@@ -83,7 +83,7 @@ it('replaces columns [3-6] when selection is {0, 3, 6}.', () => {
 	const { result } = renderHook(() => useEditorStore((state) => state.tablature.sections[0].columns));
 
 	act(() => {
-		setSelection(0, 3, 6);
+		test_setSelection(0, 3, 6);
 		appendColumns(...testColumns);
 	});
 

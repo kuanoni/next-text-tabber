@@ -6,7 +6,7 @@ import { cleanup, renderHook } from '@testing-library/react';
 
 import { useEditorStore } from '../../useEditorStore';
 import { resetStore } from '../resets/resetStore';
-import { setSelection } from '../selection/setSelection';
+import { test_setSelection } from '../testUtils';
 import { setColumnsNotation } from './setColumnsNotation';
 
 beforeEach(() => {
@@ -21,13 +21,13 @@ it('sets notation of selected columns.', () => {
 	const { result } = renderHook(() => useEditorStore((state) => state.tablature.sections[0].columns));
 
 	act(() => {
-		setSelection(0, 0, 0);
+		test_setSelection(0, 0, 0);
 		setColumnsNotation(COLUMN_NOTATIONS['Vibrato']);
 
-		setSelection(0, 7, 7);
+		test_setSelection(0, 7, 7);
 		setColumnsNotation(COLUMN_NOTATIONS['Vibrato']);
 
-		setSelection(0, 3, 6);
+		test_setSelection(0, 3, 6);
 		setColumnsNotation(COLUMN_NOTATIONS['Palm Mute']);
 	});
 

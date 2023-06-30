@@ -5,7 +5,7 @@ import { cleanup, renderHook } from '@testing-library/react';
 
 import { useEditorStore } from '../../useEditorStore';
 import { resetStore } from '../resets/resetStore';
-import { setSelection } from '../selection/setSelection';
+import { test_setSelection } from '../testUtils';
 import { clearColumns } from './clearColumns';
 
 const expectUncleared = (result: { current: Column[] }) => {
@@ -40,7 +40,7 @@ it('clears column [0] when selection is {0, 0, 0}.', () => {
 	expectUncleared(result);
 
 	act(() => {
-		setSelection(0, 0, 0);
+		test_setSelection(0, 0, 0);
 		clearColumns();
 	});
 
@@ -62,7 +62,7 @@ it('clears column [7] when selection is {0, 7, 7}.', () => {
 	expectUncleared(result);
 
 	act(() => {
-		setSelection(0, 7, 7);
+		test_setSelection(0, 7, 7);
 		clearColumns();
 	});
 
@@ -84,7 +84,7 @@ it('clears columns [1-3] when selection is {0, 1, 3}.', () => {
 	expectUncleared(result);
 
 	act(() => {
-		setSelection(0, 1, 3);
+		test_setSelection(0, 1, 3);
 		clearColumns();
 	});
 

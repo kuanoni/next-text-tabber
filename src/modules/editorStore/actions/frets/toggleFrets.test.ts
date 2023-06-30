@@ -5,7 +5,7 @@ import { cleanup, renderHook } from '@testing-library/react';
 
 import { useEditorStore } from '../../useEditorStore';
 import { resetStore } from '../resets/resetStore';
-import { setSelection } from '../selection/setSelection';
+import { test_setSelection } from '../testUtils';
 import { toggleFret } from './toggleFret';
 
 const expectColumns = (columns: Column[], expectedColumns: number[][]) => {
@@ -28,13 +28,13 @@ const expectBlankColumns = (columns: Column[]) => {
 
 const setCellFretValues = (result: { current: Column[] }) => {
 	act(() => {
-		setSelection(0, 0, 0);
+		test_setSelection(0, 0, 0);
 		toggleFret(0, 7);
 
-		setSelection(0, 7, 7);
+		test_setSelection(0, 7, 7);
 		toggleFret(5, 12);
 
-		setSelection(0, 2, 4);
+		test_setSelection(0, 2, 4);
 		toggleFret(3, 0);
 	});
 
@@ -73,13 +73,13 @@ it('unsets cell fret values of selected columns.', () => {
 
 	// Unset fret values (set them to the default -1)
 	act(() => {
-		setSelection(0, 0, 0);
+		test_setSelection(0, 0, 0);
 		toggleFret(0, 7);
 
-		setSelection(0, 7, 7);
+		test_setSelection(0, 7, 7);
 		toggleFret(5, 12);
 
-		setSelection(0, 2, 4);
+		test_setSelection(0, 2, 4);
 		toggleFret(3, 0);
 	});
 
@@ -95,13 +95,13 @@ it('replaces cell fret values of selected columns.', () => {
 
 	// Replace frets values with different values
 	act(() => {
-		setSelection(0, 0, 0);
+		test_setSelection(0, 0, 0);
 		toggleFret(0, 9);
 
-		setSelection(0, 7, 7);
+		test_setSelection(0, 7, 7);
 		toggleFret(5, 4);
 
-		setSelection(0, 2, 4);
+		test_setSelection(0, 2, 4);
 		toggleFret(3, 16);
 	});
 

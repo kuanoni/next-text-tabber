@@ -6,7 +6,7 @@ import { cleanup, renderHook } from '@testing-library/react';
 import { CELL_NOTATIONS } from '../../constants';
 import { useEditorStore } from '../../useEditorStore';
 import { resetStore } from '../resets/resetStore';
-import { setSelection } from '../selection/setSelection';
+import { test_setSelection } from '../testUtils';
 import { setFretsNotation } from './setFretsNotation';
 
 const setupCellFrets = () => {
@@ -35,13 +35,13 @@ it('sets notation of cells with non-blank fret values in selected columns.', () 
 	setupCellFrets();
 
 	act(() => {
-		setSelection(0, 0, 0);
+		test_setSelection(0, 0, 0);
 		setFretsNotation(CELL_NOTATIONS['Hammer-on']);
 
-		setSelection(0, 7, 7);
+		test_setSelection(0, 7, 7);
 		setFretsNotation(CELL_NOTATIONS['Pull-off']);
 
-		setSelection(0, 1, 3);
+		test_setSelection(0, 1, 3);
 		setFretsNotation(CELL_NOTATIONS['Bend']);
 	});
 
@@ -77,7 +77,7 @@ it("doesn't set notation of cells with blank fret values in selected columns.", 
 	const { result } = renderHook(() => useEditorStore((state) => state.tablature.sections[0].columns));
 
 	act(() => {
-		setSelection(0, 4, 6);
+		test_setSelection(0, 4, 6);
 		setFretsNotation(CELL_NOTATIONS['Bend']);
 	});
 

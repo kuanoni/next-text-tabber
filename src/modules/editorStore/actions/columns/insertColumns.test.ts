@@ -5,7 +5,7 @@ import { useEditorStore } from '@modules/editorStore/useEditorStore';
 import { cleanup, renderHook } from '@testing-library/react';
 
 import { resetStore } from '../resets/resetStore';
-import { setSelection } from '../selection/setSelection';
+import { test_setSelection } from '../testUtils';
 import { insertColumns } from './insertColumns';
 
 const testColumn: Column = {
@@ -35,7 +35,7 @@ it('inserts columns before [0] when selection is {0, 0, 0}.', () => {
 	const { result } = renderHook(() => useEditorStore((state) => state.tablature.sections[0].columns));
 
 	act(() => {
-		setSelection(0, 0, 0);
+		test_setSelection(0, 0, 0);
 		insertColumns(...testColumns);
 	});
 
@@ -62,7 +62,7 @@ it('inserts columns before [7] when selection is {0, 7, 7}.', () => {
 	const [start, end] = [lastIndex, lastIndex];
 
 	act(() => {
-		setSelection(0, start, end);
+		test_setSelection(0, start, end);
 		insertColumns(...testColumns);
 	});
 
@@ -86,7 +86,7 @@ it('replaces columns [2-5] when selection is {0, 2, 5}.', () => {
 	const { result } = renderHook(() => useEditorStore((state) => state.tablature.sections[0].columns));
 
 	act(() => {
-		setSelection(0, 2, 5);
+		test_setSelection(0, 2, 5);
 		insertColumns(...testColumns);
 	});
 
