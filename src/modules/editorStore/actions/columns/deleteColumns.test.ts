@@ -5,7 +5,7 @@ import { cleanup, renderHook } from '@testing-library/react';
 
 import { useEditorStore } from '../../useEditorStore';
 import { resetStore } from '../resets/resetStore';
-import { setSelection } from '../selection/setSelection';
+import { test_setSelection } from '../utils';
 import { deleteColumns } from './deleteColumns';
 
 beforeEach(() => {
@@ -20,7 +20,7 @@ it('deletes column [0] when selection is {0, 0, 0}.', () => {
 	const { result } = renderHook(() => useEditorStore((state) => state.tablature.sections[0].columns));
 
 	act(() => {
-		setSelection(0, 0, 0);
+		test_setSelection(0, 0, 0);
 		deleteColumns();
 	});
 
@@ -40,7 +40,7 @@ it('deletes column [7] when selection is {0, 7, 7}.', () => {
 	const { result } = renderHook(() => useEditorStore((state) => state.tablature.sections[0].columns));
 
 	act(() => {
-		setSelection(0, 7, 7);
+		test_setSelection(0, 7, 7);
 		deleteColumns();
 	});
 
@@ -60,7 +60,7 @@ it('deletes columns [3-6] when selection is {0, 3, 6}.', () => {
 	const { result } = renderHook(() => useEditorStore((state) => state.tablature.sections[0].columns));
 
 	act(() => {
-		setSelection(0, 3, 6);
+		test_setSelection(0, 3, 6);
 		deleteColumns();
 	});
 

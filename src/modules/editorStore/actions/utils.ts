@@ -1,24 +1,49 @@
+import { SelectionError, SelectionErrorCode, SelectionErrorCulprit } from '../errors/SelectionError';
+import { useEditorStore } from '../useEditorStore';
+
+export const test_setSelection = (section: number, start: number, end: number) => {
+	useEditorStore.setState((state) => {
+		state.currentSelection = { section, start, end };
+	});
+};
+
 export const validateSelection = (selection: ColumnSelection, tablature: Tablature): NonBlankColumnSelection => {
 	const { section, start, end } = selection;
 
-	if (section === null && start === null && end === null) throw new Error('Selection is blank.');
+	if (section === null && start === null && end === null)
+		throw new SelectionError(SelectionErrorCode.SELECTION_BLANK, SelectionErrorCulprit.ALL);
 
-	if (section === null) throw new Error(`Selected section is null.`);
-	if (start === null) throw new Error(`Selected start is null.`);
-	if (end === null) throw new Error(`Selected end is null.`);
+	if (section === null) throw new SelectionError(SelectionErrorCode.SELECTION_INVALID, SelectionErrorCulprit.SECTION);
+
+	if (start === null) throw new SelectionError(SelectionErrorCode.SELECTION_INVALID, SelectionErrorCulprit.START);
+
+	if (end === null) throw new SelectionError(SelectionErrorCode.SELECTION_INVALID, SelectionErrorCulprit.END);
 
 	if (section < 0 || section > tablature.sections.length - 1)
-		throw new Error(`Selected section index ${section} is out of bounds. Max ${tablature.sections.length - 1}`);
+		throw new SelectionError(
+			SelectionErrorCode.SELECTION_OUT_OF_BOUNDS,
+			SelectionErrorCulprit.SECTION,
+			section,
+			tablature.sections.length - 1
+		);
 
 	const tablatureSection = tablature.sections[section];
 
-	if (!tablatureSection) throw new Error(`Selected section at index ${section} is non-existant: ${section}`);
-
 	if (start < 0 || start > tablatureSection.columns.length - 1)
-		throw new Error(`Selected start index ${start} is out of bounds [0, ${tablatureSection.columns.length - 1}]`);
+		throw new SelectionError(
+			SelectionErrorCode.SELECTION_OUT_OF_BOUNDS,
+			SelectionErrorCulprit.START,
+			start,
+			tablatureSection.columns.length - 1
+		);
 
 	if (end < 0 || end > tablatureSection.columns.length - 1)
-		throw new Error(`Selected end index ${end} is out of bounds [0, ${tablatureSection.columns.length - 1}]`);
+		throw new SelectionError(
+			SelectionErrorCode.SELECTION_OUT_OF_BOUNDS,
+			SelectionErrorCulprit.END,
+			end,
+			tablatureSection.columns.length - 1
+		);
 
 	return selection;
 };
