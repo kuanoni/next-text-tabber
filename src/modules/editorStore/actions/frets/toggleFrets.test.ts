@@ -8,13 +8,13 @@ import { resetStore } from '../resets/resetStore';
 import { test_setSelection } from '../utils';
 import { toggleFret } from './toggleFret';
 
-const expectColumns = (columns: Column[], expectedColumns: number[][]) => {
+const expectColumnCellFrets = (columns: Column[], expectedColumns: number[][]) => {
 	expect(columns.map((c) => c.id)).toEqual([0, 1, 2, 3, 4, 5, 6, 7]);
 	expect(columns.map((c) => c.cells.map((cel) => cel.fret))).toStrictEqual(expectedColumns);
 };
 
 const expectBlankColumns = (columns: Column[]) => {
-	expectColumns(columns, [
+	expectColumnCellFrets(columns, [
 		[-1, -1, -1, -1, -1, -1],
 		[-1, -1, -1, -1, -1, -1],
 		[-1, -1, -1, -1, -1, -1],
@@ -38,7 +38,7 @@ const setCellFretValues = (result: { current: Column[] }) => {
 		toggleFret(3, 0);
 	});
 
-	expectColumns(result.current, [
+	expectColumnCellFrets(result.current, [
 		[7, -1, -1, -1, -1, -1],
 		[-1, -1, -1, -1, -1, -1],
 		[-1, -1, -1, 0, -1, -1],
@@ -58,7 +58,7 @@ beforeEach(() => {
 	});
 });
 
-it('sets cell frets of selected columns.', () => {
+it('sets cell frets of selected blank columns.', () => {
 	const { result } = renderHook(() => useEditorStore((state) => state.tablature.sections[0].columns));
 
 	expectBlankColumns(result.current);
@@ -66,12 +66,50 @@ it('sets cell frets of selected columns.', () => {
 	setCellFretValues(result);
 });
 
-it('unsets cell fret values of selected columns.', () => {
+it('sets cell frets of selected non-blank columns.', () => {
 	const { result } = renderHook(() => useEditorStore((state) => state.tablature.sections[0].columns));
 
 	setCellFretValues(result);
 
-	// Unset fret values (set them to the default -1)
+	act(() => {
+		test_setSelection(0, 0, 3);
+		toggleFret(0, 7);
+	});
+
+	expectColumnCellFrets(result.current, [
+		[7, -1, -1, -1, -1, -1],
+		[7, -1, -1, -1, -1, -1],
+		[7, -1, -1, 0, -1, -1],
+		[7, -1, -1, 0, -1, -1],
+		[-1, -1, -1, 0, -1, -1],
+		[-1, -1, -1, -1, -1, -1],
+		[-1, -1, -1, -1, -1, -1],
+		[-1, -1, -1, -1, -1, 12],
+	]);
+
+	act(() => {
+		test_setSelection(0, 1, 5);
+		toggleFret(3, 4);
+	});
+
+	expectColumnCellFrets(result.current, [
+		[7, -1, -1, -1, -1, -1],
+		[7, -1, -1, 4, -1, -1],
+		[7, -1, -1, 4, -1, -1],
+		[7, -1, -1, 4, -1, -1],
+		[-1, -1, -1, 4, -1, -1],
+		[-1, -1, -1, 4, -1, -1],
+		[-1, -1, -1, -1, -1, -1],
+		[-1, -1, -1, -1, -1, 12],
+	]);
+});
+
+it('blanks cell fret values of selected columns.', () => {
+	const { result } = renderHook(() => useEditorStore((state) => state.tablature.sections[0].columns));
+
+	setCellFretValues(result);
+
+	// Blanks fret values (set them to the default -1)
 	act(() => {
 		test_setSelection(0, 0, 0);
 		toggleFret(0, 7);
@@ -105,7 +143,7 @@ it('replaces cell fret values of selected columns.', () => {
 		toggleFret(3, 16);
 	});
 
-	expectColumns(result.current, [
+	expectColumnCellFrets(result.current, [
 		[9, -1, -1, -1, -1, -1],
 		[-1, -1, -1, -1, -1, -1],
 		[-1, -1, -1, 16, -1, -1],
