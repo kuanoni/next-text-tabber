@@ -1,6 +1,6 @@
 // clipboard
-export { copyColumns } from './clipboard/copyColumns';
-export { pasteClipboard } from './clipboard/pasteClipboard';
+export { yankClipboard as copyColumns } from './clipboard/yankClipboard';
+export { appendClipboard as pasteClipboard } from './clipboard/appendClipboard';
 export { setClipboard } from './clipboard/setClipboard';
 
 // columns
