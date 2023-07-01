@@ -7,4 +7,23 @@ export const deleteColumns = () =>
 
 		const selectionSize = end - start + 1;
 		state.tablature.sections[section].columns.splice(start, selectionSize);
+
+		let columnsLen = state.tablature.sections[section].columns.length - 1;
+
+		if (columnsLen < 0) {
+			state.tablature.sections[section].columns = [state.instrument.createBlankColumn()];
+			columnsLen = 0;
+		}
+
+		if (start > columnsLen) {
+			// If selection start is out of bounds, set selection to the last column of the section...
+			state.currentSelection = {
+				section,
+				start: columnsLen,
+				end: columnsLen,
+			};
+		} else {
+			// ...otherwise, just shrink the selection size down to 1 column
+			state.currentSelection = { section, start, end: start };
+		}
 	});
